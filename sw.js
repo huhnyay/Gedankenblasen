@@ -1,6 +1,6 @@
 // Gedankenblasen – Offline-Unterstützung
 // Bei jeder neuen Version die Zahl erhöhen, damit Handys das Update laden.
-const VERSION = "gedankenblasen-v4";
+const VERSION = "gedankenblasen-v5";
 const SHELL = [
   "./",
   "./index.html",
@@ -30,7 +30,8 @@ self.addEventListener("fetch", event => {
   const url = new URL(req.url);
 
   // Schriften von Google: einmal laden, danach aus dem Speicher
-  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") {
+  // Schriften und die PDF-Bibliothek: einmal laden, danach aus dem Speicher
+  if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com" || url.hostname === "cdnjs.cloudflare.com") {
     event.respondWith(
       caches.open(VERSION + "-fonts").then(async cache => {
         const hit = await cache.match(req);

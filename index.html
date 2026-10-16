@@ -316,12 +316,14 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
 /* Wetter, Wasser, Bilder */
 .sub-hint { margin-top: 8px; font-size: .85rem; }
 .mood-opt .dot.wdot svg { width: 30px; height: 30px; }
-.glasses { display: flex; gap: 4px; flex-wrap: wrap; }
-.glass-btn { width: 52px; height: 60px; border: 0; background: transparent; border-radius: 14px; padding: 4px; cursor: pointer; color: var(--muted); display: grid; place-items: center; transition: transform .15s, background .2s; }
-.glass-btn:hover { background: var(--accent-soft); }
-.glass-btn:active { transform: scale(.92); }
+.glasses, .moons { display: flex; gap: 4px; flex-wrap: wrap; }
+.glass-btn, .moon-btn { width: 52px; height: 60px; border: 0; background: transparent; border-radius: 14px; padding: 4px; cursor: pointer; color: var(--muted); display: grid; place-items: center; transition: transform .15s, background .2s; }
+.moon-btn { height: 56px; }
+.glass-btn:hover, .moon-btn:hover { background: var(--accent-soft); }
+.glass-btn:active, .moon-btn:active { transform: scale(.92); }
 .glass-btn svg { width: 32px; height: 42px; }
-.water-out { margin: 6px 0 0; font-weight: 700; font-size: .95rem; }
+.moon-btn svg { width: 34px; height: 34px; }
+.water-out { margin: 6px 0 0; font-weight: 700; font-size: .95rem; min-height: 1.2em; }
 .q-title { font-weight: 700; }
 .photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .photo-item { position: relative; aspect-ratio: 1; max-width: 100%; border-radius: 12px; overflow: hidden; background: var(--accent-soft); border: 0; padding: 0; }
@@ -329,14 +331,15 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
 .photo-item.missing img { opacity: 0; }
 .photo-item .rm { position: absolute; top: 4px; right: 4px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(26, 20, 45, .66); color: #fff; display: grid; place-items: center; cursor: pointer; }
 .photo-thumb { cursor: zoom-in; }
-.file-label svg { flex: none; }
+.file-label svg, .btn svg { flex: none; }
 .meta-row { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
 .meta-chip { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .meta-chip .wi { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
 .meta-chip .wi svg { width: 26px; height: 26px; }
 .meta-k { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; }
-.mini-glasses { display: inline-flex; gap: 1px; color: var(--muted); }
+.mini-glasses, .mini-moons { display: inline-flex; gap: 1px; color: var(--muted); }
 .mini-glasses svg { width: 15px; height: 20px; }
+.mini-moons svg { width: 16px; height: 16px; }
 .row-icons { display: inline-flex; gap: 8px; align-items: center; vertical-align: -3px; color: var(--muted); font-weight: 400; }
 .row-icons .ri { display: inline-flex; align-items: center; gap: 2px; font-size: .8rem; }
 .row-icons svg { width: 17px; height: 17px; }
@@ -344,6 +347,51 @@ dialog.lb { background: transparent; box-shadow: none; width: min(96vw, 900px); 
 dialog.lb::backdrop { background: rgba(16, 12, 28, .82); }
 dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 auto; border-radius: 18px; }
 .lb-x { position: absolute; top: -52px; right: 0; }
+
+/* Frage des Tages, Morgen, Atmen */
+.dq-tag { display: block; font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 2px; }
+.q.dq { background: var(--accent-soft); border-radius: var(--r-md); padding: 14px; }
+.q.dq textarea { background: var(--surface); }
+.breath-open { margin-top: 12px; }
+.morning h3 { margin-bottom: 10px; }
+dialog.breath { width: min(420px, calc(100vw - 24px)); }
+.breath-wrap { padding: 26px 22px 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.breath-stage { width: 220px; height: 220px; max-width: 100%; display: grid; place-items: center; }
+.breath-bubble { width: 200px; height: 200px; max-width: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.9) 0 6%, rgba(255,255,255,0) 7%), radial-gradient(circle at 38% 32%, rgba(255,255,255,.55), rgba(255,255,255,0) 45%), radial-gradient(circle at 70% 75%, var(--m1), transparent 65%), var(--m2);
+  box-shadow: inset -12px -16px 30px rgba(40,20,80,.10), 0 18px 40px rgba(60,40,100,.18);
+  transform: scale(.5); transition-property: transform; transition-timing-function: ease-in-out; }
+.breath-bubble.big { transform: scale(1); }
+.breath-word { font-family: var(--font-display); font-size: 1.5rem; margin: 0; min-height: 1.5em; }
+
+/* Dankbarkeits-Glas */
+.jar-grid { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 18px; align-items: center; }
+.jar-svg { width: 104px; height: auto; color: var(--muted); }
+.jar-body { min-width: 0; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.jar-body .hint, .jar-count { margin: 0; }
+.jar-count { font-weight: 700; }
+.jar-dot { animation: twinkle 3s ease-in-out infinite alternate; }
+@keyframes twinkle { from { opacity: .55; } to { opacity: 1; } }
+.jar-pick { margin-top: 16px; background: var(--accent-soft); border-radius: var(--r-md); padding: 16px; }
+.jar-pick.show { animation: rise-in .5s ease-out; }
+@keyframes rise-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.jar-text { margin: 0 0 6px; font-size: 1.1rem; font-style: italic; word-break: break-word; }
+.jar-pick .hint { margin: 0; }
+
+/* Einstellungen */
+.settings { display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: var(--r-md); padding: 14px; }
+.settings h4 { margin: 0; font-size: .9rem; color: var(--muted); }
+.switch { position: relative; display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch .track { flex: none; width: 46px; height: 28px; border-radius: 999px; background: var(--line); position: relative; transition: background .2s; margin-top: 2px; }
+.switch .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+.switch input:checked + .track { background: var(--accent); }
+.switch input:checked + .track::after { transform: translateX(18px); }
+.switch input:focus-visible + .track { outline: 3px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .breath-bubble { transition: none !important; transform: scale(.8) !important; }
+  .jar-dot { animation: none !important; }
+}
 
 /* Toast */
 .toast {
@@ -389,7 +437,12 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     <div>
       <h2 id="h-heute"></h2>
       <p class="lead" data-i18n="heute.lead"></p>
+      <button class="btn ghost small breath-open" type="button" id="breathOpen">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8.5" opacity=".45"/></svg>
+        <span data-i18n="breath.open"></span>
+      </button>
     </div>
+    <div class="card morning" id="morningCard" hidden></div>
     <div class="note" id="storageNote" hidden>
       <p><span data-i18n="note.storage"></span> <button class="link-btn" type="button" data-open-info data-i18n="note.link"></button></p>
       <button class="icon-btn note-x" type="button" id="noteClose" data-i18n-aria="note.close" style="width:36px;height:36px">
@@ -444,6 +497,10 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       <div class="cal-grid" id="calGrid" style="margin-top:14px"></div>
     </div>
     <div class="legend" id="legend"></div>
+    <div class="row"><button class="btn ghost small" type="button" id="pdfBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>
+      <span data-i18n="pdf.btn"></span></button></div>
+    <div class="card jar-card" id="jarCard"></div>
   </section>
 </div>
 
@@ -465,6 +522,15 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
 </nav>
 
 <dialog id="dlg" aria-labelledby="dlgTitle"><div class="dlg" id="dlgBody"></div></dialog>
+<dialog id="breath" class="breath" aria-labelledby="breathTitle">
+  <div class="breath-wrap">
+    <h3 id="breathTitle"></h3>
+    <div class="breath-stage"><div class="breath-bubble" id="breathBubble"></div></div>
+    <p class="breath-word" id="breathWord" aria-live="polite"></p>
+    <p class="hint" id="breathRound"></p>
+    <button class="btn ghost small" type="button" id="breathSkip"></button>
+  </div>
+</dialog>
 <dialog id="lb" class="lb"><button class="icon-btn lb-x" id="lbClose" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="lbImg" alt=""></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
@@ -474,6 +540,10 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
   const KEY = "gedankenblasen.v1";          // NICHT ändern: hier liegen die Einträge
   const NOTE_KEY = "gedankenblasen.hinweis";
   const LANG_KEY = "gedankenblasen.sprache";
+  const SLEEP_KEY = "gedankenblasen.schlaf";
+  const SOUND_KEY = "gedankenblasen.toene";
+  const APP_VERSION = 5;            // bei jedem Update zusammen mit sw.js hochzählen
+  const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
   const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
 
   // ---------- Übersetzungen ----------
@@ -557,6 +627,27 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       "photos.alt": "Bild vom {date}", "photos.open": "Bild vergrößern", "photos.missing": "Bild nicht gefunden",
       "dlg.weather": "Wetter", "dlg.water": "Wasser",
       "info.p3": "Die heruntergeladene Sicherung enthält auch deine Bilder. „Als Text kopieren“ enthält nur die Texte.",
+      "breath.open": "Erst kurz durchatmen", "breath.title": "Kurz durchatmen",
+      "breath.in": "Einatmen …", "breath.out": "Ausatmen …", "breath.round": "Atemzug {i} von 3",
+      "breath.done": "Schön. Du bist angekommen.", "breath.toCheckin": "Zum Check-in", "breath.skip": "Überspringen",
+      "dq.title": "Frage des Tages",
+      "dq.0": "Wofür bist du heute dankbar?", "dq.1": "Was hat dich heute überrascht?", "dq.2": "Worauf freust du dich morgen?",
+      "dq.3": "Wer hat dir heute gutgetan?", "dq.4": "Was hast du heute gelernt?", "dq.5": "Worauf bist du heute ein bisschen stolz?",
+      "dq.6": "Was hat dich heute zum Lächeln gebracht?", "dq.7": "Was hat dir heute Energie gegeben?", "dq.8": "Was hat dir heute Energie genommen?",
+      "dq.9": "Was möchtest du dir heute selbst sagen?", "dq.10": "Welchen Geruch, Klang oder Geschmack von heute möchtest du behalten?", "dq.11": "Was darf morgen leichter werden?",
+      "sleep.legend": "Wie hast du geschlafen?",
+      "sleep.1": "Unruhige Nacht", "sleep.2": "Noch müde", "sleep.3": "Geht so", "sleep.4": "Erholt", "sleep.5": "Hellwach",
+      "sleep.aria": "{i} von 5: {label}", "sleep.hint": "Freiwillig. Wird sofort gespeichert, nochmal antippen hebt die Auswahl auf.",
+      "sleep.saved": "Notiert. Hab einen guten Tag.", "sleep.cleared": "Auswahl entfernt.", "dlg.sleep": "Schlaf",
+      "jar.title": "Dankbarkeits-Glas", "jar.lead": "Hier sammeln sich deine Antworten auf „Was war heute schön?“.",
+      "jar.one": "1 schöner Moment", "jar.many": "{n} schöne Momente",
+      "jar.draw": "Einen schönen Moment ziehen", "jar.again": "Noch einen",
+      "jar.empty": "Noch leer. Sobald du bei „Was war heute schön?“ etwas notierst, landet es hier im Glas.",
+      "pdf.btn": "Diesen Monat als PDF", "pdf.making": "PDF wird erstellt …", "pdf.ready": "Dein PDF ist fertig",
+      "pdf.save": "PDF sichern oder teilen", "pdf.none": "In diesem Monat gibt es noch keine Einträge.",
+      "pdf.fail": "Das PDF konnte nicht erstellt werden. Beim ersten Mal braucht die App dafür Internet.",
+      "pdf.saved": "PDF gespeichert.", "pdf.page": "Seite {i} von {n}",
+      "settings.title": "Einstellungen", "sound.label": "Sanfte Töne", "sound.hint": "Ein leises Plopp beim Speichern, Platzenlassen und Atmen.",
       "s1.now": "Ruhig. Der Spaziergang nach der Vorlesung hat gutgetan.", "s1.mind": "Die Abgabe nächste Woche.", "s1.nice": "Die Sonne um vier Uhr auf dem Schreibtisch.",
       "s2.now": "Etwas angespannt.", "s2.mind": "Ein Gespräch, das noch nachhallt.", "s2.nice": "Tee mit Honig.",
       "s3.now": "Leicht und dankbar.", "s3.nice": "Lange mit einer Freundin gelacht.",
@@ -640,6 +731,27 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       "photos.alt": "Photo from {date}", "photos.open": "Enlarge photo", "photos.missing": "Photo not found",
       "dlg.weather": "Weather", "dlg.water": "Water",
       "info.p3": "The downloaded backup includes your photos as well. “Copy as text” contains only the text.",
+      "breath.open": "Take a breath first", "breath.title": "A moment to breathe",
+      "breath.in": "Breathe in …", "breath.out": "Breathe out …", "breath.round": "Breath {i} of 3",
+      "breath.done": "Lovely. You’ve arrived.", "breath.toCheckin": "Go to check-in", "breath.skip": "Skip",
+      "dq.title": "Question of the day",
+      "dq.0": "What are you grateful for today?", "dq.1": "What surprised you today?", "dq.2": "What are you looking forward to tomorrow?",
+      "dq.3": "Who was good for you today?", "dq.4": "What did you learn today?", "dq.5": "What are you a little proud of today?",
+      "dq.6": "What made you smile today?", "dq.7": "What gave you energy today?", "dq.8": "What drained your energy today?",
+      "dq.9": "What would you like to tell yourself today?", "dq.10": "Which smell, sound or taste from today would you like to keep?", "dq.11": "What could feel a little lighter tomorrow?",
+      "sleep.legend": "How did you sleep?",
+      "sleep.1": "Restless night", "sleep.2": "Still tired", "sleep.3": "So-so", "sleep.4": "Rested", "sleep.5": "Wide awake",
+      "sleep.aria": "{i} of 5: {label}", "sleep.hint": "Optional. Saved right away. Tap again to clear.",
+      "sleep.saved": "Noted. Have a good day.", "sleep.cleared": "Cleared.", "dlg.sleep": "Sleep",
+      "jar.title": "Gratitude jar", "jar.lead": "Your answers to “What was lovely today?” collect here.",
+      "jar.one": "1 lovely moment", "jar.many": "{n} lovely moments",
+      "jar.draw": "Pick a lovely moment", "jar.again": "Another one",
+      "jar.empty": "Still empty. As soon as you note something under “What was lovely today?”, it lands here in the jar.",
+      "pdf.btn": "Save this month as PDF", "pdf.making": "Creating PDF …", "pdf.ready": "Your PDF is ready",
+      "pdf.save": "Save or share PDF", "pdf.none": "There are no entries for this month yet.",
+      "pdf.fail": "The PDF couldn’t be created. The first time, the app needs an internet connection for this.",
+      "pdf.saved": "PDF saved.", "pdf.page": "Page {i} of {n}",
+      "settings.title": "Settings", "sound.label": "Gentle sounds", "sound.hint": "A soft pop when saving, letting go and breathing.",
       "s1.now": "Calm. The walk after my lecture did me good.", "s1.mind": "The deadline next week.", "s1.nice": "The sun on my desk at four o’clock.",
       "s2.now": "A bit tense.", "s2.mind": "A conversation that’s still on my mind.", "s2.nice": "Tea with honey.",
       "s3.now": "Light and grateful.", "s3.nice": "Laughed with a friend for ages.",
@@ -723,6 +835,27 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       "photos.alt": "Photo du {date}", "photos.open": "Agrandir la photo", "photos.missing": "Photo introuvable",
       "dlg.weather": "Météo", "dlg.water": "Eau",
       "info.p3": `La sauvegarde téléchargée contient aussi tes photos. «${NB}Copier en texte${NB}» ne contient que le texte.`,
+      "breath.open": "Respirer un instant d’abord", "breath.title": "Un moment pour respirer",
+      "breath.in": "Inspire …", "breath.out": "Expire …", "breath.round": "Respiration {i} sur 3",
+      "breath.done": "Très bien. Tu es là.", "breath.toCheckin": "Aller au check-in", "breath.skip": "Passer",
+      "dq.title": "Question du jour",
+      "dq.0": `Pour quoi es-tu reconnaissant·e aujourd’hui${NB}?`, "dq.1": `Qu’est-ce qui t’a surpris·e aujourd’hui${NB}?`, "dq.2": `Qu’est-ce qui te réjouit pour demain${NB}?`,
+      "dq.3": `Qui t’a fait du bien aujourd’hui${NB}?`, "dq.4": `Qu’as-tu appris aujourd’hui${NB}?`, "dq.5": `De quoi es-tu un peu fier·ère aujourd’hui${NB}?`,
+      "dq.6": `Qu’est-ce qui t’a fait sourire aujourd’hui${NB}?`, "dq.7": `Qu’est-ce qui t’a donné de l’énergie aujourd’hui${NB}?`, "dq.8": `Qu’est-ce qui t’a pris de l’énergie aujourd’hui${NB}?`,
+      "dq.9": `Qu’aimerais-tu te dire aujourd’hui${NB}?`, "dq.10": `Quelle odeur, quel son ou quel goût d’aujourd’hui aimerais-tu garder${NB}?`, "dq.11": `Qu’est-ce qui pourrait être plus léger demain${NB}?`,
+      "sleep.legend": `Comment as-tu dormi${NB}?`,
+      "sleep.1": "Nuit agitée", "sleep.2": "Encore fatigué·e", "sleep.3": "Moyen", "sleep.4": "Reposé·e", "sleep.5": "Plein d’énergie",
+      "sleep.aria": `{i} sur 5${NB}: {label}`, "sleep.hint": "Facultatif. Enregistré tout de suite. Touche à nouveau pour effacer.",
+      "sleep.saved": "C’est noté. Belle journée.", "sleep.cleared": "Sélection effacée.", "dlg.sleep": "Sommeil",
+      "jar.title": "Bocal de gratitude", "jar.lead": "Tes beaux moments de la journée s’accumulent ici.",
+      "jar.one": "1 beau moment", "jar.many": "{n} beaux moments",
+      "jar.draw": "Tirer un beau moment", "jar.again": "Un autre",
+      "jar.empty": `Encore vide. Dès que tu notes quelque chose sous «${NB}Quel a été le beau moment de la journée${NB}?${NB}», il arrive ici.`,
+      "pdf.btn": "Ce mois en PDF", "pdf.making": "Création du PDF …", "pdf.ready": "Ton PDF est prêt",
+      "pdf.save": "Enregistrer ou partager le PDF", "pdf.none": "Pas encore de notes ce mois-ci.",
+      "pdf.fail": "Impossible de créer le PDF. La première fois, l’app a besoin d’une connexion internet.",
+      "pdf.saved": "PDF enregistré.", "pdf.page": "Page {i} sur {n}",
+      "settings.title": "Réglages", "sound.label": "Sons doux", "sound.hint": "Un petit « plop » quand tu enregistres, lâches prise ou respires.",
       "s1.now": "Calme. La promenade après le cours m’a fait du bien.", "s1.mind": "Le rendu de la semaine prochaine.", "s1.nice": "Le soleil sur mon bureau à seize heures.",
       "s2.now": "Un peu tendu.", "s2.mind": "Une conversation qui me trotte encore dans la tête.", "s2.nice": "Un thé au miel.",
       "s3.now": "Léger et reconnaissant.", "s3.nice": "J’ai longuement ri avec une amie.",
@@ -766,7 +899,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     lang = l;
     try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
     makeFormatters(); applyStatic();
-    renderCheckin(); releaseState = "write"; renderRelease();
+    renderCheckin(); renderMorning(); releaseState = "write"; renderRelease();
     if (current === "blasen") renderBlasen();
     if (current === "rueckblick") renderCal();
   }
@@ -1007,6 +1140,251 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     return ids;
   }
 
+  // ---------- Sanfte Töne (Web Audio, ohne Dateien) ----------
+  let soundOn = true;
+  try { soundOn = localStorage.getItem(SOUND_KEY) !== "0"; } catch (e) {}
+  let actx = null;
+  function sound(kind) {
+    if (!soundOn) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      actx = actx || new AC();
+      if (actx.state === "suspended") actx.resume();
+      const p = { pop: [620, 170, 0.16, 0.3], bloop: [280, 620, 0.22, 0.2], soft: [520, 660, 0.45, 0.1], breath: [330, 392, 0.9, 0.07] }[kind] || [440, 440, 0.2, 0.15];
+      const t0 = actx.currentTime + 0.01;
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(p[0], t0);
+      o.frequency.exponentialRampToValueAtTime(p[1], t0 + p[2] * 0.8);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(p[3], t0 + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + p[2]);
+      o.connect(g); g.connect(actx.destination);
+      o.start(t0); o.stop(t0 + p[2] + 0.05);
+    } catch (e) {}
+  }
+
+  // ---------- Frage des Tages ----------
+  const DQ_COUNT = 12;
+  function dqIndex(dateIso) { const [y, m, d] = dateIso.split("-").map(Number); return Math.floor(Date.UTC(y, m - 1, d) / 86400000) % DQ_COUNT; }
+
+  // ---------- Schlaf (morgens) ----------
+  function loadSleep() { try { const o = JSON.parse(localStorage.getItem(SLEEP_KEY) || "{}"); return o && typeof o === "object" ? o : {}; } catch (e) { return {}; } }
+  let sleepMap = loadSleep();
+  function saveSleep() { try { localStorage.setItem(SLEEP_KEY, JSON.stringify(sleepMap)); } catch (e) { toast(t("toast.storageFail")); } }
+  const sleepFor = d => { const v = sleepMap[d]; return Number.isInteger(v) && v >= 1 && v <= 5 ? v : 0; };
+  const moonSVG = on => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" style="${on ? "fill:var(--accent);stroke:var(--accent)" : "fill:none;stroke:currentColor;opacity:.55"}" stroke-width="1.7" stroke-linejoin="round"/></svg>`;
+  const miniMoons = v => `<span class="mini-moons" aria-hidden="true">${[1, 2, 3, 4, 5].map(i => moonSVG(i <= v)).join("")}</span>`;
+  function renderMorning() {
+    const card = $("#morningCard");
+    const h = new Date().getHours();
+    card.hidden = !(h >= 4 && h < 14);
+    if (card.hidden) return;
+    const v = sleepFor(todayIso());
+    card.innerHTML = `
+      <h3>${esc(t("sleep.legend"))}</h3>
+      <div class="moons">${[1, 2, 3, 4, 5].map(i => `<button type="button" class="moon-btn" data-moon="${i}" aria-pressed="${v === i}" aria-label="${esc(t("sleep.aria", { i, label: t("sleep." + i) }))}">${moonSVG(i <= v)}</button>`).join("")}</div>
+      <p class="water-out" aria-live="polite">${v ? esc(t("sleep." + v)) : ""}</p>
+      <p class="hint sub-hint">${esc(t("sleep.hint"))}</p>`;
+  }
+  $("#morningCard").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-moon]");
+    if (!b) return;
+    const i = Number(b.dataset.moon), d = todayIso();
+    if (sleepFor(d) === i) { delete sleepMap[d]; toast(t("sleep.cleared")); }
+    else { sleepMap[d] = i; toast(t("sleep.saved")); sound("soft"); }
+    saveSleep(); renderMorning();
+    const nb = $(`#morningCard [data-moon="${i}"]`); if (nb) nb.focus();
+  });
+
+  // ---------- Atemübung ----------
+  const br = $("#breath");
+  let brTimers = [];
+  function clearBr() { brTimers.forEach(clearTimeout); brTimers = []; }
+  function startBreath() {
+    clearBr();
+    const bub = $("#breathBubble"), word = $("#breathWord"), round = $("#breathRound"), skip = $("#breathSkip");
+    $("#breathTitle").textContent = t("breath.title");
+    word.textContent = ""; round.textContent = "";
+    skip.textContent = t("breath.skip");
+    bub.style.transitionDuration = "0s"; bub.classList.remove("big");
+    if (!br.open) br.showModal();
+    skip.focus();
+    sound("breath");
+    let at = 350;
+    for (let i = 1; i <= 3; i++) {
+      brTimers.push(setTimeout(() => { word.textContent = t("breath.in"); round.textContent = t("breath.round", { i }); bub.style.transitionDuration = "4s"; bub.classList.add("big"); if (i > 1) sound("breath"); }, at));
+      at += 4000;
+      brTimers.push(setTimeout(() => { word.textContent = t("breath.out"); bub.style.transitionDuration = "6s"; bub.classList.remove("big"); }, at));
+      at += 6000;
+    }
+    brTimers.push(setTimeout(() => { word.textContent = t("breath.done"); round.textContent = ""; skip.textContent = t("breath.toCheckin"); sound("soft"); }, at));
+  }
+  $("#breathOpen").addEventListener("click", startBreath);
+  $("#breathSkip").addEventListener("click", () => br.close());
+  br.addEventListener("close", () => { clearBr(); const r = $('input[name="ci-mood"]'); if (r) r.focus(); });
+
+  // ---------- Dankbarkeits-Glas ----------
+  let lastPick = null;
+  function renderJar() {
+    const card = $("#jarCard");
+    const items = entries.filter(e => e.nice && e.nice.trim());
+    const n = items.length;
+    const r = rng(7), dots = [];
+    for (let i = 0; i < Math.min(n, 48); i++) {
+      const row = Math.floor(i / 6), col = i % 6;
+      const order = [2, 3, 1, 4, 0, 5][col]; const x = 33 + order * 10.6 + (r() * 4 - 2), y = 125 - row * 9.4 - r() * 3;
+      dots.push(`<circle class="jar-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(3.2 + r() * 1.4).toFixed(1)}" style="fill:${MOOD_COLORS[(i % 5) + 1]};animation-delay:-${(r() * 3).toFixed(2)}s"/>`);
+    }
+    const JAR = "M42 19h36v10c14 6 24 18 24 34v59c0 12-8 20-20 20H38c-12 0-20-8-20-20V63c0-16 10-28 24-34z";
+    card.innerHTML = `
+      <div class="jar-grid">
+        <svg class="jar-svg" viewBox="0 0 120 150" aria-hidden="true">
+          <defs><clipPath id="jarClip"><path d="${JAR}"/></clipPath></defs>
+          <rect x="38" y="6" width="44" height="13" rx="5" style="fill:var(--m4)" stroke="currentColor" stroke-width="2"/>
+          <path d="${JAR}" style="fill:var(--accent-soft)"/>
+          <g clip-path="url(#jarClip)">${dots.join("")}</g>
+          <path d="${JAR}" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M29 72c0-8 4-14 10-17" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="jar-body">
+          <h3>${esc(t("jar.title"))}</h3>
+          ${n ? `<p class="jar-count">${esc(n === 1 ? t("jar.one") : t("jar.many", { n }))}</p>` : ""}
+          <p class="hint">${esc(n ? t("jar.lead") : t("jar.empty"))}</p>
+          ${n ? `<button class="btn small" type="button" id="jarDraw">${esc(t("jar.draw"))}</button>` : ""}
+        </div>
+      </div>
+      <div class="jar-pick" id="jarPick" hidden aria-live="polite"></div>`;
+  }
+  $("#jarCard").addEventListener("click", ev => {
+    if (!ev.target.closest("#jarDraw")) return;
+    const items = entries.filter(e => e.nice && e.nice.trim());
+    if (!items.length) return;
+    let pick = items[Math.floor(Math.random() * items.length)];
+    if (items.length > 1) while (pick.id === lastPick) pick = items[Math.floor(Math.random() * items.length)];
+    lastPick = pick.id;
+    const box = $("#jarPick");
+    box.hidden = false;
+    box.innerHTML = `<p class="jar-text">${esc(pick.nice)}</p><p class="hint">${esc(longDate(parseIso(pick.date)))}</p>`;
+    box.classList.remove("show"); void box.offsetWidth; box.classList.add("show");
+    $("#jarDraw").textContent = t("jar.again");
+    sound("soft");
+  });
+
+  // ---------- Datei speichern / teilen ----------
+  async function saveFile(name, blob, mime) {
+    if (downloads) {
+      try { await downloads.save({ filename: name, data: blob }); return "saved"; }
+      catch (e) { if (e && e.code === "declined") return "cancel"; }
+    }
+    try {
+      const file = new File([blob], name, { type: mime });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: name }); return "shared"; }
+    } catch (e) { if (e && e.name === "AbortError") return "cancel"; }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return "downloaded";
+  }
+
+  // ---------- Monat als PDF ----------
+  const HEX = [null, [169, 193, 234], [203, 184, 238], [190, 223, 201], [247, 205, 177], [244, 227, 155]];
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      if (window.jspdf) return res();
+      const s = document.createElement("script");
+      s.src = src; s.onload = () => res(); s.onerror = () => rej(new Error("load"));
+      document.head.appendChild(s);
+    });
+  }
+  async function buildPDF(yy, mm) {
+    await loadScript(JSPDF_URL);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const W = 210, H = 297, M = 18, IND = 11, TW = W - 2 * M - IND;
+    const clean = s => String(s || "").replace(/[  ]/g, " ");
+    const ink = () => doc.setTextColor(42, 38, 56), muted = () => doc.setTextColor(94, 87, 112);
+    let y = M;
+    const ensure = h => { if (y + h > H - M - 6) { doc.addPage(); y = M; } };
+    const pre = `${yy}-${pad(mm + 1)}`;
+    const list = entries.filter(e => e.date.startsWith(pre)).sort((a, b) => (a.date + (a.createdAt || "")).localeCompare(b.date + (b.createdAt || "")));
+    doc.setFillColor(...HEX[2]); doc.circle(M + 5, y + 5, 5, "F");
+    doc.setFillColor(...HEX[1]); doc.circle(M + 12, y + 1.5, 2.6, "F");
+    doc.setFont("helvetica", "bold"); doc.setFontSize(22); ink(); doc.text("Gedankenblasen", M + 19, y + 7);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(12); muted();
+    doc.text(clean(cap(fmtMonth.format(new Date(yy, mm, 1))) + " · " + countText(list.length)), M + 19, y + 13.5);
+    y += 24;
+    for (const e of list) {
+      ensure(22);
+      doc.setFillColor(...HEX[e.mood]); doc.circle(M + 4.5, y + 3.5, 4.5, "F");
+      doc.setFont("helvetica", "bold"); doc.setFontSize(13); ink(); doc.text(clean(longDate(parseIso(e.date))), M + IND, y + 4.8);
+      const meta = [moodLabel(e.mood)];
+      if (e.weather) meta.push(t("dlg.weather") + ": " + weatherLabel(e.weather));
+      if (e.water) meta.push(t("dlg.water") + ": " + waterText(e.water));
+      const sl = sleepFor(e.date); if (sl) meta.push(t("dlg.sleep") + ": " + t("sleep." + sl));
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10); muted();
+      const ml = doc.splitTextToSize(clean(meta.join("  ·  ")), TW);
+      doc.text(ml, M + IND, y + 10); y += 10 + ml.length * 4.4 + 2;
+      const qa = QUESTIONS.map(k => [t("q." + k), e[k]]);
+      if (e.dqa) qa.push([t("dq." + e.dq), e.dqa]);
+      for (const [q, a] of qa) {
+        if (!a) continue;
+        ensure(12);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(9.5); muted(); doc.text(clean(q), M + IND, y + 3.5); y += 5.2;
+        doc.setFont("helvetica", "normal"); doc.setFontSize(11); ink();
+        for (const line of doc.splitTextToSize(clean(a), TW)) { ensure(5.2); doc.text(line, M + IND, y + 3.8); y += 5.2; }
+        y += 1.8;
+      }
+      const ph = e.photos || [];
+      if (ph.length) {
+        const box = 36, gap = 4;
+        ensure(box + 4);
+        let x = M + IND;
+        for (const id of ph) {
+          try {
+            const blob = await PhotoDB.get(id);
+            if (!blob) continue;
+            const d = await blobToDataURL(blob);
+            const fmt = d.startsWith("data:image/png") ? "PNG" : "JPEG";
+            const pr = doc.getImageProperties(d);
+            const sc = Math.min(box / pr.width, box / pr.height), w = pr.width * sc, h = pr.height * sc;
+            doc.addImage(d, fmt, x + (box - w) / 2, y + (box - h) / 2, w, h);
+            x += box + gap;
+          } catch (err) {}
+        }
+        y += box + 4;
+      }
+      y += 2; doc.setDrawColor(220, 213, 232); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 7;
+    }
+    const n = doc.getNumberOfPages();
+    for (let i = 1; i <= n; i++) {
+      doc.setPage(i); doc.setFont("helvetica", "normal"); doc.setFontSize(9); muted();
+      doc.text("Gedankenblasen", M, H - 10);
+      doc.text(clean(t("pdf.page", { i, n })), W - M, H - 10, { align: "right" });
+    }
+    return doc.output("blob");
+  }
+  $("#pdfBtn").addEventListener("click", async () => {
+    const pre = `${calY}-${pad(calM + 1)}`;
+    if (!entries.some(e => e.date.startsWith(pre))) { toast(t("pdf.none")); return; }
+    const btn = $("#pdfBtn");
+    btn.disabled = true; toast(t("pdf.making"));
+    try {
+      const blob = await buildPDF(calY, calM);
+      const name = `gedankenblasen-${pre}.pdf`;
+      openDlg(`
+        <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("pdf.ready"))}</h3><p>${esc(cap(fmtMonth.format(new Date(calY, calM, 1))))}</p></div>${closeBtn()}</div>
+        <div class="row"><button class="btn" type="button" id="pdfSave">${esc(t("pdf.save"))}</button></div>`);
+      $("#pdfSave").addEventListener("click", async () => {
+        const r = await saveFile(name, blob, "application/pdf");
+        if (r === "saved" || r === "downloaded") toast(t("pdf.saved"));
+      });
+    } catch (e) { toast(t("pdf.fail")); }
+    finally { btn.disabled = false; }
+  });
+
   // ---------- Navigation ----------
   const TABS = ["heute", "blasen", "loslassen", "rueckblick"];
   let current = "heute";
@@ -1057,7 +1435,13 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
         <div class="row"><label class="btn ghost small file-label" id="${prefix}-photo-add">${CAM_ICON}${esc(t("photos.add"))}<input type="file" id="${prefix}-photo-input" accept="image/*" multiple></label></div>
         <small>${esc(t("photos.hint"))}</small>
       </div>`;
-    const date = e ? e.date : todayIso();
+    const dqi = e && Number.isInteger(e.dq) ? e.dq : dqIndex(e && e.date ? e.date : todayIso());
+    const dqBlock = `
+      <div class="q dq">
+        <label for="${prefix}-dqa"><span class="dq-tag">${esc(t("dq.title"))}</span>${esc(t("dq." + dqi))}</label>
+        <textarea id="${prefix}-dqa" rows="2" data-dq="${dqi}">${esc(e ? e.dqa || "" : "")}</textarea>
+      </div>`;
+    const date = e && e.date ? e.date : todayIso();
     const dateBlock = withDate ? `
       <details class="when" ${date !== todayIso() ? "open" : ""}>
         <summary>${esc(t("form.otherDay"))}</summary>
@@ -1067,6 +1451,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
       ${extras}
       ${qs}
+      ${dqBlock}
       ${photos}
       ${dateBlock}`;
   }
@@ -1076,6 +1461,8 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     const f = forms[prefix] || { weather: 0, water: 0 };
     const out = { mood: m ? Number(m.value) : 0, date: date > todayIso() ? todayIso() : date, weather: f.weather, water: f.water };
     QUESTIONS.forEach(k => { out[k] = $("#" + prefix + "-" + k).value.trim(); });
+    const dqa = $("#" + prefix + "-dqa");
+    if (dqa) { out.dq = Number(dqa.dataset.dq); out.dqa = dqa.value.trim(); }
     return out;
   }
 
@@ -1111,6 +1498,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       entries.push(entry);
       persist();
       renderCheckin();
+      sound("bloop");
       toast(t("toast.saved"));
       go("blasen", { fresh: entry.id });
     });
@@ -1245,6 +1633,9 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     const meta = [];
     if (e.weather) meta.push(`<div class="meta-chip"><span class="wi" style="background:${WEATHER_COLORS[e.weather]}">${weatherIcon(e.weather)}</span><span><span class="meta-k">${esc(t("dlg.weather"))}</span>${esc(weatherLabel(e.weather))}</span></div>`);
     if (e.water) meta.push(`<div class="meta-chip">${miniGlasses(e.water)}<span><span class="meta-k">${esc(t("dlg.water"))}</span>${esc(waterText(e.water))}</span></div>`);
+    const sl = sleepFor(e.date);
+    if (sl) meta.push(`<div class="meta-chip">${miniMoons(sl)}<span><span class="meta-k">${esc(t("dlg.sleep"))}</span>${esc(t("sleep." + sl))}</span></div>`);
+    const dqHtml = e.dqa ? `<div class="answer"><h4><span class="dq-tag">${esc(t("dq.title"))}</span>${esc(t("dq." + e.dq))}</h4><p>${esc(e.dqa)}</p></div>` : "";
     const alt = t("photos.alt", { date: longDate(d) });
     const ph = (e.photos || []);
     const gallery = ph.length ? `<div class="answer"><h4>${esc(t("photos.legend"))}</h4><div class="photos">${ph.map(id =>
@@ -1258,6 +1649,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
       ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
       ${answers}
+      ${dqHtml}
       ${gallery}
       ${e.sample ? "" : `
       <div id="actArea" class="row">
@@ -1395,6 +1787,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     const stage = $("#relStage");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     b.classList.add("pop");
+    sound("pop");
     $("#relPop").disabled = true;
     if (!reduce) {
       for (let i = 0; i < 14; i++) {
@@ -1457,6 +1850,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       html += `<button type="button" class="${cls}" style="${style}" data-date="${key}" ${future ? "disabled" : ""} aria-label="${esc(label)}">${d}${list.length > 1 ? `<span class="cnt" aria-hidden="true">${"•".repeat(Math.min(list.length, 3))}</span>` : ""}</button>`;
     }
     $("#calGrid").innerHTML = html;
+    renderJar();
   }
   $("#calGrid").addEventListener("click", ev => {
     const b = ev.target.closest(".cal-day");
@@ -1484,7 +1878,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
   const inArtifact = !!(window.claude && window.claude.use);
 
   function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
-  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries) }, null, 2); }
+  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap }, null, 2); }
   function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); }); }
   function dataURLToBlob(d) {
     const comma = d.indexOf(",");
@@ -1500,7 +1894,7 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
       if (fotos[id]) continue;
       try { const blob = await PhotoDB.get(id); if (blob) fotos[id] = await blobToDataURL(blob); } catch (err) {}
     }
-    return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries), fotos }, null, 2);
+    return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, fotos }, null, 2);
   }
   let backupReady = null;
 
@@ -1510,8 +1904,16 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
     const langBtns = LANGS.map(l => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" lang="${l}">${I18N[l].name}</button>`).join("");
     openDlg(`
       <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("info.title"))}</h3><p>${esc(t("info.count", { count: countText(entries.length) }))}</p></div>${closeBtn()}</div>
-      <div class="lang-row"><span class="hint" id="langLbl">${esc(t("info.lang"))} · Sprache · Language · Langue</span>
-        <div class="seg" role="group" aria-labelledby="langLbl">${langBtns}</div></div>
+      <div class="settings">
+        <h4>${esc(t("settings.title"))}</h4>
+        <div class="lang-row"><span class="hint" id="langLbl">${esc(t("info.lang"))} · Sprache · Language · Langue</span>
+          <div class="seg" role="group" aria-labelledby="langLbl">${langBtns}</div></div>
+        <label class="switch" for="soundToggle">
+          <input type="checkbox" id="soundToggle" role="switch" ${soundOn ? "checked" : ""}>
+          <span class="track" aria-hidden="true"></span>
+          <span><strong>${esc(t("sound.label"))}</strong><br><span class="hint">${esc(t("sound.hint"))}</span></span>
+        </label>
+      </div>
       ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
       <p style="margin:0">${esc(t("info.p1"))}</p>
       <p style="margin:0">${esc(t("info.p2"))}</p>
@@ -1525,7 +1927,13 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
         <label for="copyArea" class="hint">${esc(t("info.copyLabel"))}</label>
         <textarea id="copyArea" class="copy-area" readonly></textarea>
       </div>
-      <p class="hint">${esc(t("info.importHint"))}</p>`);
+      <p class="hint">${esc(t("info.importHint"))}</p>
+      <p class="hint" style="margin:0">Gedankenblasen · Version ${APP_VERSION}</p>`);
+    $("#soundToggle").addEventListener("change", ev => {
+      soundOn = ev.target.checked;
+      try { localStorage.setItem(SOUND_KEY, soundOn ? "1" : "0"); } catch (e) {}
+      sound("pop");
+    });
     $("#expBtn").addEventListener("click", exportBackup);
     $("#copyBtn").addEventListener("click", copyBackup);
     $("#impFile").addEventListener("change", importBackup);
@@ -1584,8 +1992,15 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
           water: typeof e.water === "number" && e.water >= 0 && e.water <= 5 ? Math.round(e.water * 2) / 2 : 0,
           photos: Array.isArray(e.photos) ? e.photos.filter(p => typeof p === "string" && /^p[a-z0-9]+$/i.test(p)).slice(0, MAX_PHOTOS) : [],
           now: String(e.now || ""), mind: String(e.mind || ""), nice: String(e.nice || ""),
+          dq: Number.isInteger(e.dq) && e.dq >= 0 && e.dq < DQ_COUNT ? e.dq : dqIndex(e.date), dqa: String(e.dqa || ""),
           createdAt: e.createdAt || new Date().toISOString(), updatedAt: e.updatedAt || e.createdAt || new Date().toISOString(),
         }));
+        if (parsed && parsed.schlaf && typeof parsed.schlaf === "object") {
+          for (const [d, v] of Object.entries(parsed.schlaf)) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(d) && Number.isInteger(v) && v >= 1 && v <= 5 && !sleepFor(d)) sleepMap[d] = v;
+          }
+          saveSleep();
+        }
         const ids = new Set(entries.map(e => e.id));
         const added = valid.filter(e => !ids.has(e.id));
         for (const e of added) {
@@ -1633,13 +2048,14 @@ dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 aut
   $("#bubbleWrap").hidden = viewMode !== "bubbles";
   $("#list").hidden = viewMode !== "list";
   renderCheckin();
+  renderMorning();
   const hash0 = (location.hash || "").replace("#", "");
   go(TABS.includes(hash0) ? hash0 : "heute");
 })();
 </script>
 <script>
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
-  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
+  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {}); });
 }
 </script>
 </body>
