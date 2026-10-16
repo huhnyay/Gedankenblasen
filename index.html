@@ -309,6 +309,10 @@ dialog[open] { animation: sheet .3s ease-out; }
 .file-label { position: relative; overflow: hidden; }
 .file-label input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
+.lang-row { display: flex; flex-direction: column; gap: 8px; }
+.lang-row .seg { flex-wrap: wrap; }
+nav.tabs button span { text-align: center; line-height: 1.15; }
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -332,7 +336,6 @@ dialog[open] { animation: sheet .3s ease-out; }
 </style>
 </head>
 <body>
-
 <div class="app">
   <header class="top">
     <div class="brand">
@@ -344,7 +347,7 @@ dialog[open] { animation: sheet .3s ease-out; }
       </svg>
       <h1>Gedankenblasen</h1>
     </div>
-    <button class="icon-btn" id="infoBtn" aria-label="Speicherung und Sicherung">
+    <button class="icon-btn" id="infoBtn" data-i18n-aria="info.aria">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c3.5 0 7 1.2 7 1.2v6.3c0 4.6-3.2 8-7 9.5-3.8-1.5-7-4.9-7-9.5V4.2S8.5 3 12 3z"/><path d="M9 12l2 2 4-4"/></svg>
     </button>
   </header>
@@ -352,12 +355,12 @@ dialog[open] { animation: sheet .3s ease-out; }
   <!-- HEUTE -->
   <section class="view" id="view-heute" aria-labelledby="h-heute">
     <div>
-      <h2 id="h-heute"><span id="greeting">Guten Abend</span>. Zwei Minuten für dich.</h2>
-      <p class="lead">Halte kurz inne. Wie fühlt sich der Tag an? Die Fragen sind freiwillig, eine Stimmung genügt.</p>
+      <h2 id="h-heute"></h2>
+      <p class="lead" data-i18n="heute.lead"></p>
     </div>
     <div class="note" id="storageNote" hidden>
-      <p>Deine Einträge bleiben nur auf diesem Gerät, nichts wird hochgeladen. <button class="link-btn" type="button" data-open-info>So sicherst du sie</button></p>
-      <button class="icon-btn note-x" type="button" id="noteClose" aria-label="Hinweis ausblenden" style="width:36px;height:36px">
+      <p><span data-i18n="note.storage"></span> <button class="link-btn" type="button" data-open-info data-i18n="note.link"></button></p>
+      <button class="icon-btn note-x" type="button" id="noteClose" data-i18n-aria="note.close" style="width:36px;height:36px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
@@ -367,12 +370,12 @@ dialog[open] { animation: sheet .3s ease-out; }
   <!-- BLASEN -->
   <section class="view" id="view-blasen" aria-labelledby="h-blasen" hidden>
     <div>
-      <h2 id="h-blasen">Deine Gedankenblasen</h2>
-      <p class="lead">Jede Blase ist ein Abend. Tippe eine an, um sie zu öffnen.</p>
+      <h2 id="h-blasen" data-i18n="blasen.title"></h2>
+      <p class="lead" data-i18n="blasen.lead"></p>
     </div>
-    <div class="seg" role="group" aria-label="Darstellung">
-      <button type="button" id="segBubbles" aria-pressed="true">Blasen</button>
-      <button type="button" id="segList" aria-pressed="false">Liste</button>
+    <div class="seg" role="group" data-i18n-aria="blasen.segAria">
+      <button type="button" id="segBubbles" aria-pressed="true" data-i18n="blasen.segBubbles"></button>
+      <button type="button" id="segList" aria-pressed="false" data-i18n="blasen.segList"></button>
     </div>
     <div id="bubbleWrap">
       <div class="field" id="field"></div>
@@ -384,12 +387,12 @@ dialog[open] { animation: sheet .3s ease-out; }
   <!-- LOSLASSEN -->
   <section class="view" id="view-loslassen" aria-labelledby="h-los" hidden>
     <div>
-      <h2 id="h-los">Loslassen</h2>
-      <p class="lead">Ein kleines Ritual für Gedanken, die heute nicht mehr mit ins Bett sollen.</p>
+      <h2 id="h-los" data-i18n="los.title"></h2>
+      <p class="lead" data-i18n="los.lead"></p>
     </div>
     <div class="note" role="note">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
-      <p><strong>Dieser Text wird nicht gespeichert.</strong> Er verschwindet, sobald die Blase platzt, und taucht nirgendwo wieder auf. Das Ritual löst kein Problem. Es schafft nur einen Moment Abstand.</p>
+      <p><strong data-i18n="los.noteStrong"></strong> <span data-i18n="los.noteText"></span></p>
     </div>
     <div class="card" id="releaseCard"></div>
   </section>
@@ -397,14 +400,14 @@ dialog[open] { animation: sheet .3s ease-out; }
   <!-- RÜCKBLICK -->
   <section class="view" id="view-rueckblick" aria-labelledby="h-rb" hidden>
     <div>
-      <h2 id="h-rb">Rückblick</h2>
-      <p class="lead">Die Farben zeigen, wie sich deine Tage angefühlt haben. Leere Tage sind einfach leer, das ist völlig in Ordnung.</p>
+      <h2 id="h-rb" data-i18n="rb.title"></h2>
+      <p class="lead" data-i18n="rb.lead"></p>
     </div>
     <div class="card">
       <div class="cal-head">
-        <button class="icon-btn" id="calPrev" aria-label="Vorheriger Monat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="icon-btn" id="calPrev" data-i18n-aria="rb.prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
         <h3 id="calTitle" aria-live="polite"></h3>
-        <button class="icon-btn" id="calNext" aria-label="Nächster Monat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button class="icon-btn" id="calNext" data-i18n-aria="rb.next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="cal-grid" id="calGrid" style="margin-top:14px"></div>
     </div>
@@ -412,19 +415,19 @@ dialog[open] { animation: sheet .3s ease-out; }
   </section>
 </div>
 
-<nav class="tabs" aria-label="Bereiche">
+<nav class="tabs" data-i18n-aria="nav.aria">
   <div class="inner">
     <button type="button" data-tab="heute" aria-current="page">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg>Heute
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg><span data-i18n="tab.heute"></span>
     </button>
     <button type="button" data-tab="blasen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="17" cy="7" r="3.5"/><circle cx="18.5" cy="17" r="2"/></svg>Blasen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="17" cy="7" r="3.5"/><circle cx="18.5" cy="17" r="2"/></svg><span data-i18n="tab.blasen"></span>
     </button>
     <button type="button" data-tab="loslassen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>Loslassen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg><span data-i18n="tab.loslassen"></span>
     </button>
     <button type="button" data-tab="rueckblick">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Rückblick
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span data-i18n="tab.rueckblick"></span>
     </button>
   </div>
 </nav>
@@ -435,26 +438,279 @@ dialog[open] { animation: sheet .3s ease-out; }
 <script>
 (() => {
   "use strict";
-  const KEY = "gedankenblasen.v1";
+  const KEY = "gedankenblasen.v1";          // NICHT ändern: hier liegen die Einträge
   const NOTE_KEY = "gedankenblasen.hinweis";
-  const MOODS = [
-    null,
-    { label: "Schwer", color: "var(--m1)" },
-    { label: "Wackelig", color: "var(--m2)" },
-    { label: "Okay", color: "var(--m3)" },
-    { label: "Gut", color: "var(--m4)" },
-    { label: "Leicht", color: "var(--m5)" },
+  const LANG_KEY = "gedankenblasen.sprache";
+  const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
+
+  // ---------- Übersetzungen ----------
+  const I18N = {
+    de: {
+      locale: "de-DE", name: "Deutsch",
+      "info.aria": "Speicherung, Sicherung und Sprache",
+      "greet.night": "Gute Nacht", "greet.morning": "Guten Morgen", "greet.day": "Hallo", "greet.evening": "Guten Abend",
+      "heute.title": "{greet}. Zwei Minuten für dich.",
+      "heute.lead": "Halte kurz inne. Wie fühlt sich der Tag an? Die Fragen sind freiwillig, eine Stimmung genügt.",
+      "note.storage": "Deine Einträge bleiben nur auf diesem Gerät, nichts wird hochgeladen.",
+      "note.link": "So sicherst du sie", "note.close": "Hinweis ausblenden",
+      "mood.legend": "Wie fühlt sich dein Tag an?",
+      "mood.1": "Schwer", "mood.2": "Wackelig", "mood.3": "Okay", "mood.4": "Gut", "mood.5": "Leicht",
+      "q.now": "Wie geht es mir gerade?", "ph.now": "Müde, aber zufrieden …",
+      "q.mind": "Was beschäftigt mich?", "ph.mind": "Was gerade Raum in deinem Kopf einnimmt",
+      "q.nice": "Was war heute schön?", "ph.nice": "Auch Kleinigkeiten zählen",
+      "form.otherDay": "Für einen anderen Tag eintragen", "form.dateAria": "Datum des Eintrags", "form.date": "Datum",
+      "form.save": "Als Blase speichern", "form.hintPick": "Wähle zuerst eine Stimmung.", "form.hintEmpty": "Du kannst die Fragen auch leer lassen.",
+      "toast.saved": "Gespeichert. Schön, dass du dir die Zeit genommen hast.",
+      "blasen.title": "Deine Gedankenblasen", "blasen.lead": "Jede Blase ist ein Abend. Tippe eine an, um sie zu öffnen.",
+      "blasen.segAria": "Darstellung", "blasen.segBubbles": "Blasen", "blasen.segList": "Liste",
+      "sample.word": "Beispiel",
+      "aria.entry": "Eintrag vom {date}, Stimmung {mood}. Öffnen", "aria.sample": "Beispiel: {date}, Stimmung {mood}. Öffnen",
+      "field.empty": "Noch keine eigenen Blasen. Die drei hier sind nur Beispiele und verschwinden, sobald du deinen ersten Abend festhältst.",
+      "field.first": "Ersten Check-in machen",
+      "field.more": "Hier schweben deine {max} neuesten Blasen. Alle {n} Einträge findest du in der Liste und im Rückblick.",
+      "list.empty": "Hier erscheinen deine Einträge, sobald du den ersten gespeichert hast.", "list.toCheckin": "Zum Check-in",
+      "list.onlyMood": "Nur die Stimmung festgehalten",
+      "dlg.close": "Schließen", "dlg.sampleNote": "Das ist ein Beispiel, damit du siehst, wie eine Blase aussieht. Es wird nicht gespeichert.",
+      "dlg.nothing": "Nichts notiert", "dlg.edited": "bearbeitet", "dlg.time": "{t} Uhr",
+      "dlg.edit": "Bearbeiten", "dlg.delete": "Löschen", "dlg.backToDay": "Zurück zum Tag",
+      "edit.title": "Eintrag bearbeiten", "edit.save": "Änderungen speichern", "edit.cancel": "Abbrechen",
+      "toast.pickMood": "Bitte wähle eine Stimmung.", "toast.changes": "Änderungen gespeichert.",
+      "del.confirm": "Diesen Eintrag wirklich löschen? Das lässt sich nicht rückgängig machen.", "del.yes": "Ja, löschen", "del.keep": "Behalten",
+      "toast.deleted": "Eintrag gelöscht.",
+      "los.title": "Loslassen", "los.lead": "Ein kleines Ritual für Gedanken, die heute nicht mehr mit ins Bett sollen.",
+      "los.noteStrong": "Dieser Text wird nicht gespeichert.",
+      "los.noteText": "Er verschwindet, sobald die Blase platzt, und taucht nirgendwo wieder auf. Das Ritual löst kein Problem. Es schafft nur einen Moment Abstand.",
+      "los.q": "Was möchtest du für heute loslassen?", "los.ph": "Schreib es einfach auf, ganz ohne Ordnung.",
+      "los.go": "In eine Blase legen", "los.pop": "Blase platzen lassen",
+      "los.breath": "Atme einmal ruhig ein und aus. Wenn du bereit bist, tippe auf die Blase.",
+      "los.done": "Weg ist die Blase.",
+      "los.doneText": "Der Gedanke darf trotzdem wiederkommen, und das ist in Ordnung. Für den Moment hast du ihm etwas Abstand gegeben.",
+      "los.again": "Noch etwas loslassen",
+      "rb.title": "Rückblick", "rb.lead": "Die Farben zeigen, wie sich deine Tage angefühlt haben. Leere Tage sind einfach leer, das ist völlig in Ordnung.",
+      "rb.prev": "Vorheriger Monat", "rb.next": "Nächster Monat",
+      "rb.none": "{date}: kein Eintrag", "rb.has": "{date}: {count}, Stimmung {mood}",
+      "count.one": "1 Eintrag", "count.many": "{n} Einträge",
+      "day.none": "Kein Eintrag an diesem Tag.",
+      "day.ask": "Möchtest du rückblickend etwas für diesen Tag festhalten? Nur, wenn es sich gerade richtig anfühlt.",
+      "day.write": "Für diesen Tag eintragen",
+      "nav.aria": "Bereiche", "tab.heute": "Heute", "tab.blasen": "Blasen", "tab.loslassen": "Loslassen", "tab.rueckblick": "Rückblick",
+      "info.title": "Deine Einträge & Sicherung", "info.count": "{count} auf diesem Gerät",
+      "info.warn": "Achtung: Dieser Browser erlaubt hier gerade keinen lokalen Speicher. Neue Einträge gehen beim Schließen verloren. Lade eine Sicherung herunter.",
+      "info.p1": "Gedankenblasen speichert alles nur hier auf deinem Gerät. Nichts wird an einen Server geschickt, es gibt kein Konto.",
+      "info.p2": "Das heißt aber auch: Wenn du die App vom Home-Bildschirm löschst, Websitedaten in den Einstellungen entfernst oder das Gerät wechselst, können deine Einträge verloren gehen. Eine Sicherungsdatei schützt dich davor.",
+      "info.export": "Sicherung herunterladen", "info.copy": "Als Text kopieren", "info.import": "Sicherung einlesen",
+      "info.copyLabel": "Markiere den Text und speichere ihn z. B. in einer Notiz:",
+      "info.importHint": "Beim Einlesen werden Einträge aus der Datei ergänzt. Vorhandene Einträge bleiben erhalten.",
+      "info.lang": "Sprache",
+      "toast.storageFail": "Speichern hat nicht geklappt. Dein Browser erlaubt hier keinen lokalen Speicher. Lade eine Sicherung herunter.",
+      "toast.backupSaved": "Sicherung gespeichert.", "toast.backupCancel": "Sicherung abgebrochen.",
+      "toast.noDownload": "Herunterladen geht hier nicht. Kopiere die Sicherung als Text.",
+      "toast.shared": "Sicherung weitergegeben. Am iPhone z. B. über „In Dateien sichern“.",
+      "toast.downloaded": "Sicherung heruntergeladen.", "toast.copied": "Sicherung in die Zwischenablage kopiert.",
+      "toast.marked": "Text ist markiert. Kopiere ihn mit deinem Gerät.",
+      "toast.imported": "{count} übernommen.", "toast.importNone": "Alle Einträge aus der Datei waren schon vorhanden.",
+      "toast.importError": "Diese Datei kann ich nicht lesen. Wähle eine Gedankenblasen-Sicherung (.json).",
+      "backup.file": "gedankenblasen-sicherung",
+      "s1.now": "Ruhig. Der Spaziergang nach der Vorlesung hat gutgetan.", "s1.mind": "Die Abgabe nächste Woche.", "s1.nice": "Die Sonne um vier Uhr auf dem Schreibtisch.",
+      "s2.now": "Etwas angespannt.", "s2.mind": "Ein Gespräch, das noch nachhallt.", "s2.nice": "Tee mit Honig.",
+      "s3.now": "Leicht und dankbar.", "s3.nice": "Lange mit einer Freundin gelacht.",
+    },
+    en: {
+      locale: "en-GB", name: "English",
+      "info.aria": "Storage, backup and language",
+      "greet.night": "Good night", "greet.morning": "Good morning", "greet.day": "Hello", "greet.evening": "Good evening",
+      "heute.title": "{greet}. Two minutes for you.",
+      "heute.lead": "Pause for a moment. How does today feel? The questions are optional; choosing a mood is enough.",
+      "note.storage": "Your entries stay on this device only. Nothing is uploaded.",
+      "note.link": "How to back them up", "note.close": "Hide note",
+      "mood.legend": "How does your day feel?",
+      "mood.1": "Heavy", "mood.2": "Shaky", "mood.3": "Okay", "mood.4": "Good", "mood.5": "Light",
+      "q.now": "How am I feeling right now?", "ph.now": "Tired, but content …",
+      "q.mind": "What’s on my mind?", "ph.mind": "Whatever is taking up space in your head",
+      "q.nice": "What was lovely today?", "ph.nice": "Little things count too",
+      "form.otherDay": "Add an entry for another day", "form.dateAria": "Entry date", "form.date": "Date",
+      "form.save": "Save as a bubble", "form.hintPick": "Choose a mood first.", "form.hintEmpty": "You can leave the questions empty.",
+      "toast.saved": "Saved. Good that you took the time for yourself.",
+      "blasen.title": "Your thought bubbles", "blasen.lead": "Each bubble is one evening. Tap one to open it.",
+      "blasen.segAria": "View", "blasen.segBubbles": "Bubbles", "blasen.segList": "List",
+      "sample.word": "Example",
+      "aria.entry": "Entry from {date}, mood {mood}. Open", "aria.sample": "Example: {date}, mood {mood}. Open",
+      "field.empty": "No bubbles of your own yet. These three are only examples and will disappear once you capture your first evening.",
+      "field.first": "Do your first check-in",
+      "field.more": "Your {max} newest bubbles float here. You’ll find all {n} entries in the list and in Look back.",
+      "list.empty": "Your entries will appear here once you’ve saved the first one.", "list.toCheckin": "Go to check-in",
+      "list.onlyMood": "Mood only",
+      "dlg.close": "Close", "dlg.sampleNote": "This is an example so you can see what a bubble looks like. It isn’t saved.",
+      "dlg.nothing": "Nothing noted", "dlg.edited": "edited", "dlg.time": "{t}",
+      "dlg.edit": "Edit", "dlg.delete": "Delete", "dlg.backToDay": "Back to the day",
+      "edit.title": "Edit entry", "edit.save": "Save changes", "edit.cancel": "Cancel",
+      "toast.pickMood": "Please choose a mood.", "toast.changes": "Changes saved.",
+      "del.confirm": "Delete this entry? This can’t be undone.", "del.yes": "Yes, delete", "del.keep": "Keep it",
+      "toast.deleted": "Entry deleted.",
+      "los.title": "Let go", "los.lead": "A small ritual for thoughts you don’t want to take to bed tonight.",
+      "los.noteStrong": "This text is not saved.",
+      "los.noteText": "It disappears as soon as the bubble pops and won’t show up anywhere again. The ritual doesn’t solve any problem. It simply gives you a moment of distance.",
+      "los.q": "What would you like to let go of today?", "los.ph": "Just write it down, no need for order.",
+      "los.go": "Put it in a bubble", "los.pop": "Pop the bubble",
+      "los.breath": "Take one slow breath in and out. When you’re ready, tap the bubble.",
+      "los.done": "The bubble is gone.",
+      "los.doneText": "The thought may still come back, and that’s okay. For now, you’ve given it a little distance.",
+      "los.again": "Let go of something else",
+      "rb.title": "Look back", "rb.lead": "The colours show how your days felt. Empty days are simply empty, and that’s completely fine.",
+      "rb.prev": "Previous month", "rb.next": "Next month",
+      "rb.none": "{date}: no entry", "rb.has": "{date}: {count}, mood {mood}",
+      "count.one": "1 entry", "count.many": "{n} entries",
+      "day.none": "No entry on this day.",
+      "day.ask": "Would you like to capture something for this day in hindsight? Only if it feels right.",
+      "day.write": "Add an entry for this day",
+      "nav.aria": "Sections", "tab.heute": "Today", "tab.blasen": "Bubbles", "tab.loslassen": "Let go", "tab.rueckblick": "Look back",
+      "info.title": "Your entries & backup", "info.count": "{count} on this device",
+      "info.warn": "Heads-up: this browser doesn’t allow local storage here right now. New entries will be lost when you close it. Download a backup.",
+      "info.p1": "Gedankenblasen keeps everything right here on your device. Nothing is sent to a server, and there’s no account.",
+      "info.p2": "That also means: if you remove the app from your home screen, clear website data in your settings or switch devices, your entries can be lost. A backup file protects you from that.",
+      "info.export": "Download backup", "info.copy": "Copy as text", "info.import": "Import backup",
+      "info.copyLabel": "Select the text and keep it somewhere safe, e.g. in a note:",
+      "info.importHint": "Importing adds the entries from the file. Your existing entries stay as they are.",
+      "info.lang": "Language",
+      "toast.storageFail": "Saving didn’t work. Your browser doesn’t allow local storage here. Please download a backup.",
+      "toast.backupSaved": "Backup saved.", "toast.backupCancel": "Backup cancelled.",
+      "toast.noDownload": "Downloads don’t work here. Copy the backup as text instead.",
+      "toast.shared": "Backup shared. On iPhone, choose “Save to Files”.",
+      "toast.downloaded": "Backup downloaded.", "toast.copied": "Backup copied to the clipboard.",
+      "toast.marked": "The text is selected. Copy it with your device.",
+      "toast.imported": "{count} imported.", "toast.importNone": "All entries in this file were already here.",
+      "toast.importError": "I can’t read this file. Please choose a Gedankenblasen backup (.json).",
+      "backup.file": "gedankenblasen-backup",
+      "s1.now": "Calm. The walk after my lecture did me good.", "s1.mind": "The deadline next week.", "s1.nice": "The sun on my desk at four o’clock.",
+      "s2.now": "A bit tense.", "s2.mind": "A conversation that’s still on my mind.", "s2.nice": "Tea with honey.",
+      "s3.now": "Light and grateful.", "s3.nice": "Laughed with a friend for ages.",
+    },
+    fr: {
+      locale: "fr-FR", name: "Français",
+      "info.aria": "Stockage, sauvegarde et langue",
+      "greet.night": "Bonne nuit", "greet.morning": "Bonjour", "greet.day": "Bonjour", "greet.evening": "Bonsoir",
+      "heute.title": "{greet}. Deux minutes pour toi.",
+      "heute.lead": `Prends un instant. Comment s’est passée ta journée${NB}? Les questions sont facultatives, une humeur suffit.`,
+      "note.storage": "Tes notes restent uniquement sur cet appareil. Rien n’est envoyé en ligne.",
+      "note.link": "Comment les sauvegarder", "note.close": "Masquer la remarque",
+      "mood.legend": `Comment te sens-tu aujourd’hui${NB}?`,
+      "mood.1": "Lourd", "mood.2": "Fragile", "mood.3": "Ça va", "mood.4": "Bien", "mood.5": "Léger",
+      "q.now": `Comment je me sens en ce moment${NB}?`, "ph.now": "Calme, un peu de fatigue …",
+      "q.mind": `Qu’est-ce qui me préoccupe${NB}?`, "ph.mind": "Ce qui prend de la place dans ta tête",
+      "q.nice": `Quel a été le beau moment de la journée${NB}?`, "ph.nice": "Les petites choses comptent aussi",
+      "form.otherDay": "Noter pour un autre jour", "form.dateAria": "Date de la note", "form.date": "Date",
+      "form.save": "Enregistrer en bulle", "form.hintPick": "Choisis d’abord une humeur.", "form.hintEmpty": "Tu peux laisser les questions vides.",
+      "toast.saved": "Enregistré. C’est bien d’avoir pris ce temps pour toi.",
+      "blasen.title": "Tes bulles de pensées", "blasen.lead": "Chaque bulle est une soirée. Touche-en une pour l’ouvrir.",
+      "blasen.segAria": "Affichage", "blasen.segBubbles": "Bulles", "blasen.segList": "Liste",
+      "sample.word": "Exemple",
+      "aria.entry": "Note du {date}, humeur {mood}. Ouvrir", "aria.sample": `Exemple${NB}: {date}, humeur {mood}. Ouvrir`,
+      "field.empty": "Pas encore de bulles à toi. Ces trois-là ne sont que des exemples et disparaîtront dès que tu noteras ta première soirée.",
+      "field.first": "Faire ton premier check-in",
+      "field.more": "Tes {max} bulles les plus récentes flottent ici. Tu retrouves tes {n} notes dans la liste et dans Bilan.",
+      "list.empty": "Tes notes apparaîtront ici dès que tu auras enregistré la première.", "list.toCheckin": "Aller au check-in",
+      "list.onlyMood": "Humeur seulement",
+      "dlg.close": "Fermer", "dlg.sampleNote": "Ceci est un exemple pour te montrer à quoi ressemble une bulle. Il n’est pas enregistré.",
+      "dlg.nothing": "Rien noté", "dlg.edited": "modifié", "dlg.time": "{t}",
+      "dlg.edit": "Modifier", "dlg.delete": "Supprimer", "dlg.backToDay": "Retour au jour",
+      "edit.title": "Modifier la note", "edit.save": "Enregistrer", "edit.cancel": "Annuler",
+      "toast.pickMood": "Choisis une humeur, s’il te plaît.", "toast.changes": "Modifications enregistrées.",
+      "del.confirm": `Supprimer vraiment cette note${NB}? C’est définitif.`, "del.yes": "Oui, supprimer", "del.keep": "Garder",
+      "toast.deleted": "Note supprimée.",
+      "los.title": "Lâcher prise", "los.lead": "Un petit rituel pour les pensées que tu ne veux pas emporter au lit ce soir.",
+      "los.noteStrong": "Ce texte n’est pas enregistré.",
+      "los.noteText": "Il disparaît dès que la bulle éclate et ne réapparaît nulle part. Le rituel ne résout aucun problème. Il t’offre simplement un moment de recul.",
+      "los.q": `De quoi aimerais-tu te libérer aujourd’hui${NB}?`, "los.ph": "Écris-le simplement, sans chercher à mettre de l’ordre.",
+      "los.go": "Mettre dans une bulle", "los.pop": "Faire éclater la bulle",
+      "los.breath": "Inspire et expire calmement. Quand tu le sens, touche la bulle.",
+      "los.done": "La bulle a disparu.",
+      "los.doneText": "La pensée peut revenir, et c’est normal. Pour l’instant, tu as pris un peu de distance.",
+      "los.again": "Lâcher autre chose",
+      "rb.title": "Bilan", "rb.lead": "Les couleurs montrent comment tu as vécu tes journées. Les jours vides sont simplement vides, et c’est tout à fait normal.",
+      "rb.prev": "Mois précédent", "rb.next": "Mois suivant",
+      "rb.none": `{date}${NB}: aucune note`, "rb.has": `{date}${NB}: {count}, humeur {mood}`,
+      "count.one": "1 note", "count.many": "{n} notes",
+      "day.none": "Aucune note ce jour-là.",
+      "day.ask": `Veux-tu noter quelque chose pour ce jour après coup${NB}? Seulement si tu en as envie.`,
+      "day.write": "Noter pour ce jour",
+      "nav.aria": "Sections", "tab.heute": "Aujourd’hui", "tab.blasen": "Bulles", "tab.loslassen": "Lâcher prise", "tab.rueckblick": "Bilan",
+      "info.title": "Tes notes et ta sauvegarde", "info.count": "{count} sur cet appareil",
+      "info.warn": `Attention${NB}: ce navigateur n’autorise pas le stockage local ici. Les nouvelles notes seront perdues à la fermeture. Télécharge une sauvegarde.`,
+      "info.p1": "Gedankenblasen garde tout ici, sur ton appareil. Rien n’est envoyé à un serveur, et il n’y a pas de compte.",
+      "info.p2": "Cela veut aussi dire que si tu supprimes l’app de l’écran d’accueil, effaces les données des sites dans les réglages ou changes d’appareil, tes notes peuvent être perdues. Un fichier de sauvegarde t’en protège.",
+      "info.export": "Télécharger une sauvegarde", "info.copy": "Copier en texte", "info.import": "Importer une sauvegarde",
+      "info.copyLabel": `Sélectionne le texte et garde-le, par exemple dans une note${NB}:`,
+      "info.importHint": "L’import ajoute les notes du fichier. Tes notes actuelles restent telles quelles.",
+      "info.lang": "Langue",
+      "toast.storageFail": "L’enregistrement a échoué. Ton navigateur n’autorise pas le stockage local ici. Télécharge une sauvegarde.",
+      "toast.backupSaved": "Sauvegarde enregistrée.", "toast.backupCancel": "Sauvegarde annulée.",
+      "toast.noDownload": "Le téléchargement ne fonctionne pas ici. Copie la sauvegarde en texte.",
+      "toast.shared": `Sauvegarde partagée. Sur iPhone, choisis «${NB}Enregistrer dans Fichiers${NB}».`,
+      "toast.downloaded": "Sauvegarde téléchargée.", "toast.copied": "Sauvegarde copiée dans le presse-papiers.",
+      "toast.marked": "Le texte est sélectionné. Copie-le avec ton appareil.",
+      "toast.imported": "{count} importée(s).", "toast.importNone": "Toutes les notes de ce fichier étaient déjà là.",
+      "toast.importError": "Je ne peux pas lire ce fichier. Choisis une sauvegarde Gedankenblasen (.json).",
+      "backup.file": "gedankenblasen-sauvegarde",
+      "s1.now": "Calme. La promenade après le cours m’a fait du bien.", "s1.mind": "Le rendu de la semaine prochaine.", "s1.nice": "Le soleil sur mon bureau à seize heures.",
+      "s2.now": "Un peu tendu.", "s2.mind": "Une conversation qui me trotte encore dans la tête.", "s2.nice": "Un thé au miel.",
+      "s3.now": "Léger et reconnaissant.", "s3.nice": "J’ai longuement ri avec une amie.",
+    },
+  };
+  const LANGS = ["de", "en", "fr"];
+  function detectLang() {
+    try { const s = localStorage.getItem(LANG_KEY); if (LANGS.includes(s)) return s; } catch (e) {}
+    const list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "de"];
+    for (const l of list) { const k = String(l).slice(0, 2).toLowerCase(); if (LANGS.includes(k)) return k; }
+    return "en";
+  }
+  let lang = detectLang();
+  function t(key, vars) {
+    let s = (I18N[lang] && I18N[lang][key]) ?? I18N.de[key] ?? key;
+    if (vars) for (const k in vars) s = s.split("{" + k + "}").join(vars[k]);
+    return s;
+  }
+  function countText(n) { return n === 1 ? t("count.one") : t("count.many", { n }); }
+  let fmtLong, fmtShort, fmtMonth, fmtTime, fmtWd;
+  function makeFormatters() {
+    const loc = I18N[lang].locale;
+    fmtLong = new Intl.DateTimeFormat(loc, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    fmtShort = new Intl.DateTimeFormat(loc, { day: "numeric", month: "short" });
+    fmtMonth = new Intl.DateTimeFormat(loc, { month: "long", year: "numeric" });
+    fmtTime = new Intl.DateTimeFormat(loc, { hour: "2-digit", minute: "2-digit" });
+    fmtWd = new Intl.DateTimeFormat(loc, { weekday: "short" });
+  }
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+    const h = new Date().getHours();
+    const g = h < 5 ? "greet.night" : h < 11 ? "greet.morning" : h < 17 ? "greet.day" : "greet.evening";
+    $("#h-heute").textContent = t("heute.title", { greet: t(g) });
+    $("#legend").innerHTML = [1, 2, 3, 4, 5].map(m => `<span><i style="background:${MOOD_COLORS[m]}"></i>${esc(moodLabel(m))}</span>`).join("");
+  }
+  function setLang(l) {
+    if (!LANGS.includes(l) || l === lang) return;
+    lang = l;
+    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    makeFormatters(); applyStatic();
+    renderCheckin(); releaseState = "write"; renderRelease();
+    if (current === "blasen") renderBlasen();
+    if (current === "rueckblick") renderCal();
+  }
+
+  const MOOD_COLORS = [null, "var(--m1)", "var(--m2)", "var(--m3)", "var(--m4)", "var(--m5)"];
+  const moodLabel = m => t("mood." + m);
+  const QUESTIONS = ["now", "mind", "nice"];
+  const SAMPLE_BASE = [
+    { id: "s1", off: -1, mood: 4, keys: { now: "s1.now", mind: "s1.mind", nice: "s1.nice" } },
+    { id: "s2", off: -2, mood: 2, keys: { now: "s2.now", mind: "s2.mind", nice: "s2.nice" } },
+    { id: "s3", off: -4, mood: 5, keys: { now: "s3.now", nice: "s3.nice" } },
   ];
-  const QUESTIONS = [
-    { key: "now", q: "Wie geht es mir gerade?", ph: "Müde, aber zufrieden …" },
-    { key: "mind", q: "Was beschäftigt mich?", ph: "Was gerade Raum in deinem Kopf einnimmt" },
-    { key: "nice", q: "Was war heute schön?", ph: "Auch Kleinigkeiten zählen" },
-  ];
-  const SAMPLES = [
-    { id: "s1", date: offsetDate(-1), mood: 4, now: "Ruhig. Der Spaziergang nach der Vorlesung hat gutgetan.", mind: "Die Abgabe nächste Woche.", nice: "Die Sonne um vier Uhr auf dem Schreibtisch.", sample: true },
-    { id: "s2", date: offsetDate(-2), mood: 2, now: "Etwas angespannt.", mind: "Ein Gespräch, das noch nachhallt.", nice: "Tee mit Honig.", sample: true },
-    { id: "s3", date: offsetDate(-4), mood: 5, now: "Leicht und dankbar.", mind: "", nice: "Lange mit einer Freundin gelacht.", sample: true },
-  ];
+  function samples() {
+    return SAMPLE_BASE.map(s => ({ id: s.id, date: offsetDate(s.off), mood: s.mood, sample: true,
+      now: s.keys.now ? t(s.keys.now) : "", mind: s.keys.mind ? t(s.keys.mind) : "", nice: s.keys.nice ? t(s.keys.nice) : "" }));
+  }
 
   // ---------- Speicher ----------
   let storageOk = true;
@@ -468,7 +724,7 @@ dialog[open] { animation: sheet .3s ease-out; }
   }
   function persist() {
     try { localStorage.setItem(KEY, JSON.stringify(entries)); storageOk = true; return true; }
-    catch (e) { storageOk = false; toast("Speichern hat nicht geklappt. Dein Browser erlaubt hier keinen lokalen Speicher. Lade eine Sicherung herunter."); return false; }
+    catch (e) { storageOk = false; toast(t("toast.storageFail")); return false; }
   }
   function validEntry(e) {
     return e && typeof e.id === "string" && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number.isInteger(e.mood) && e.mood >= 1 && e.mood <= 5;
@@ -482,23 +738,14 @@ dialog[open] { animation: sheet .3s ease-out; }
   function todayIso() { return iso(new Date()); }
   function offsetDate(n) { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
   function parseIso(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
-  const fmtLong = new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-  const fmtShort = new Intl.DateTimeFormat("de-DE", { day: "numeric", month: "short" });
-  const fmtMonth = new Intl.DateTimeFormat("de-DE", { month: "long", year: "numeric" });
-  const fmtTime = new Intl.DateTimeFormat("de-DE", { hour: "2-digit", minute: "2-digit" });
   function uid() { return "e" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
   function rng(seed) { let s = seed || 1; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
   function sorted(list) { return [...list].sort((a, b) => (b.date + (b.createdAt || "")).localeCompare(a.date + (a.createdAt || ""))); }
+  const longDate = d => cap(fmtLong.format(d));
 
   function face(m) {
-    const mouths = {
-      1: "M13 30 Q20 23 27 30",
-      2: "M14 29 Q20 26 26 29",
-      3: "M14 28 L26 28",
-      4: "M13 26 Q20 32 27 26",
-      5: "M12 25 Q20 35 28 25 Z",
-    };
+    const mouths = { 1: "M13 30 Q20 23 27 30", 2: "M14 29 Q20 26 26 29", 3: "M14 28 L26 28", 4: "M13 26 Q20 32 27 26", 5: "M12 25 Q20 35 28 25 Z" };
     const eyes = m === 5
       ? '<path d="M12 18 Q14.5 15.5 17 18 M23 18 Q25.5 15.5 28 18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
       : '<circle cx="14.5" cy="18" r="2.1" fill="currentColor"/><circle cx="25.5" cy="18" r="2.1" fill="currentColor"/>';
@@ -515,7 +762,7 @@ dialog[open] { animation: sheet .3s ease-out; }
   function go(tab, opts = {}) {
     if (!TABS.includes(tab)) tab = "heute";
     current = tab;
-    TABS.forEach(t => { $("#view-" + t).hidden = t !== tab; });
+    TABS.forEach(x => { $("#view-" + x).hidden = x !== tab; });
     document.querySelectorAll("nav.tabs button").forEach(b => {
       if (b.dataset.tab === tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -532,21 +779,21 @@ dialog[open] { animation: sheet .3s ease-out; }
     const moods = [1, 2, 3, 4, 5].map(m => `
       <div class="mood-opt">
         <input type="radio" name="${prefix}-mood" id="${prefix}-mood-${m}" value="${m}" ${mood === m ? "checked" : ""}>
-        <label for="${prefix}-mood-${m}"><span class="dot" style="background:${MOODS[m].color};color:var(--bubble-ink)">${face(m)}</span><span class="lbl">${MOODS[m].label}</span></label>
+        <label for="${prefix}-mood-${m}"><span class="dot" style="background:${MOOD_COLORS[m]};color:var(--bubble-ink)">${face(m)}</span><span class="lbl">${esc(moodLabel(m))}</span></label>
       </div>`).join("");
-    const qs = QUESTIONS.map(q => `
+    const qs = QUESTIONS.map(k => `
       <div class="q">
-        <label for="${prefix}-${q.key}">${q.q}</label>
-        <textarea id="${prefix}-${q.key}" placeholder="${esc(q.ph)}" rows="3">${esc(e ? e[q.key] : "")}</textarea>
+        <label for="${prefix}-${k}">${esc(t("q." + k))}</label>
+        <textarea id="${prefix}-${k}" placeholder="${esc(t("ph." + k))}" rows="3">${esc(e ? e[k] : "")}</textarea>
       </div>`).join("");
     const date = e ? e.date : todayIso();
     const dateBlock = withDate ? `
       <details class="when" ${date !== todayIso() ? "open" : ""}>
-        <summary>Für einen anderen Tag eintragen</summary>
-        <input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}" aria-label="Datum des Eintrags">
-      </details>` : `<div class="q"><label for="${prefix}-date">Datum</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
+        <summary>${esc(t("form.otherDay"))}</summary>
+        <input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}" aria-label="${esc(t("form.dateAria"))}">
+      </details>` : `<div class="q"><label for="${prefix}-date">${esc(t("form.date"))}</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
     return `
-      <fieldset><legend>Wie fühlt sich dein Tag an?</legend><div class="moods">${moods}</div></fieldset>
+      <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
       ${qs}
       ${dateBlock}`;
   }
@@ -554,7 +801,7 @@ dialog[open] { animation: sheet .3s ease-out; }
     const m = document.querySelector(`input[name="${prefix}-mood"]:checked`);
     const date = $("#" + prefix + "-date").value || todayIso();
     const out = { mood: m ? Number(m.value) : 0, date: date > todayIso() ? todayIso() : date };
-    QUESTIONS.forEach(q => { out[q.key] = $("#" + prefix + "-" + q.key).value.trim(); });
+    QUESTIONS.forEach(k => { out[k] = $("#" + prefix + "-" + k).value.trim(); });
     return out;
   }
 
@@ -566,16 +813,16 @@ dialog[open] { animation: sheet .3s ease-out; }
         <div class="form-foot">
           <button class="btn" type="submit" id="ciSave" disabled>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="13" r="7"/><circle cx="17.5" cy="5.5" r="2"/></svg>
-            Als Blase speichern
+            ${esc(t("form.save"))}
           </button>
-          <p class="hint" id="ciHint">Wähle zuerst eine Stimmung.</p>
+          <p class="hint" id="ciHint">${esc(t("form.hintPick"))}</p>
         </div>
       </form>`;
     const form = $("#ciForm");
     form.addEventListener("change", () => {
       const ok = !!form.querySelector('input[name="ci-mood"]:checked');
       $("#ciSave").disabled = !ok;
-      $("#ciHint").textContent = ok ? "Du kannst die Fragen auch leer lassen." : "Wähle zuerst eine Stimmung.";
+      $("#ciHint").textContent = ok ? t("form.hintEmpty") : t("form.hintPick");
     });
     form.addEventListener("submit", ev => {
       ev.preventDefault();
@@ -586,7 +833,7 @@ dialog[open] { animation: sheet .3s ease-out; }
       entries.push(entry);
       persist();
       renderCheckin();
-      toast("Gespeichert. Schön, dass du dir die Zeit genommen hast.");
+      toast(t("toast.saved"));
       go("blasen", { fresh: entry.id });
     });
   }
@@ -611,40 +858,40 @@ dialog[open] { animation: sheet .3s ease-out; }
     const field = $("#field");
     const real = sorted(entries);
     const showSamples = real.length === 0;
-    const items = showSamples ? SAMPLES : real.slice(0, MAX_BUBBLES);
+    const items = showSamples ? samples() : real.slice(0, MAX_BUBBLES);
     const W = field.clientWidth || 340;
     let H = Math.max(420, Math.min(760, 220 + items.length * 26));
     const placed = [];
     const nodes = [];
-    items.forEach((e, i) => {
+    items.forEach(e => {
       const len = (e.now + e.mind + e.nice).length;
       const base = Math.min(W / 3.2, 120);
       const size = Math.round(Math.max(72, Math.min(base, 74 + Math.sqrt(len) * 3.6)));
       const r = rng(hash(e.id));
       let x, y, ok = false;
-      for (let t = 0; t < 400 && !ok; t++) {
-        if (t > 0 && t % 80 === 0) H += 70;
+      for (let tr = 0; tr < 400 && !ok; tr++) {
+        if (tr > 0 && tr % 80 === 0) H += 70;
         x = 10 + r() * Math.max(1, W - size - 20);
         y = 14 + r() * Math.max(1, H - size - (showSamples ? 120 : 28));
         ok = placed.every(p => Math.hypot((p.x + p.s / 2) - (x + size / 2), (p.y + p.s / 2) - (y + size / 2)) > (p.s + size) / 2 + 8);
       }
       placed.push({ x, y, s: size });
       const d = parseIso(e.date);
-      const label = `${e.sample ? "Beispiel: " : "Eintrag vom "}${fmtLong.format(d)}, Stimmung ${MOODS[e.mood].label}. Öffnen`;
+      const label = t(e.sample ? "aria.sample" : "aria.entry", { date: longDate(d), mood: moodLabel(e.mood) });
       nodes.push(`<button type="button" class="bubble${e.sample ? " sample" : ""}${e.id === freshId ? " fresh" : ""}" data-id="${e.id}"
-        style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;--c:${MOODS[e.mood].color};--dur:${(6 + r() * 5).toFixed(2)}s;--delay:-${(r() * 6).toFixed(2)}s;--dx:${(r() * 8 - 4).toFixed(1)}px"
-        aria-label="${esc(label)}">${face(e.mood)}<span class="bd">${e.sample ? "Beispiel" : fmtShort.format(d)}</span></button>`);
+        style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;--c:${MOOD_COLORS[e.mood]};--dur:${(6 + r() * 5).toFixed(2)}s;--delay:-${(r() * 6).toFixed(2)}s;--dx:${(r() * 8 - 4).toFixed(1)}px"
+        aria-label="${esc(label)}">${face(e.mood)}<span class="bd">${esc(e.sample ? t("sample.word") : fmtShort.format(d))}</span></button>`);
     });
     field.style.height = H + "px";
     field.innerHTML = nodes.join("") + (showSamples ? `
       <div class="field-empty">
-        <p>Noch keine eigenen Blasen. Die drei hier sind nur Beispiele und verschwinden, sobald du deinen ersten Abend festhältst.</p>
-        <button class="btn small" type="button" data-go="heute">Ersten Check-in machen</button>
+        <p>${esc(t("field.empty"))}</p>
+        <button class="btn small" type="button" data-go="heute">${esc(t("field.first"))}</button>
       </div>` : "");
     const more = $("#fieldMore");
     if (!showSamples && real.length > MAX_BUBBLES) {
       more.hidden = false;
-      more.textContent = `Hier schweben deine ${MAX_BUBBLES} neuesten Blasen. Alle ${real.length} Einträge findest du in der Liste und im Rückblick.`;
+      more.textContent = t("field.more", { max: MAX_BUBBLES, n: real.length });
     } else more.hidden = true;
   }
   $("#field").addEventListener("click", ev => {
@@ -659,7 +906,7 @@ dialog[open] { animation: sheet .3s ease-out; }
     const list = $("#list");
     const real = sorted(entries);
     if (!real.length) {
-      list.innerHTML = `<div class="empty"><p>Hier erscheinen deine Einträge, sobald du den ersten gespeichert hast.</p><button class="btn small" type="button" data-go="heute">Zum Check-in</button></div>`;
+      list.innerHTML = `<div class="empty"><p>${esc(t("list.empty"))}</p><button class="btn small" type="button" data-go="heute">${esc(t("list.toCheckin"))}</button></div>`;
       return;
     }
     const groups = new Map();
@@ -670,15 +917,16 @@ dialog[open] { animation: sheet .3s ease-out; }
     });
     list.innerHTML = [...groups].map(([k, arr]) => `
       <div class="list-month">
-        <h3>${fmtMonth.format(parseIso(k + "-01"))}</h3>
-        <div class="list-items">${arr.map(rowHTML).join("")}</div>
+        <h3>${esc(cap(fmtMonth.format(parseIso(k + "-01"))))}</h3>
+        <div class="list-items">${arr.map(e => rowHTML(e)).join("")}</div>
       </div>`).join("");
   }
-  function rowHTML(e) {
-    const snippet = e.now || e.nice || e.mind || "Nur die Stimmung festgehalten";
-    return `<button type="button" class="entry-row" data-id="${e.id}">
-      <span class="chip" style="background:${MOODS[e.mood].color}">${face(e.mood)}</span>
-      <span class="meta"><strong>${esc(fmtLong.format(parseIso(e.date)))} · ${MOODS[e.mood].label}</strong><span>${esc(snippet)}</span></span>
+  function rowHTML(e, from) {
+    const snippet = e.now || e.nice || e.mind || t("list.onlyMood");
+    const attr = from ? `data-from="${from}" data-dayentry="${e.id}"` : `data-id="${e.id}"`;
+    return `<button type="button" class="entry-row" ${attr}>
+      <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
+      <span class="meta"><strong>${esc(longDate(parseIso(e.date)))} · ${esc(moodLabel(e.mood))}</strong><span>${esc(snippet)}</span></span>
     </button>`;
   }
   $("#list").addEventListener("click", ev => {
@@ -702,30 +950,30 @@ dialog[open] { animation: sheet .3s ease-out; }
   function closeDlg() { if (dlg.open) dlg.close(); }
   dlg.addEventListener("close", () => { if (lastFocus && lastFocus.isConnected) lastFocus.focus(); });
   dlg.addEventListener("click", ev => { if (ev.target === dlg) closeDlg(); });
-  const closeBtn = `<button class="icon-btn" type="button" data-close aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+  const closeBtn = () => `<button class="icon-btn" type="button" data-close aria-label="${esc(t("dlg.close"))}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
 
-  function findEntry(id) { return entries.find(e => e.id === id) || SAMPLES.find(e => e.id === id); }
+  function findEntry(id) { return entries.find(e => e.id === id) || samples().find(e => e.id === id); }
 
   function openEntry(id, from) {
     const e = findEntry(id);
     if (!e) return;
     const d = parseIso(e.date);
-    const answers = QUESTIONS.map(q => `<div class="answer"><h4>${q.q}</h4>${e[q.key] ? `<p>${esc(e[q.key])}</p>` : `<p class="none">Nichts notiert</p>`}</div>`).join("");
-    const edited = e.updatedAt && e.createdAt && e.updatedAt !== e.createdAt ? ` · bearbeitet` : "";
-    const time = e.createdAt ? ` · ${fmtTime.format(new Date(e.createdAt))} Uhr` : "";
+    const answers = QUESTIONS.map(k => `<div class="answer"><h4>${esc(t("q." + k))}</h4>${e[k] ? `<p>${esc(e[k])}</p>` : `<p class="none">${esc(t("dlg.nothing"))}</p>`}</div>`).join("");
+    const edited = e.updatedAt && e.createdAt && e.updatedAt !== e.createdAt ? ` · ${esc(t("dlg.edited"))}` : "";
+    const time = e.createdAt ? ` · ${esc(t("dlg.time", { t: fmtTime.format(new Date(e.createdAt)) }))}` : "";
     openDlg(`
       <div class="dlg-head">
-        <span class="chip" style="background:${MOODS[e.mood].color}">${face(e.mood)}</span>
-        <div class="ttl"><h3 id="dlgTitle">${esc(fmtLong.format(d))}</h3><p>${MOODS[e.mood].label}${time}${edited}</p></div>
-        ${closeBtn}
+        <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
+        <div class="ttl"><h3 id="dlgTitle">${esc(longDate(d))}</h3><p>${esc(moodLabel(e.mood))}${time}${edited}</p></div>
+        ${closeBtn()}
       </div>
-      ${e.sample ? `<div class="note"><p>Das ist ein Beispiel, damit du siehst, wie eine Blase aussieht. Es wird nicht gespeichert.</p></div>` : ""}
+      ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
       ${answers}
       ${e.sample ? "" : `
       <div id="actArea" class="row">
-        <button class="btn small" type="button" data-edit="${e.id}">Bearbeiten</button>
-        <button class="btn ghost small" type="button" data-askdel="${e.id}">Löschen</button>
-        ${from ? `<button class="btn ghost small" type="button" data-day="${from}">Zurück zum Tag</button>` : ""}
+        <button class="btn small" type="button" data-edit="${e.id}">${esc(t("dlg.edit"))}</button>
+        <button class="btn ghost small" type="button" data-askdel="${e.id}">${esc(t("dlg.delete"))}</button>
+        ${from ? `<button class="btn ghost small" type="button" data-day="${from}">${esc(t("dlg.backToDay"))}</button>` : ""}
       </div>`}`);
   }
 
@@ -733,22 +981,22 @@ dialog[open] { animation: sheet .3s ease-out; }
     const e = entries.find(x => x.id === id);
     if (!e) return;
     openDlg(`
-      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">Eintrag bearbeiten</h3><p>${esc(fmtLong.format(parseIso(e.date)))}</p></div>${closeBtn}</div>
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("edit.title"))}</h3><p>${esc(longDate(parseIso(e.date)))}</p></div>${closeBtn()}</div>
       <form class="form" id="edForm" novalidate>
         ${formHTML("ed", e, false)}
         <div class="row">
-          <button class="btn" type="submit">Änderungen speichern</button>
-          <button class="btn ghost" type="button" data-view="${e.id}">Abbrechen</button>
+          <button class="btn" type="submit">${esc(t("edit.save"))}</button>
+          <button class="btn ghost" type="button" data-view="${e.id}">${esc(t("edit.cancel"))}</button>
         </div>
       </form>`);
     $("#edForm").addEventListener("submit", ev => {
       ev.preventDefault();
       const data = readForm("ed");
-      if (!data.mood) { toast("Bitte wähle eine Stimmung."); return; }
+      if (!data.mood) { toast(t("toast.pickMood")); return; }
       Object.assign(e, data, { updatedAt: new Date().toISOString() });
       persist();
       refresh();
-      toast("Änderungen gespeichert.");
+      toast(t("toast.changes"));
       openEntry(e.id);
     });
   }
@@ -757,28 +1005,29 @@ dialog[open] { animation: sheet .3s ease-out; }
     const area = $("#actArea");
     if (!area) return;
     area.outerHTML = `<div class="confirm" id="actArea">
-      <p>Diesen Eintrag wirklich löschen? Das lässt sich nicht rückgängig machen.</p>
+      <p>${esc(t("del.confirm"))}</p>
       <div class="row">
-        <button class="btn danger small" type="button" data-del="${id}">Ja, löschen</button>
-        <button class="btn ghost small" type="button" data-view="${id}" autofocus>Behalten</button>
+        <button class="btn danger small" type="button" data-del="${id}">${esc(t("del.yes"))}</button>
+        <button class="btn ghost small" type="button" data-view="${id}">${esc(t("del.keep"))}</button>
       </div></div>`;
     body.querySelector("[data-view]").focus();
   }
 
   body.addEventListener("click", ev => {
-    const t = ev.target.closest("button, [data-close]");
-    if (!t) return;
-    if (t.hasAttribute("data-close")) closeDlg();
-    else if (t.dataset.edit) openEdit(t.dataset.edit);
-    else if (t.dataset.askdel) askDelete(t.dataset.askdel);
-    else if (t.dataset.view) openEntry(t.dataset.view);
-    else if (t.dataset.del) {
-      entries = entries.filter(e => e.id !== t.dataset.del);
-      persist(); closeDlg(); refresh(); toast("Eintrag gelöscht.");
+    const b = ev.target.closest("button");
+    if (!b) return;
+    if (b.hasAttribute("data-close")) closeDlg();
+    else if (b.dataset.edit) openEdit(b.dataset.edit);
+    else if (b.dataset.askdel) askDelete(b.dataset.askdel);
+    else if (b.dataset.view) openEntry(b.dataset.view);
+    else if (b.dataset.del) {
+      entries = entries.filter(e => e.id !== b.dataset.del);
+      persist(); closeDlg(); refresh(); toast(t("toast.deleted"));
     }
-    else if (t.dataset.day) openDay(t.dataset.day);
-    else if (t.dataset.dayentry) openEntry(t.dataset.dayentry, t.dataset.from);
-    else if (t.dataset.writeday) { closeDlg(); renderCheckin(t.dataset.writeday); go("heute"); }
+    else if (b.dataset.day) openDay(b.dataset.day);
+    else if (b.dataset.dayentry) openEntry(b.dataset.dayentry, b.dataset.from);
+    else if (b.dataset.writeday) { closeDlg(); renderCheckin(b.dataset.writeday); go("heute"); }
+    else if (b.dataset.lang) { setLang(b.dataset.lang); openInfo(); }
   });
 
   function refresh() {
@@ -794,11 +1043,11 @@ dialog[open] { animation: sheet .3s ease-out; }
       card.innerHTML = `
         <form class="form" id="relForm" novalidate>
           <div class="q">
-            <label for="relText">Was möchtest du für heute loslassen?</label>
-            <textarea id="relText" rows="5" placeholder="Schreib es einfach auf, ganz ohne Ordnung." autocomplete="off"></textarea>
+            <label for="relText">${esc(t("los.q"))}</label>
+            <textarea id="relText" rows="5" placeholder="${esc(t("los.ph"))}" autocomplete="off"></textarea>
           </div>
           <div class="form-foot">
-            <button class="btn" type="submit" id="relGo" disabled>In eine Blase legen</button>
+            <button class="btn" type="submit" id="relGo" disabled>${esc(t("los.go"))}</button>
           </div>
         </form>`;
       const ta = $("#relText"), btn = $("#relGo");
@@ -811,11 +1060,11 @@ dialog[open] { animation: sheet .3s ease-out; }
         releaseState = "bubble";
         card.innerHTML = `
           <div class="release-stage" id="relStage">
-            <button type="button" class="release-bubble" id="relBubble" aria-label="Blase platzen lassen"><p></p></button>
+            <button type="button" class="release-bubble" id="relBubble" aria-label="${esc(t("los.pop"))}"><p></p></button>
           </div>
           <div class="after">
-            <p class="hint">Atme einmal ruhig ein und aus. Wenn du bereit bist, tippe auf die Blase.</p>
-            <button class="btn" type="button" id="relPop">Blase platzen lassen</button>
+            <p class="hint">${esc(t("los.breath"))}</p>
+            <button class="btn" type="button" id="relPop">${esc(t("los.pop"))}</button>
           </div>`;
         $("#relBubble p").textContent = text;
         $("#relBubble").addEventListener("click", popIt);
@@ -825,9 +1074,9 @@ dialog[open] { animation: sheet .3s ease-out; }
       card.innerHTML = `
         <div class="after" style="padding:24px 0">
           <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="6" fill="var(--m2)"/><circle cx="16" cy="22" r="3.5" fill="var(--m1)"/><circle cx="56" cy="20" r="3" fill="var(--m4)"/><circle cx="58" cy="52" r="4" fill="var(--m3)"/><circle cx="14" cy="54" r="2.5" fill="var(--m5)"/></svg>
-          <h3 tabindex="-1" id="relDone">Weg ist die Blase.</h3>
-          <p>Der Gedanke darf trotzdem wiederkommen, und das ist in Ordnung. Für den Moment hast du ihm etwas Abstand gegeben.</p>
-          <button class="btn ghost" type="button" id="relAgain">Noch etwas loslassen</button>
+          <h3 tabindex="-1" id="relDone">${esc(t("los.done"))}</h3>
+          <p>${esc(t("los.doneText"))}</p>
+          <button class="btn ghost" type="button" id="relAgain">${esc(t("los.again"))}</button>
         </div>`;
       $("#relAgain").addEventListener("click", () => { releaseState = "write"; renderRelease(); $("#relText").focus(); });
     }
@@ -840,7 +1089,6 @@ dialog[open] { animation: sheet .3s ease-out; }
     b.classList.add("pop");
     $("#relPop").disabled = true;
     if (!reduce) {
-      const colors = ["var(--m1)", "var(--m2)", "var(--m3)", "var(--m4)", "var(--m5)"];
       for (let i = 0; i < 14; i++) {
         const s = document.createElement("span");
         s.className = "droplet";
@@ -848,7 +1096,7 @@ dialog[open] { animation: sheet .3s ease-out; }
         const dist = 120 + Math.random() * 60;
         s.style.setProperty("--tx", Math.cos(a) * dist + "px");
         s.style.setProperty("--ty", Math.sin(a) * dist + "px");
-        s.style.background = colors[i % 5];
+        s.style.background = MOOD_COLORS[(i % 5) + 1];
         const sz = 6 + Math.random() * 10;
         s.style.width = s.style.height = sz + "px";
         stage.appendChild(s);
@@ -874,29 +1122,30 @@ dialog[open] { animation: sheet .3s ease-out; }
   }
   function renderCal() {
     const now = new Date();
-    $("#calTitle").textContent = fmtMonth.format(new Date(calY, calM, 1));
+    $("#calTitle").textContent = cap(fmtMonth.format(new Date(calY, calM, 1)));
     $("#calNext").disabled = calY > now.getFullYear() || (calY === now.getFullYear() && calM >= now.getMonth());
     $("#calNext").style.opacity = $("#calNext").disabled ? .35 : 1;
     const days = byDay();
     const first = new Date(calY, calM, 1);
     const offset = (first.getDay() + 6) % 7;
     const count = new Date(calY, calM + 1, 0).getDate();
-    const t = todayIso();
-    let html = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map(w => `<div class="cal-wd" aria-hidden="true">${w}</div>`).join("");
+    const td = todayIso();
+    // Wochentage ab Montag (5. Jan. 2026 ist ein Montag)
+    let html = [0, 1, 2, 3, 4, 5, 6].map(i => `<div class="cal-wd" aria-hidden="true">${esc(cap(fmtWd.format(new Date(2026, 0, 5 + i)).replace(".", "")).slice(0, 3))}</div>`).join("");
     for (let i = 0; i < offset; i++) html += `<div></div>`;
     for (let d = 1; d <= count; d++) {
       const key = `${calY}-${pad(calM + 1)}-${pad(d)}`;
       const list = days.get(key) || [];
-      const future = key > t;
+      const future = key > td;
       let style = "", cls = "cal-day", label;
-      const long = fmtLong.format(new Date(calY, calM, d));
+      const long = longDate(new Date(calY, calM, d));
       if (list.length) {
         const avg = Math.round(list.reduce((s, e) => s + e.mood, 0) / list.length);
-        style = `background:${MOODS[avg].color}`;
+        style = `background:${MOOD_COLORS[avg]}`;
         cls += " has";
-        label = `${long}: ${list.length === 1 ? "1 Eintrag" : list.length + " Einträge"}, Stimmung ${MOODS[avg].label}`;
-      } else label = future ? long : `${long}: kein Eintrag`;
-      if (key === t) cls += " today";
+        label = t("rb.has", { date: long, count: countText(list.length), mood: moodLabel(avg) });
+      } else label = future ? long : t("rb.none", { date: long });
+      if (key === td) cls += " today";
       html += `<button type="button" class="${cls}" style="${style}" data-date="${key}" ${future ? "disabled" : ""} aria-label="${esc(label)}">${d}${list.length > 1 ? `<span class="cnt" aria-hidden="true">${"•".repeat(Math.min(list.length, 3))}</span>` : ""}</button>`;
     }
     $("#calGrid").innerHTML = html;
@@ -907,45 +1156,47 @@ dialog[open] { animation: sheet .3s ease-out; }
   });
   function openDay(date) {
     const list = sorted(entries.filter(e => e.date === date));
-    const long = fmtLong.format(parseIso(date));
+    const long = longDate(parseIso(date));
     if (!list.length) {
       openDlg(`
-        <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>Kein Eintrag an diesem Tag.</p></div>${closeBtn}</div>
-        <p style="margin:0">Möchtest du rückblickend etwas für diesen Tag festhalten? Nur, wenn es sich gerade richtig anfühlt.</p>
-        <div class="row"><button class="btn small" type="button" data-writeday="${date}">Für diesen Tag eintragen</button></div>`);
+        <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>${esc(t("day.none"))}</p></div>${closeBtn()}</div>
+        <p style="margin:0">${esc(t("day.ask"))}</p>
+        <div class="row"><button class="btn small" type="button" data-writeday="${date}">${esc(t("day.write"))}</button></div>`);
       return;
     }
     if (list.length === 1) { openEntry(list[0].id); return; }
     openDlg(`
-      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>${list.length} Einträge</p></div>${closeBtn}</div>
-      <div class="list-items">${list.map(e => rowHTML(e).replace('data-id=', `data-from="${date}" data-dayentry=`)).join("")}</div>`);
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>${esc(countText(list.length))}</p></div>${closeBtn()}</div>
+      <div class="list-items">${list.map(e => rowHTML(e, date)).join("")}</div>`);
   }
-  $("#legend").innerHTML = [1, 2, 3, 4, 5].map(m => `<span><i style="background:${MOODS[m].color}"></i>${MOODS[m].label}</span>`).join("");
 
-  // ---------- Info & Sicherung ----------
+  // ---------- Info, Sicherung & Sprache ----------
   let downloads = null;
   (async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use("downloads"); } catch (e) {} })();
   const inArtifact = !!(window.claude && window.claude.use);
 
-  function backupName() { return `gedankenblasen-sicherung-${todayIso()}.json`; }
+  function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
   function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 1, exportiert: new Date().toISOString(), eintraege: sorted(entries) }, null, 2); }
 
   function openInfo() {
+    const langBtns = LANGS.map(l => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" lang="${l}">${I18N[l].name}</button>`).join("");
     openDlg(`
-      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">Deine Einträge &amp; Sicherung</h3><p>${entries.length === 1 ? "1 Eintrag" : entries.length + " Einträge"} auf diesem Gerät</p></div>${closeBtn}</div>
-      ${storageOk ? "" : `<div class="confirm"><p><strong>Achtung:</strong> Dieser Browser erlaubt hier gerade keinen lokalen Speicher. Neue Einträge gehen beim Schließen verloren. Lade eine Sicherung herunter.</p></div>`}
-      <p style="margin:0">Gedankenblasen speichert alles nur hier auf deinem Gerät. Nichts wird an einen Server geschickt, es gibt kein Konto.</p>
-      <p style="margin:0">Das heißt aber auch: Wenn du die App vom Home-Bildschirm löschst, Websitedaten in den Einstellungen entfernst oder das Gerät wechselst, können deine Einträge verloren gehen. Eine Sicherungsdatei schützt dich davor.</p>
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("info.title"))}</h3><p>${esc(t("info.count", { count: countText(entries.length) }))}</p></div>${closeBtn()}</div>
+      <div class="lang-row"><span class="hint" id="langLbl">${esc(t("info.lang"))} · Sprache · Language · Langue</span>
+        <div class="seg" role="group" aria-labelledby="langLbl">${langBtns}</div></div>
+      ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
+      <p style="margin:0">${esc(t("info.p1"))}</p>
+      <p style="margin:0">${esc(t("info.p2"))}</p>
       <div class="row">
-        <button class="btn small" type="button" id="expBtn" ${entries.length ? "" : "disabled"}>Sicherung herunterladen</button>
-        <button class="btn ghost small" type="button" id="copyBtn" ${entries.length ? "" : "disabled"}>Als Text kopieren</button>
-        <label class="btn ghost small file-label">Sicherung einlesen<input type="file" id="impFile" accept=".json,application/json"></label>
+        <button class="btn small" type="button" id="expBtn" ${entries.length ? "" : "disabled"}>${esc(t("info.export"))}</button>
+        <button class="btn ghost small" type="button" id="copyBtn" ${entries.length ? "" : "disabled"}>${esc(t("info.copy"))}</button>
+        <label class="btn ghost small file-label">${esc(t("info.import"))}<input type="file" id="impFile" accept=".json,application/json"></label>
       </div>
       <div id="copyWrap" hidden>
-        <label for="copyArea" class="hint">Markiere den Text und speichere ihn z. B. in einer Notiz:</label>
+        <label for="copyArea" class="hint">${esc(t("info.copyLabel"))}</label>
         <textarea id="copyArea" class="copy-area" readonly></textarea>
       </div>
-      <p class="hint">Beim Einlesen werden Einträge aus der Datei ergänzt. Vorhandene Einträge bleiben erhalten.</p>`);
+      <p class="hint">${esc(t("info.importHint"))}</p>`);
     $("#expBtn").addEventListener("click", exportBackup);
     $("#copyBtn").addEventListener("click", copyBackup);
     $("#impFile").addEventListener("change", importBackup);
@@ -953,28 +1204,28 @@ dialog[open] { animation: sheet .3s ease-out; }
   async function exportBackup() {
     const data = backupData();
     if (downloads) {
-      try { await downloads.save({ filename: backupName(), data }); toast("Sicherung gespeichert."); }
+      try { await downloads.save({ filename: backupName(), data }); toast(t("toast.backupSaved")); }
       catch (e) {
-        if (e && e.code === "declined") toast("Sicherung abgebrochen.");
-        else { toast("Herunterladen geht hier gerade nicht. Kopiere die Sicherung als Text."); showCopy(data); }
+        if (e && e.code === "declined") toast(t("toast.backupCancel"));
+        else { toast(t("toast.noDownload")); showCopy(data); }
       }
       return;
     }
-    if (inArtifact) { showCopy(data); toast("Herunterladen geht hier nicht. Kopiere die Sicherung als Text."); return; }
+    if (inArtifact) { showCopy(data); toast(t("toast.noDownload")); return; }
     try {
       const file = new File([data], backupName(), { type: "application/json" });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "Gedankenblasen-Sicherung" });
-        toast("Sicherung weitergegeben. Am iPhone z. B. über „In Dateien sichern“.");
+        await navigator.share({ files: [file], title: "Gedankenblasen" });
+        toast(t("toast.shared"));
         return;
       }
-    } catch (e) { if (e && e.name === "AbortError") { toast("Sicherung abgebrochen."); return; } }
+    } catch (e) { if (e && e.name === "AbortError") { toast(t("toast.backupCancel")); return; } }
     try {
       const url = URL.createObjectURL(new Blob([data], { type: "application/json" }));
       const a = document.createElement("a");
       a.href = url; a.download = backupName(); document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      toast("Sicherung heruntergeladen.");
+      toast(t("toast.downloaded"));
     } catch (e) { showCopy(data); }
   }
   function showCopy(data) {
@@ -983,9 +1234,9 @@ dialog[open] { animation: sheet .3s ease-out; }
   }
   function copyBackup() {
     const data = backupData();
-    const fallback = () => { showCopy(data); toast("Text ist markiert. Kopiere ihn mit deinem Gerät."); };
+    const fallback = () => { showCopy(data); toast(t("toast.marked")); };
     try {
-      navigator.clipboard.writeText(data).then(() => toast("Sicherung in die Zwischenablage kopiert."), fallback);
+      navigator.clipboard.writeText(data).then(() => toast(t("toast.copied")), fallback);
     } catch (e) { fallback(); }
   }
   function importBackup(ev) {
@@ -1006,9 +1257,9 @@ dialog[open] { animation: sheet .3s ease-out; }
         const added = valid.filter(e => !ids.has(e.id));
         entries = entries.concat(added);
         persist(); refresh();
-        toast(added.length ? `${added.length} ${added.length === 1 ? "Eintrag" : "Einträge"} übernommen.` : "Alle Einträge aus der Datei waren schon vorhanden.");
+        toast(added.length ? t("toast.imported", { count: countText(added.length) }) : t("toast.importNone"));
         openInfo();
-      } catch (e) { toast("Diese Datei kann ich nicht lesen. Wähle eine Gedankenblasen-Sicherung (.json)."); }
+      } catch (e) { toast(t("toast.importError")); }
     };
     reader.readAsText(file);
   }
@@ -1024,15 +1275,15 @@ dialog[open] { animation: sheet .3s ease-out; }
   // ---------- Toast ----------
   let toastT;
   function toast(msg) {
-    const t = $("#toast");
-    t.textContent = msg; t.hidden = false;
+    const el = $("#toast");
+    el.textContent = msg; el.hidden = false;
     clearTimeout(toastT);
-    toastT = setTimeout(() => { t.hidden = true; }, 3600);
+    toastT = setTimeout(() => { el.hidden = true; }, 3600);
   }
 
   // ---------- Start ----------
-  const h = new Date().getHours();
-  $("#greeting").textContent = h < 5 ? "Gute Nacht" : h < 11 ? "Guten Morgen" : h < 17 ? "Hallo" : "Guten Abend";
+  makeFormatters();
+  applyStatic();
   try { const m = localStorage.getItem("gedankenblasen.ansicht"); if (m === "list") viewMode = "list"; } catch (e) {}
   $("#segBubbles").setAttribute("aria-pressed", viewMode === "bubbles");
   $("#segList").setAttribute("aria-pressed", viewMode === "list");
