@@ -1,6 +1,6 @@
 // Gedankenblasen – Offline-Unterstützung
 // Bei jeder neuen Version die Zahl erhöhen, damit Handys das Update laden.
-const VERSION = "gedankenblasen-v5";
+const VERSION = "gedankenblasen-v6";
 const SHELL = [
   "./",
   "./index.html",
