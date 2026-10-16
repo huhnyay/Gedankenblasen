@@ -36,7 +36,7 @@ img { max-width: 100%; }
   --danger: #A2384F;
   --bubble-ink: #2A2638;
   --shadow: 0 10px 30px rgba(70, 50, 120, .12);
-  --m1: #A9C1EA; --m2: #CBB8EE; --m3: #BEDFC9; --m4: #F7CDB1; --m5: #F4E39B;
+  --m1: #A9C1EA; --m2: #CBB8EE; --m3: #BEDFC9; --m4: #F7CDB1; --m5: #F4E39B; --w3: #D9DCE6;
   --font-display: "Fredoka", "Nunito", ui-rounded, system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r-lg: 26px; --r-md: 18px; --r-sm: 12px;
@@ -46,7 +46,7 @@ img { max-width: 100%; }
     --bg: #1A1727; --bg-deep: #14121F; --surface: #252136; --ink: #EEEAF6; --muted: #B6AFCA;
     --line: #3A3452; --accent: #BBAEF2; --accent-ink: #1A1727; --accent-soft: #332D4C;
     --danger: #F2A3B4; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-    --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C;
+    --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C; --w3: #B9BBCB;
     color-scheme: dark;
   }
 }
@@ -54,7 +54,7 @@ img { max-width: 100%; }
   --bg: #1A1727; --bg-deep: #14121F; --surface: #252136; --ink: #EEEAF6; --muted: #B6AFCA;
   --line: #3A3452; --accent: #BBAEF2; --accent-ink: #1A1727; --accent-soft: #332D4C;
   --danger: #F2A3B4; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-  --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C;
+  --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C; --w3: #B9BBCB;
   color-scheme: dark;
 }
 
@@ -313,6 +313,38 @@ dialog[open] { animation: sheet .3s ease-out; }
 .lang-row .seg { flex-wrap: wrap; }
 nav.tabs button span { text-align: center; line-height: 1.15; }
 
+/* Wetter, Wasser, Bilder */
+.sub-hint { margin-top: 8px; font-size: .85rem; }
+.mood-opt .dot.wdot svg { width: 30px; height: 30px; }
+.glasses { display: flex; gap: 4px; flex-wrap: wrap; }
+.glass-btn { width: 52px; height: 60px; border: 0; background: transparent; border-radius: 14px; padding: 4px; cursor: pointer; color: var(--muted); display: grid; place-items: center; transition: transform .15s, background .2s; }
+.glass-btn:hover { background: var(--accent-soft); }
+.glass-btn:active { transform: scale(.92); }
+.glass-btn svg { width: 32px; height: 42px; }
+.water-out { margin: 6px 0 0; font-weight: 700; font-size: .95rem; }
+.q-title { font-weight: 700; }
+.photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.photo-item { position: relative; aspect-ratio: 1; max-width: 100%; border-radius: 12px; overflow: hidden; background: var(--accent-soft); border: 0; padding: 0; }
+.photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-item.missing img { opacity: 0; }
+.photo-item .rm { position: absolute; top: 4px; right: 4px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(26, 20, 45, .66); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.photo-thumb { cursor: zoom-in; }
+.file-label svg { flex: none; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
+.meta-chip { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.meta-chip .wi { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
+.meta-chip .wi svg { width: 26px; height: 26px; }
+.meta-k { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; }
+.mini-glasses { display: inline-flex; gap: 1px; color: var(--muted); }
+.mini-glasses svg { width: 15px; height: 20px; }
+.row-icons { display: inline-flex; gap: 8px; align-items: center; vertical-align: -3px; color: var(--muted); font-weight: 400; }
+.row-icons .ri { display: inline-flex; align-items: center; gap: 2px; font-size: .8rem; }
+.row-icons svg { width: 17px; height: 17px; }
+dialog.lb { background: transparent; box-shadow: none; width: min(96vw, 900px); max-height: 94vh; overflow: visible; padding: 0; }
+dialog.lb::backdrop { background: rgba(16, 12, 28, .82); }
+dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 auto; border-radius: 18px; }
+.lb-x { position: absolute; top: -52px; right: 0; }
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -433,6 +465,7 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
 </nav>
 
 <dialog id="dlg" aria-labelledby="dlgTitle"><div class="dlg" id="dlgBody"></div></dialog>
+<dialog id="lb" class="lb"><button class="icon-btn lb-x" id="lbClose" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="lbImg" alt=""></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
@@ -511,6 +544,19 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
       "toast.imported": "{count} übernommen.", "toast.importNone": "Alle Einträge aus der Datei waren schon vorhanden.",
       "toast.importError": "Diese Datei kann ich nicht lesen. Wähle eine Gedankenblasen-Sicherung (.json).",
       "backup.file": "gedankenblasen-sicherung",
+      "weather.legend": "Wie war das Wetter heute?", "weather.hint": "Freiwillig. Nochmal antippen hebt die Auswahl auf.",
+      "weather.1": "Sonnig", "weather.2": "Heiter", "weather.3": "Bewölkt", "weather.4": "Regen", "weather.5": "Gewitter",
+      "water.legend": "Wie viel Wasser hast du getrunken?", "water.hint": "Tippe auf ein Glas. Nochmal tippen macht es halb voll, dann leer.",
+      "water.value": "{n} von 5 Gläsern", "water.none": "Noch nichts eingetragen",
+      "water.glass": "Glas {i}: {state}", "water.full": "voll", "water.half": "halb voll", "water.empty": "leer",
+      "photos.legend": "Bilder vom Tag", "photos.add": "Bild hinzufügen",
+      "photos.hint": "Bis zu 4 Bilder. Sie bleiben nur auf diesem Gerät.",
+      "photos.remove": "Bild entfernen", "photos.max": "Höchstens 4 Bilder pro Eintrag.",
+      "photos.error": "Dieses Bild konnte ich nicht laden. Probier ein anderes.",
+      "photos.storeFail": "Bilder können in diesem Browser nicht gespeichert werden. Der Eintrag wurde ohne Bilder gespeichert.",
+      "photos.alt": "Bild vom {date}", "photos.open": "Bild vergrößern", "photos.missing": "Bild nicht gefunden",
+      "dlg.weather": "Wetter", "dlg.water": "Wasser",
+      "info.p3": "Die heruntergeladene Sicherung enthält auch deine Bilder. „Als Text kopieren“ enthält nur die Texte.",
       "s1.now": "Ruhig. Der Spaziergang nach der Vorlesung hat gutgetan.", "s1.mind": "Die Abgabe nächste Woche.", "s1.nice": "Die Sonne um vier Uhr auf dem Schreibtisch.",
       "s2.now": "Etwas angespannt.", "s2.mind": "Ein Gespräch, das noch nachhallt.", "s2.nice": "Tee mit Honig.",
       "s3.now": "Leicht und dankbar.", "s3.nice": "Lange mit einer Freundin gelacht.",
@@ -581,6 +627,19 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
       "toast.imported": "{count} imported.", "toast.importNone": "All entries in this file were already here.",
       "toast.importError": "I can’t read this file. Please choose a Gedankenblasen backup (.json).",
       "backup.file": "gedankenblasen-backup",
+      "weather.legend": "What was the weather like today?", "weather.hint": "Optional. Tap again to clear.",
+      "weather.1": "Sunny", "weather.2": "Partly cloudy", "weather.3": "Cloudy", "weather.4": "Rainy", "weather.5": "Stormy",
+      "water.legend": "How much water did you drink?", "water.hint": "Tap a glass. Tap again for half full, then empty.",
+      "water.value": "{n} of 5 glasses", "water.none": "Nothing added yet",
+      "water.glass": "Glass {i}: {state}", "water.full": "full", "water.half": "half full", "water.empty": "empty",
+      "photos.legend": "Photos from the day", "photos.add": "Add photo",
+      "photos.hint": "Up to 4 photos. They stay on this device only.",
+      "photos.remove": "Remove photo", "photos.max": "Up to 4 photos per entry.",
+      "photos.error": "That photo couldn’t be loaded. Try another one.",
+      "photos.storeFail": "Photos can’t be stored in this browser. The entry was saved without photos.",
+      "photos.alt": "Photo from {date}", "photos.open": "Enlarge photo", "photos.missing": "Photo not found",
+      "dlg.weather": "Weather", "dlg.water": "Water",
+      "info.p3": "The downloaded backup includes your photos as well. “Copy as text” contains only the text.",
       "s1.now": "Calm. The walk after my lecture did me good.", "s1.mind": "The deadline next week.", "s1.nice": "The sun on my desk at four o’clock.",
       "s2.now": "A bit tense.", "s2.mind": "A conversation that’s still on my mind.", "s2.nice": "Tea with honey.",
       "s3.now": "Light and grateful.", "s3.nice": "Laughed with a friend for ages.",
@@ -651,6 +710,19 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
       "toast.imported": "{count} importée(s).", "toast.importNone": "Toutes les notes de ce fichier étaient déjà là.",
       "toast.importError": "Je ne peux pas lire ce fichier. Choisis une sauvegarde Gedankenblasen (.json).",
       "backup.file": "gedankenblasen-sauvegarde",
+      "weather.legend": `Quel temps a-t-il fait aujourd’hui${NB}?`, "weather.hint": "Facultatif. Touche à nouveau pour effacer.",
+      "weather.1": "Ensoleillé", "weather.2": "Éclaircies", "weather.3": "Nuageux", "weather.4": "Pluie", "weather.5": "Orage",
+      "water.legend": `Combien d’eau as-tu bu${NB}?`, "water.hint": "Touche un verre. Touche encore pour le remplir à moitié, puis le vider.",
+      "water.value": "{n} verre(s) sur 5", "water.none": "Rien de noté",
+      "water.glass": `Verre {i}${NB}: {state}`, "water.full": "plein", "water.half": "à moitié", "water.empty": "vide",
+      "photos.legend": "Photos du jour", "photos.add": "Ajouter une photo",
+      "photos.hint": "Jusqu’à 4 photos. Elles restent uniquement sur cet appareil.",
+      "photos.remove": "Retirer la photo", "photos.max": "4 photos maximum par note.",
+      "photos.error": "Impossible de charger cette photo. Essaie une autre.",
+      "photos.storeFail": "Les photos ne peuvent pas être enregistrées dans ce navigateur. La note a été enregistrée sans photos.",
+      "photos.alt": "Photo du {date}", "photos.open": "Agrandir la photo", "photos.missing": "Photo introuvable",
+      "dlg.weather": "Météo", "dlg.water": "Eau",
+      "info.p3": `La sauvegarde téléchargée contient aussi tes photos. «${NB}Copier en texte${NB}» ne contient que le texte.`,
       "s1.now": "Calme. La promenade après le cours m’a fait du bien.", "s1.mind": "Le rendu de la semaine prochaine.", "s1.nice": "Le soleil sur mon bureau à seize heures.",
       "s2.now": "Un peu tendu.", "s2.mind": "Une conversation qui me trotte encore dans la tête.", "s2.nice": "Un thé au miel.",
       "s3.now": "Léger et reconnaissant.", "s3.nice": "J’ai longuement ri avec une amie.",
@@ -703,12 +775,12 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
   const moodLabel = m => t("mood." + m);
   const QUESTIONS = ["now", "mind", "nice"];
   const SAMPLE_BASE = [
-    { id: "s1", off: -1, mood: 4, keys: { now: "s1.now", mind: "s1.mind", nice: "s1.nice" } },
-    { id: "s2", off: -2, mood: 2, keys: { now: "s2.now", mind: "s2.mind", nice: "s2.nice" } },
-    { id: "s3", off: -4, mood: 5, keys: { now: "s3.now", nice: "s3.nice" } },
+    { id: "s1", off: -1, mood: 4, weather: 2, water: 3.5, keys: { now: "s1.now", mind: "s1.mind", nice: "s1.nice" } },
+    { id: "s2", off: -2, mood: 2, weather: 4, water: 2, keys: { now: "s2.now", mind: "s2.mind", nice: "s2.nice" } },
+    { id: "s3", off: -4, mood: 5, weather: 1, water: 4, keys: { now: "s3.now", nice: "s3.nice" } },
   ];
   function samples() {
-    return SAMPLE_BASE.map(s => ({ id: s.id, date: offsetDate(s.off), mood: s.mood, sample: true,
+    return SAMPLE_BASE.map(s => ({ id: s.id, date: offsetDate(s.off), mood: s.mood, weather: s.weather, water: s.water, photos: [], sample: true,
       now: s.keys.now ? t(s.keys.now) : "", mind: s.keys.mind ? t(s.keys.mind) : "", nice: s.keys.nice ? t(s.keys.nice) : "" }));
   }
 
@@ -756,6 +828,185 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
     return `<svg viewBox="0 0 40 40" aria-hidden="true">${brows}${eyes}${mouth}</svg>`;
   }
 
+  // ---------- Wetter ----------
+  const WEATHER_COLORS = [null, "var(--m5)", "var(--m4)", "var(--w3)", "var(--m1)", "var(--m2)"];
+  const weatherLabel = w => t("weather." + w);
+  const SW = 'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  const SUN = `<circle cx="12" cy="12" r="4.2" style="fill:rgba(255,255,255,.65)" ${SW}/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" ${SW}/>`;
+  const cloud = tf => `<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" transform="${tf}" style="fill:rgba(255,255,255,.8)" ${SW}/>`;
+  function weatherIcon(w) {
+    const inner = {
+      1: SUN,
+      2: `<g transform="translate(-1.5 -2.5) scale(.72)">${SUN}</g>${cloud("translate(1.5 2)")}`,
+      3: cloud("translate(0 0)"),
+      4: `${cloud("translate(0 -3.5)")}<path d="M9 18l-1 2.8M13 18l-1 2.8M17 18l-1 2.8" fill="none" ${SW}/>`,
+      5: `${cloud("translate(0 -3.5)")}<path d="M13 15.2l-2.4 3.6h3l-2.4 3.6" fill="none" ${SW}/>`,
+    }[w] || "";
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" style="overflow:visible">${inner}</svg>`;
+  }
+
+  // ---------- Wasser ----------
+  const GLASS = "M4 3h20l-2.6 29.2a2 2 0 0 1-2 1.8H8.6a2 2 0 0 1-2-1.8z";
+  let gid = 0;
+  function glassSVG(fill) {
+    const id = "gclip" + (++gid);
+    const y = fill >= 1 ? 7 : fill > 0 ? 20 : 36;
+    return `<svg viewBox="0 0 28 36" aria-hidden="true"><defs><clipPath id="${id}"><path d="${GLASS}"/></clipPath></defs>`
+      + (fill > 0 ? `<rect x="0" y="${y}" width="28" height="${36 - y}" style="fill:var(--m1)" clip-path="url(#${id})"/><path d="M5 ${y}h18" style="stroke:rgba(255,255,255,.7)" stroke-width="1.5" clip-path="url(#${id})"/>` : "")
+      + `<path d="${GLASS}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
+  }
+  const waterFmt = v => new Intl.NumberFormat(I18N[lang].locale, { maximumFractionDigits: 1 }).format(v);
+  const waterText = v => v ? t("water.value", { n: waterFmt(v) }) : t("water.none");
+  const glassFill = (v, i) => Math.max(0, Math.min(1, v - (i - 1)));
+  function glassesHTML(v) {
+    return [1, 2, 3, 4, 5].map(i => {
+      const f = glassFill(v, i);
+      const st = f >= 1 ? "water.full" : f > 0 ? "water.half" : "water.empty";
+      return `<button type="button" class="glass-btn" data-glass="${i}" aria-label="${esc(t("water.glass", { i, state: t(st) }))}">${glassSVG(f)}</button>`;
+    }).join("");
+  }
+  const miniGlasses = v => `<span class="mini-glasses" aria-hidden="true">${[1, 2, 3, 4, 5].map(i => glassSVG(glassFill(v, i))).join("")}</span>`;
+
+  // ---------- Bilder (IndexedDB, nur auf dem Gerät) ----------
+  const MAX_PHOTOS = 4;
+  const PhotoDB = (() => {
+    let dbp = null;
+    function open() {
+      if (!dbp) dbp = new Promise((res, rej) => {
+        try {
+          const r = indexedDB.open("gedankenblasen-fotos", 1);
+          r.onupgradeneeded = () => r.result.createObjectStore("fotos");
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
+        } catch (e) { rej(e); }
+      });
+      dbp.catch(() => { dbp = null; });
+      return dbp;
+    }
+    async function run(mode, fn) {
+      const db = await open();
+      return new Promise((res, rej) => {
+        const tx = db.transaction("fotos", mode);
+        const req = fn(tx.objectStore("fotos"));
+        tx.oncomplete = () => res(req ? req.result : undefined);
+        tx.onerror = () => rej(tx.error);
+        tx.onabort = () => rej(tx.error);
+      });
+    }
+    return {
+      put: (id, blob) => run("readwrite", s => s.put(blob, id)),
+      get: id => run("readonly", s => s.get(id)),
+      del: id => run("readwrite", s => s.delete(id)),
+    };
+  })();
+  const urlCache = new Map();
+  async function getPhotoURL(id) {
+    if (urlCache.has(id)) return urlCache.get(id);
+    try {
+      const blob = await PhotoDB.get(id);
+      if (!blob) return null;
+      const u = URL.createObjectURL(blob);
+      urlCache.set(id, u);
+      return u;
+    } catch (e) { return null; }
+  }
+  function dropUrl(id) { const u = urlCache.get(id); if (u) { URL.revokeObjectURL(u); urlCache.delete(id); } }
+  function fillImgs(root, local) {
+    root.querySelectorAll("img[data-pid]").forEach(img => {
+      const p = local && local.find(x => x.id === img.dataset.pid);
+      if (p && p.url) { img.src = p.url; return; }
+      getPhotoURL(img.dataset.pid).then(u => {
+        if (u) img.src = u;
+        else { img.closest(".photo-item").classList.add("missing"); img.alt = t("photos.missing"); }
+      });
+    });
+  }
+  async function shrink(file) {
+    const src = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+      const sc = Math.min(1, 1280 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(img.naturalWidth * sc));
+      c.height = Math.max(1, Math.round(img.naturalHeight * sc));
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("blob")), "image/jpeg", 0.82));
+    } finally { URL.revokeObjectURL(src); }
+  }
+
+  // ---------- Formular-Zustand (Wetter, Wasser, Bilder) ----------
+  const forms = {};
+  const X_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const CAM_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.3" r="3.3"/></svg>';
+  function setupForm(prefix, e) {
+    const f = forms[prefix] = {
+      weather: e ? (e.weather || 0) : 0,
+      water: e ? (e.water || 0) : 0,
+      photos: (e && Array.isArray(e.photos) ? e.photos : []).map(id => ({ id })),
+      removed: [],
+    };
+    const gl = $("#" + prefix + "-water");
+    const paintWater = () => { gl.innerHTML = glassesHTML(f.water); $("#" + prefix + "-water-out").textContent = waterText(f.water); };
+    paintWater();
+    gl.addEventListener("click", ev => {
+      const b = ev.target.closest("[data-glass]");
+      if (!b) return;
+      const i = Number(b.dataset.glass);
+      const fill = glassFill(f.water, i);
+      f.water = fill >= 1 ? i - 0.5 : fill > 0 ? i - 1 : i;
+      paintWater();
+      const nb = gl.querySelector(`[data-glass="${i}"]`); if (nb) nb.focus();
+    });
+    document.querySelectorAll(`input[name="${prefix}-weather"]`).forEach(inp => inp.addEventListener("click", () => {
+      const v = Number(inp.value);
+      if (f.weather === v) { inp.checked = false; f.weather = 0; } else f.weather = v;
+    }));
+    const box = $("#" + prefix + "-photos");
+    box.addEventListener("click", ev => {
+      const b = ev.target.closest("[data-rm]");
+      if (!b) return;
+      const p = f.photos.splice(Number(b.dataset.rm), 1)[0];
+      if (p) { if (p.blob) URL.revokeObjectURL(p.url); else f.removed.push(p.id); }
+      renderFormPhotos(prefix);
+    });
+    $("#" + prefix + "-photo-input").addEventListener("change", async ev => {
+      const files = [...(ev.target.files || [])];
+      ev.target.value = "";
+      for (const file of files) {
+        if (f.photos.length >= MAX_PHOTOS) { toast(t("photos.max")); break; }
+        try {
+          const blob = await shrink(file);
+          f.photos.push({ id: "p" + uid(), blob, url: URL.createObjectURL(blob) });
+        } catch (err) { toast(t("photos.error")); }
+        renderFormPhotos(prefix);
+      }
+    });
+    renderFormPhotos(prefix);
+  }
+  function renderFormPhotos(prefix) {
+    const f = forms[prefix], box = $("#" + prefix + "-photos");
+    if (!f || !box) return;
+    box.innerHTML = f.photos.map((p, idx) => `<div class="photo-item"><img alt="" data-pid="${p.id}"><button type="button" class="rm" data-rm="${idx}" aria-label="${esc(t("photos.remove"))}">${X_ICON}</button></div>`).join("");
+    box.hidden = !f.photos.length;
+    fillImgs(box, f.photos);
+    $("#" + prefix + "-photo-add").hidden = f.photos.length >= MAX_PHOTOS;
+  }
+  async function commitPhotos(prefix) {
+    const f = forms[prefix];
+    const ids = [];
+    let failed = false;
+    for (const p of f.photos) {
+      if (p.blob) {
+        try { await PhotoDB.put(p.id, p.blob); ids.push(p.id); urlCache.set(p.id, p.url); }
+        catch (e) { failed = true; URL.revokeObjectURL(p.url); }
+      } else ids.push(p.id);
+    }
+    for (const id of f.removed) { try { await PhotoDB.del(id); } catch (e) {} dropUrl(id); }
+    if (failed) toast(t("photos.storeFail"));
+    if (ids.length && navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+    return ids;
+  }
+
   // ---------- Navigation ----------
   const TABS = ["heute", "blasen", "loslassen", "rueckblick"];
   let current = "heute";
@@ -786,6 +1037,26 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
         <label for="${prefix}-${k}">${esc(t("q." + k))}</label>
         <textarea id="${prefix}-${k}" placeholder="${esc(t("ph." + k))}" rows="3">${esc(e ? e[k] : "")}</textarea>
       </div>`).join("");
+    const weather = e ? (e.weather || 0) : 0;
+    const weathers = [1, 2, 3, 4, 5].map(w => `
+      <div class="mood-opt">
+        <input type="radio" name="${prefix}-weather" id="${prefix}-weather-${w}" value="${w}" ${weather === w ? "checked" : ""}>
+        <label for="${prefix}-weather-${w}"><span class="dot wdot" style="background:${WEATHER_COLORS[w]};color:var(--bubble-ink)">${weatherIcon(w)}</span><span class="lbl">${esc(weatherLabel(w))}</span></label>
+      </div>`).join("");
+    const extras = `
+      <fieldset><legend>${esc(t("weather.legend"))}</legend><div class="moods">${weathers}</div><p class="hint sub-hint">${esc(t("weather.hint"))}</p></fieldset>
+      <fieldset><legend>${esc(t("water.legend"))}</legend>
+        <div class="glasses" id="${prefix}-water"></div>
+        <p class="water-out" id="${prefix}-water-out" aria-live="polite"></p>
+        <p class="hint sub-hint">${esc(t("water.hint"))}</p>
+      </fieldset>`;
+    const photos = `
+      <div class="q">
+        <span class="q-title">${esc(t("photos.legend"))}</span>
+        <div class="photos" id="${prefix}-photos" hidden></div>
+        <div class="row"><label class="btn ghost small file-label" id="${prefix}-photo-add">${CAM_ICON}${esc(t("photos.add"))}<input type="file" id="${prefix}-photo-input" accept="image/*" multiple></label></div>
+        <small>${esc(t("photos.hint"))}</small>
+      </div>`;
     const date = e ? e.date : todayIso();
     const dateBlock = withDate ? `
       <details class="when" ${date !== todayIso() ? "open" : ""}>
@@ -794,13 +1065,16 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
       </details>` : `<div class="q"><label for="${prefix}-date">${esc(t("form.date"))}</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
     return `
       <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
+      ${extras}
       ${qs}
+      ${photos}
       ${dateBlock}`;
   }
   function readForm(prefix) {
     const m = document.querySelector(`input[name="${prefix}-mood"]:checked`);
     const date = $("#" + prefix + "-date").value || todayIso();
-    const out = { mood: m ? Number(m.value) : 0, date: date > todayIso() ? todayIso() : date };
+    const f = forms[prefix] || { weather: 0, water: 0 };
+    const out = { mood: m ? Number(m.value) : 0, date: date > todayIso() ? todayIso() : date, weather: f.weather, water: f.water };
     QUESTIONS.forEach(k => { out[k] = $("#" + prefix + "-" + k).value.trim(); });
     return out;
   }
@@ -819,15 +1093,19 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
         </div>
       </form>`;
     const form = $("#ciForm");
-    form.addEventListener("change", () => {
+    setupForm("ci", presetDate ? { date: presetDate } : null);
+    form.addEventListener("change", ev => {
+      if (ev.target && ev.target.type === "file") return;
       const ok = !!form.querySelector('input[name="ci-mood"]:checked');
       $("#ciSave").disabled = !ok;
       $("#ciHint").textContent = ok ? t("form.hintEmpty") : t("form.hintPick");
     });
-    form.addEventListener("submit", ev => {
+    form.addEventListener("submit", async ev => {
       ev.preventDefault();
       const data = readForm("ci");
       if (!data.mood) return;
+      $("#ciSave").disabled = true;
+      data.photos = await commitPhotos("ci");
       const now = new Date().toISOString();
       const entry = { id: uid(), ...data, createdAt: now, updatedAt: now };
       entries.push(entry);
@@ -924,9 +1202,12 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
   function rowHTML(e, from) {
     const snippet = e.now || e.nice || e.mind || t("list.onlyMood");
     const attr = from ? `data-from="${from}" data-dayentry="${e.id}"` : `data-id="${e.id}"`;
+    const nPh = (e.photos || []).length;
+    const icons = (e.weather ? `<span class="ri" title="${esc(weatherLabel(e.weather))}">${weatherIcon(e.weather)}</span>` : "")
+      + (nPh ? `<span class="ri">${CAM_ICON}<span>${nPh}</span></span>` : "");
     return `<button type="button" class="entry-row" ${attr}>
       <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
-      <span class="meta"><strong>${esc(longDate(parseIso(e.date)))} · ${esc(moodLabel(e.mood))}</strong><span>${esc(snippet)}</span></span>
+      <span class="meta"><strong>${esc(longDate(parseIso(e.date)))} · ${esc(moodLabel(e.mood))}${icons ? ` <span class="row-icons" aria-hidden="true">${icons}</span>` : ""}</strong><span>${esc(snippet)}</span></span>
     </button>`;
   }
   $("#list").addEventListener("click", ev => {
@@ -961,6 +1242,13 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
     const answers = QUESTIONS.map(k => `<div class="answer"><h4>${esc(t("q." + k))}</h4>${e[k] ? `<p>${esc(e[k])}</p>` : `<p class="none">${esc(t("dlg.nothing"))}</p>`}</div>`).join("");
     const edited = e.updatedAt && e.createdAt && e.updatedAt !== e.createdAt ? ` · ${esc(t("dlg.edited"))}` : "";
     const time = e.createdAt ? ` · ${esc(t("dlg.time", { t: fmtTime.format(new Date(e.createdAt)) }))}` : "";
+    const meta = [];
+    if (e.weather) meta.push(`<div class="meta-chip"><span class="wi" style="background:${WEATHER_COLORS[e.weather]}">${weatherIcon(e.weather)}</span><span><span class="meta-k">${esc(t("dlg.weather"))}</span>${esc(weatherLabel(e.weather))}</span></div>`);
+    if (e.water) meta.push(`<div class="meta-chip">${miniGlasses(e.water)}<span><span class="meta-k">${esc(t("dlg.water"))}</span>${esc(waterText(e.water))}</span></div>`);
+    const alt = t("photos.alt", { date: longDate(d) });
+    const ph = (e.photos || []);
+    const gallery = ph.length ? `<div class="answer"><h4>${esc(t("photos.legend"))}</h4><div class="photos">${ph.map(id =>
+      `<button type="button" class="photo-item photo-thumb" data-photo="${id}" aria-label="${esc(t("photos.open"))}"><img alt="${esc(alt)}" data-pid="${id}"></button>`).join("")}</div></div>` : "";
     openDlg(`
       <div class="dlg-head">
         <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
@@ -968,14 +1256,29 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
         ${closeBtn()}
       </div>
       ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
+      ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
       ${answers}
+      ${gallery}
       ${e.sample ? "" : `
       <div id="actArea" class="row">
         <button class="btn small" type="button" data-edit="${e.id}">${esc(t("dlg.edit"))}</button>
         <button class="btn ghost small" type="button" data-askdel="${e.id}">${esc(t("dlg.delete"))}</button>
         ${from ? `<button class="btn ghost small" type="button" data-day="${from}">${esc(t("dlg.backToDay"))}</button>` : ""}
       </div>`}`);
+    fillImgs(body);
   }
+
+  // Bild groß anzeigen
+  const lb = $("#lb"), lbImg = $("#lbImg");
+  function openLightbox(id, alt) {
+    getPhotoURL(id).then(u => {
+      if (!u) { toast(t("photos.missing")); return; }
+      lbImg.src = u; lbImg.alt = alt || "";
+      $("#lbClose").setAttribute("aria-label", t("dlg.close"));
+      if (!lb.open) lb.showModal();
+    });
+  }
+  lb.addEventListener("click", () => lb.close());
 
   function openEdit(id) {
     const e = entries.find(x => x.id === id);
@@ -989,10 +1292,12 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
           <button class="btn ghost" type="button" data-view="${e.id}">${esc(t("edit.cancel"))}</button>
         </div>
       </form>`);
-    $("#edForm").addEventListener("submit", ev => {
+    setupForm("ed", e);
+    $("#edForm").addEventListener("submit", async ev => {
       ev.preventDefault();
       const data = readForm("ed");
       if (!data.mood) { toast(t("toast.pickMood")); return; }
+      data.photos = await commitPhotos("ed");
       Object.assign(e, data, { updatedAt: new Date().toISOString() });
       persist();
       refresh();
@@ -1017,10 +1322,13 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
     const b = ev.target.closest("button");
     if (!b) return;
     if (b.hasAttribute("data-close")) closeDlg();
+    else if (b.dataset.photo) { const im = b.querySelector("img"); openLightbox(b.dataset.photo, im ? im.alt : ""); }
     else if (b.dataset.edit) openEdit(b.dataset.edit);
     else if (b.dataset.askdel) askDelete(b.dataset.askdel);
     else if (b.dataset.view) openEntry(b.dataset.view);
     else if (b.dataset.del) {
+      const gone = entries.find(e => e.id === b.dataset.del);
+      ((gone && gone.photos) || []).forEach(id => { PhotoDB.del(id).catch(() => {}); dropUrl(id); });
       entries = entries.filter(e => e.id !== b.dataset.del);
       persist(); closeDlg(); refresh(); toast(t("toast.deleted"));
     }
@@ -1176,9 +1484,29 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
   const inArtifact = !!(window.claude && window.claude.use);
 
   function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
-  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 1, exportiert: new Date().toISOString(), eintraege: sorted(entries) }, null, 2); }
+  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries) }, null, 2); }
+  function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); }); }
+  function dataURLToBlob(d) {
+    const comma = d.indexOf(",");
+    const mime = (d.slice(0, comma).match(/data:([^;]+)/) || [])[1] || "image/jpeg";
+    const bin = atob(d.slice(comma + 1));
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+  async function buildBackup() {
+    const fotos = {};
+    for (const e of entries) for (const id of (e.photos || [])) {
+      if (fotos[id]) continue;
+      try { const blob = await PhotoDB.get(id); if (blob) fotos[id] = await blobToDataURL(blob); } catch (err) {}
+    }
+    return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries), fotos }, null, 2);
+  }
+  let backupReady = null;
 
   function openInfo() {
+    backupReady = null;
+    buildBackup().then(d => { backupReady = d; const b = $("#expBtn"); if (b && entries.length) b.disabled = false; });
     const langBtns = LANGS.map(l => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" lang="${l}">${I18N[l].name}</button>`).join("");
     openDlg(`
       <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("info.title"))}</h3><p>${esc(t("info.count", { count: countText(entries.length) }))}</p></div>${closeBtn()}</div>
@@ -1187,8 +1515,9 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
       ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
       <p style="margin:0">${esc(t("info.p1"))}</p>
       <p style="margin:0">${esc(t("info.p2"))}</p>
+      <p style="margin:0">${esc(t("info.p3"))}</p>
       <div class="row">
-        <button class="btn small" type="button" id="expBtn" ${entries.length ? "" : "disabled"}>${esc(t("info.export"))}</button>
+        <button class="btn small" type="button" id="expBtn" ${entries.length && backupReady ? "" : "disabled"}>${esc(t("info.export"))}</button>
         <button class="btn ghost small" type="button" id="copyBtn" ${entries.length ? "" : "disabled"}>${esc(t("info.copy"))}</button>
         <label class="btn ghost small file-label">${esc(t("info.import"))}<input type="file" id="impFile" accept=".json,application/json"></label>
       </div>
@@ -1202,7 +1531,7 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
     $("#impFile").addEventListener("change", importBackup);
   }
   async function exportBackup() {
-    const data = backupData();
+    const data = backupReady || backupData();
     if (downloads) {
       try { await downloads.save({ filename: backupName(), data }); toast(t("toast.backupSaved")); }
       catch (e) {
@@ -1243,18 +1572,32 @@ nav.tabs button span { text-align: center; line-height: 1.15; }
     const file = ev.target.files && ev.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       try {
         const parsed = JSON.parse(reader.result);
         const arr = Array.isArray(parsed) ? parsed : parsed.eintraege;
         if (!Array.isArray(arr)) throw new Error();
+        const fotos = parsed && typeof parsed.fotos === "object" && parsed.fotos ? parsed.fotos : {};
         const valid = arr.filter(validEntry).map(e => ({
           id: e.id, date: e.date, mood: e.mood,
+          weather: Number.isInteger(e.weather) && e.weather >= 1 && e.weather <= 5 ? e.weather : 0,
+          water: typeof e.water === "number" && e.water >= 0 && e.water <= 5 ? Math.round(e.water * 2) / 2 : 0,
+          photos: Array.isArray(e.photos) ? e.photos.filter(p => typeof p === "string" && /^p[a-z0-9]+$/i.test(p)).slice(0, MAX_PHOTOS) : [],
           now: String(e.now || ""), mind: String(e.mind || ""), nice: String(e.nice || ""),
           createdAt: e.createdAt || new Date().toISOString(), updatedAt: e.updatedAt || e.createdAt || new Date().toISOString(),
         }));
         const ids = new Set(entries.map(e => e.id));
         const added = valid.filter(e => !ids.has(e.id));
+        for (const e of added) {
+          const kept = [];
+          for (const id of e.photos) {
+            const d = fotos[id];
+            if (typeof d === "string" && d.startsWith("data:image/")) {
+              try { await PhotoDB.put(id, dataURLToBlob(d)); kept.push(id); } catch (err) {}
+            }
+          }
+          e.photos = kept;
+        }
         entries = entries.concat(added);
         persist(); refresh();
         toast(added.length ? t("toast.imported", { count: countText(added.length) }) : t("toast.importNone"));
