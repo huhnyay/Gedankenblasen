@@ -1,0 +1,1648 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gedankenblasen</title>
+<meta name="description" content="Zwei Minuten am Abend: Stimmung festhalten, Gedanken als Blasen sammeln und loslassen.">
+<meta name="theme-color" content="#F1EEF6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1A1727" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gedankenblasen">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+/* Layout: eine ruhige Spalte wie ein Abendhimmel, unten eine Tab-Leiste mit vier Räumen */
+:root {
+  --bg: #F1EEF6;
+  --bg-deep: #E6E0EF;
+  --surface: #FCFBFE;
+  --ink: #2A2638;
+  --muted: #5E5770;
+  --line: #DCD5E8;
+  --accent: #6553A6;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E7E0F6;
+  --danger: #A2384F;
+  --bubble-ink: #2A2638;
+  --shadow: 0 10px 30px rgba(70, 50, 120, .12);
+  --m1: #A9C1EA; --m2: #CBB8EE; --m3: #BEDFC9; --m4: #F7CDB1; --m5: #F4E39B; --w3: #D9DCE6;
+  --font-display: "Fredoka", "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r-lg: 26px; --r-md: 18px; --r-sm: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1727; --bg-deep: #14121F; --surface: #252136; --ink: #EEEAF6; --muted: #B6AFCA;
+    --line: #3A3452; --accent: #BBAEF2; --accent-ink: #1A1727; --accent-soft: #332D4C;
+    --danger: #F2A3B4; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C; --w3: #B9BBCB;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1A1727; --bg-deep: #14121F; --surface: #252136; --ink: #EEEAF6; --muted: #B6AFCA;
+  --line: #3A3452; --accent: #BBAEF2; --accent-ink: #1A1727; --accent-soft: #332D4C;
+  --danger: #F2A3B4; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  --m1: #9DB5E0; --m2: #BFAAE6; --m3: #AFD3BA; --m4: #EDBF9F; --m5: #E9D88C; --w3: #B9BBCB;
+  color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  background-image: radial-gradient(120% 60% at 50% 0%, var(--bg-deep), var(--bg) 70%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-tap-highlight-color: transparent;
+}
+* { box-sizing: border-box; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+
+.app {
+  max-width: 560px; margin: 0 auto; min-height: 100%;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: calc(14px + env(safe-area-inset-top, 0px)) calc(96px + env(safe-area-inset-bottom, 0px));
+  display: flex; flex-direction: column; gap: 18px;
+}
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 34px; height: 34px; flex: none; }
+.brand h1 { font-family: var(--font-display); font-weight: 600; font-size: 1.45rem; margin: 0; letter-spacing: .2px; }
+.icon-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--surface); display: grid; place-items: center; cursor: pointer;
+}
+.icon-btn svg { width: 22px; height: 22px; }
+
+h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; margin: 0; }
+.lead { color: var(--muted); margin: 6px 0 0; max-width: 60ch; }
+.view { display: flex; flex-direction: column; gap: 18px; }
+.view[hidden] { display: none !important; }
+
+.card { background: var(--surface); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow); }
+.note {
+  display: flex; gap: 12px; align-items: flex-start; background: var(--accent-soft);
+  border-radius: var(--r-md); padding: 14px 16px; font-size: .95rem;
+}
+.note p { margin: 0; }
+.note .note-x { margin-left: auto; flex: none; }
+.link-btn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-weight: 700; }
+
+/* Stimmung */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; padding: 0; margin-bottom: 12px; }
+.moods { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.mood-opt { position: relative; }
+.mood-opt input { position: absolute; opacity: 0; inset: 0; pointer-events: none; }
+.mood-opt label {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
+  padding: 8px 2px; border-radius: var(--r-md); border: 2px solid transparent; transition: background .2s, border-color .2s;
+}
+.mood-opt .dot {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  box-shadow: inset -4px -6px 10px rgba(0,0,0,.07); transition: transform .25s;
+}
+.mood-opt .dot svg { width: 34px; height: 34px; }
+.mood-opt span.lbl { font-size: .8rem; color: var(--muted); text-align: center; line-height: 1.2; }
+.mood-opt input:checked + label { border-color: var(--accent); background: var(--accent-soft); }
+.mood-opt input:checked + label .dot { transform: scale(1.1); }
+.mood-opt input:checked + label span.lbl { color: var(--ink); font-weight: 700; }
+.mood-opt input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.q { display: flex; flex-direction: column; gap: 6px; }
+.q label { font-weight: 700; }
+.q small { color: var(--muted); font-size: .85rem; }
+textarea {
+  width: 100%; min-height: 84px; resize: vertical; border-radius: var(--r-sm);
+  border: 1.5px solid var(--line); background: var(--bg); padding: 12px 14px; line-height: 1.5;
+}
+textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+input[type="date"] {
+  border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--bg); padding: 8px 12px; max-width: 100%;
+}
+.form { display: flex; flex-direction: column; gap: 20px; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.hint { color: var(--muted); font-size: .9rem; margin: 0; }
+details.when summary { cursor: pointer; color: var(--muted); font-size: .92rem; }
+details.when[open] summary { margin-bottom: 8px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 1rem;
+  transition: transform .15s, opacity .2s;
+}
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn.danger { background: var(--danger); color: var(--surface); }
+.btn.small { min-height: 40px; padding: 0 16px; font-size: .92rem; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Segment-Umschalter */
+.seg { display: inline-flex; background: var(--surface); border-radius: 999px; padding: 4px; border: 1px solid var(--line); align-self: flex-start; }
+.seg button { border: 0; background: none; padding: 8px 18px; border-radius: 999px; cursor: pointer; font-weight: 700; color: var(--muted); min-height: 40px; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Blasenfeld */
+.field {
+  position: relative; width: 100%; border-radius: var(--r-lg); overflow: hidden;
+  background: radial-gradient(90% 70% at 50% 100%, var(--accent-soft), transparent 70%), var(--surface);
+  box-shadow: var(--shadow); min-height: 420px;
+}
+.bubble {
+  position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); cursor: pointer; padding: 0;
+  color: var(--bubble-ink); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.9) 0 7%, rgba(255,255,255,0) 8%),
+    radial-gradient(circle at 38% 32%, rgba(255,255,255,.55), rgba(255,255,255,0) 45%),
+    var(--c);
+  box-shadow: inset -8px -10px 18px rgba(40,20,80,.10), 0 8px 18px rgba(60,40,100,.14);
+  animation: float var(--dur, 8s) ease-in-out var(--delay, 0s) infinite alternate;
+  transition: transform .2s;
+}
+.bubble:hover { filter: brightness(1.03); }
+.bubble svg { width: 38%; height: 38%; }
+.bubble .bd { font-size: .74rem; font-weight: 700; line-height: 1; }
+.bubble.sample { opacity: .8; }
+.bubble.sample .bd { font-weight: 400; font-style: italic; }
+.bubble.fresh { animation: rise 1.6s cubic-bezier(.2,.8,.2,1) both, float var(--dur, 8s) ease-in-out 1.6s infinite alternate; }
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(var(--dx, 4px), -10px); }
+  100% { transform: translate(calc(var(--dx, 4px) * -1), -4px); }
+}
+@keyframes rise {
+  0% { transform: translateY(180px) scale(.6); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.field-empty {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 20px 18px; text-align: center;
+  background: linear-gradient(transparent, var(--surface) 40%);
+}
+.field-empty p { margin: 0 0 10px; color: var(--muted); font-size: .95rem; }
+.field-more { color: var(--muted); font-size: .9rem; margin: 0; text-align: center; }
+
+/* Liste */
+.list { display: flex; flex-direction: column; gap: 20px; }
+.list-month h3 { font-size: 1rem; color: var(--muted); margin-bottom: 8px; text-transform: none; }
+.list-items { display: flex; flex-direction: column; gap: 8px; }
+.entry-row {
+  display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; text-align: left; width: 100%;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; cursor: pointer;
+}
+.entry-row .chip { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
+.entry-row .chip svg { width: 26px; height: 26px; }
+.entry-row .meta { min-width: 0; }
+.entry-row .meta strong { display: block; font-size: .95rem; }
+.entry-row .meta span { display: block; color: var(--muted); font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.empty { text-align: center; color: var(--muted); padding: 24px 12px; }
+
+/* Loslassen */
+.release-stage { position: relative; display: grid; place-items: center; min-height: 340px; }
+.release-bubble {
+  width: min(78vw, 290px); aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 1px solid rgba(255,255,255,.6);
+  display: grid; place-items: center; padding: 18%; cursor: pointer; position: relative; color: var(--bubble-ink);
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,.95) 0 6%, rgba(255,255,255,0) 7%),
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,.6), rgba(255,255,255,0) 45%),
+    radial-gradient(circle at 70% 75%, rgba(169,193,234,.55), rgba(255,255,255,0) 60%),
+    rgba(214, 205, 240, .75);
+  box-shadow: inset -12px -16px 30px rgba(40,20,80,.10), 0 18px 40px rgba(60,40,100,.18);
+  animation: breathe 8s ease-in-out infinite;
+}
+.release-bubble p {
+  margin: 0; font-size: .98rem; line-height: 1.45; text-align: center; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 7; -webkit-box-orient: vertical; word-break: break-word;
+}
+@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.release-bubble.pop { animation: pop .7s ease-out forwards; }
+@keyframes pop {
+  0% { transform: scale(1.05); opacity: 1; }
+  40% { transform: scale(1.18); opacity: .9; }
+  100% { transform: scale(1.45); opacity: 0; filter: blur(4px); }
+}
+.droplet {
+  position: absolute; width: 12px; height: 12px; border-radius: 50%; left: 50%; top: 50%;
+  background: rgba(203, 184, 238, .9); pointer-events: none;
+  animation: fly .9s ease-out forwards;
+}
+@keyframes fly {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(.2); opacity: 0; }
+}
+.after { text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.after p { margin: 0; max-width: 38ch; }
+
+/* Kalender */
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cal-head h3 { font-size: 1.2rem; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.cal-wd { text-align: center; font-size: .78rem; color: var(--muted); font-weight: 700; letter-spacing: .5px; padding-bottom: 4px; }
+.cal-day {
+  aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 1px solid transparent; background: transparent;
+  display: grid; place-items: center; cursor: pointer; font-variant-numeric: tabular-nums; font-size: .95rem; position: relative;
+}
+.cal-day.has { color: var(--bubble-ink); font-weight: 700; box-shadow: inset -3px -4px 8px rgba(40,20,80,.08); }
+.cal-day.today { border: 2px solid var(--accent); }
+.cal-day:disabled { color: var(--muted); opacity: .45; cursor: default; }
+.cal-day .cnt { position: absolute; bottom: 12%; font-size: .55rem; line-height: 1; letter-spacing: 1px; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: .88rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+
+/* Tab-Leiste */
+nav.tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  padding-left: max(12px, env(safe-area-inset-left, 0px));
+  padding-right: max(12px, env(safe-area-inset-right, 0px));
+  padding-top: 8px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+nav.tabs .inner { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+nav.tabs button {
+  border: 0; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 6px 2px; border-radius: 14px; color: var(--muted); font-size: .78rem; font-weight: 700; min-height: 52px;
+}
+nav.tabs button svg { width: 24px; height: 24px; }
+nav.tabs button[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
+
+/* Dialog */
+dialog {
+  border: 0; padding: 0; border-radius: var(--r-lg); background: var(--surface); color: var(--ink);
+  width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 40px); box-shadow: 0 30px 80px rgba(20,10,50,.35);
+}
+dialog::backdrop { background: rgba(26, 20, 45, .45); backdrop-filter: blur(3px); }
+dialog[open] { animation: sheet .3s ease-out; }
+@keyframes sheet { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.dlg { padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 16px; max-height: calc(100vh - 40px); overflow-y: auto; }
+.dlg-head { display: flex; align-items: flex-start; gap: 12px; }
+.dlg-head .chip { width: 52px; height: 52px; border-radius: 50%; flex: none; display: grid; place-items: center; color: var(--bubble-ink); }
+.dlg-head .chip svg { width: 34px; height: 34px; }
+.dlg-head .ttl { min-width: 0; flex: 1; }
+.dlg-head .ttl p { margin: 2px 0 0; color: var(--muted); font-size: .92rem; }
+.answer h4 { margin: 0 0 4px; font-size: .9rem; color: var(--muted); font-weight: 700; }
+.answer p { margin: 0; white-space: pre-wrap; word-break: break-word; }
+.answer p.none { color: var(--muted); font-style: italic; }
+.confirm { background: var(--accent-soft); border-radius: var(--r-md); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.confirm p { margin: 0; }
+.copy-area { width: 100%; min-height: 140px; font-family: ui-monospace, Menlo, monospace; font-size: .8rem; }
+.file-label { position: relative; overflow: hidden; }
+.file-label input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.lang-row { display: flex; flex-direction: column; gap: 8px; }
+.lang-row .seg { flex-wrap: wrap; }
+nav.tabs button span { text-align: center; line-height: 1.15; }
+
+/* Wetter, Wasser, Bilder */
+.sub-hint { margin-top: 8px; font-size: .85rem; }
+.mood-opt .dot.wdot svg { width: 30px; height: 30px; }
+.glasses { display: flex; gap: 4px; flex-wrap: wrap; }
+.glass-btn { width: 52px; height: 60px; border: 0; background: transparent; border-radius: 14px; padding: 4px; cursor: pointer; color: var(--muted); display: grid; place-items: center; transition: transform .15s, background .2s; }
+.glass-btn:hover { background: var(--accent-soft); }
+.glass-btn:active { transform: scale(.92); }
+.glass-btn svg { width: 32px; height: 42px; }
+.water-out { margin: 6px 0 0; font-weight: 700; font-size: .95rem; }
+.q-title { font-weight: 700; }
+.photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.photo-item { position: relative; aspect-ratio: 1; max-width: 100%; border-radius: 12px; overflow: hidden; background: var(--accent-soft); border: 0; padding: 0; }
+.photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-item.missing img { opacity: 0; }
+.photo-item .rm { position: absolute; top: 4px; right: 4px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(26, 20, 45, .66); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.photo-thumb { cursor: zoom-in; }
+.file-label svg { flex: none; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
+.meta-chip { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.meta-chip .wi { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
+.meta-chip .wi svg { width: 26px; height: 26px; }
+.meta-k { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; }
+.mini-glasses { display: inline-flex; gap: 1px; color: var(--muted); }
+.mini-glasses svg { width: 15px; height: 20px; }
+.row-icons { display: inline-flex; gap: 8px; align-items: center; vertical-align: -3px; color: var(--muted); font-weight: 400; }
+.row-icons .ri { display: inline-flex; align-items: center; gap: 2px; font-size: .8rem; }
+.row-icons svg { width: 17px; height: 17px; }
+dialog.lb { background: transparent; box-shadow: none; width: min(96vw, 900px); max-height: 94vh; overflow: visible; padding: 0; }
+dialog.lb::backdrop { background: rgba(16, 12, 28, .82); }
+dialog.lb img { max-width: 100%; max-height: 86vh; display: block; margin: 0 auto; border-radius: 18px; }
+.lb-x { position: absolute; top: -52px; right: 0; }
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 999px; font-size: .95rem; z-index: 40;
+  max-width: calc(100vw - 32px); text-align: center; box-shadow: var(--shadow); transition: opacity .3s;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .bubble, .release-bubble { animation: none !important; }
+  .release-bubble.pop { animation: fadeout .5s linear forwards !important; animation-duration: .5s !important; }
+  @keyframes fadeout { to { opacity: 0; } }
+  .droplet { display: none; }
+}
+@media (max-width: 380px) {
+  .mood-opt .dot { width: 44px; height: 44px; }
+  .mood-opt .dot svg { width: 28px; height: 28px; }
+  .mood-opt span.lbl { font-size: .72rem; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="16" cy="22" r="13" fill="var(--m2)"/>
+        <circle cx="29" cy="12" r="7" fill="var(--m1)"/>
+        <circle cx="31" cy="29" r="4.5" fill="var(--m4)"/>
+        <circle cx="11" cy="17" r="3" fill="#fff" opacity=".8"/>
+      </svg>
+      <h1>Gedankenblasen</h1>
+    </div>
+    <button class="icon-btn" id="infoBtn" data-i18n-aria="info.aria">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c3.5 0 7 1.2 7 1.2v6.3c0 4.6-3.2 8-7 9.5-3.8-1.5-7-4.9-7-9.5V4.2S8.5 3 12 3z"/><path d="M9 12l2 2 4-4"/></svg>
+    </button>
+  </header>
+
+  <!-- HEUTE -->
+  <section class="view" id="view-heute" aria-labelledby="h-heute">
+    <div>
+      <h2 id="h-heute"></h2>
+      <p class="lead" data-i18n="heute.lead"></p>
+    </div>
+    <div class="note" id="storageNote" hidden>
+      <p><span data-i18n="note.storage"></span> <button class="link-btn" type="button" data-open-info data-i18n="note.link"></button></p>
+      <button class="icon-btn note-x" type="button" id="noteClose" data-i18n-aria="note.close" style="width:36px;height:36px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="card" id="checkinCard"></div>
+  </section>
+
+  <!-- BLASEN -->
+  <section class="view" id="view-blasen" aria-labelledby="h-blasen" hidden>
+    <div>
+      <h2 id="h-blasen" data-i18n="blasen.title"></h2>
+      <p class="lead" data-i18n="blasen.lead"></p>
+    </div>
+    <div class="seg" role="group" data-i18n-aria="blasen.segAria">
+      <button type="button" id="segBubbles" aria-pressed="true" data-i18n="blasen.segBubbles"></button>
+      <button type="button" id="segList" aria-pressed="false" data-i18n="blasen.segList"></button>
+    </div>
+    <div id="bubbleWrap">
+      <div class="field" id="field"></div>
+      <p class="field-more" id="fieldMore" hidden></p>
+    </div>
+    <div class="list" id="list" hidden></div>
+  </section>
+
+  <!-- LOSLASSEN -->
+  <section class="view" id="view-loslassen" aria-labelledby="h-los" hidden>
+    <div>
+      <h2 id="h-los" data-i18n="los.title"></h2>
+      <p class="lead" data-i18n="los.lead"></p>
+    </div>
+    <div class="note" role="note">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+      <p><strong data-i18n="los.noteStrong"></strong> <span data-i18n="los.noteText"></span></p>
+    </div>
+    <div class="card" id="releaseCard"></div>
+  </section>
+
+  <!-- RÜCKBLICK -->
+  <section class="view" id="view-rueckblick" aria-labelledby="h-rb" hidden>
+    <div>
+      <h2 id="h-rb" data-i18n="rb.title"></h2>
+      <p class="lead" data-i18n="rb.lead"></p>
+    </div>
+    <div class="card">
+      <div class="cal-head">
+        <button class="icon-btn" id="calPrev" data-i18n-aria="rb.prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <h3 id="calTitle" aria-live="polite"></h3>
+        <button class="icon-btn" id="calNext" data-i18n-aria="rb.next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="cal-grid" id="calGrid" style="margin-top:14px"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+  </section>
+</div>
+
+<nav class="tabs" data-i18n-aria="nav.aria">
+  <div class="inner">
+    <button type="button" data-tab="heute" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg><span data-i18n="tab.heute"></span>
+    </button>
+    <button type="button" data-tab="blasen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="14" r="6"/><circle cx="17" cy="7" r="3.5"/><circle cx="18.5" cy="17" r="2"/></svg><span data-i18n="tab.blasen"></span>
+    </button>
+    <button type="button" data-tab="loslassen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg><span data-i18n="tab.loslassen"></span>
+    </button>
+    <button type="button" data-tab="rueckblick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span data-i18n="tab.rueckblick"></span>
+    </button>
+  </div>
+</nav>
+
+<dialog id="dlg" aria-labelledby="dlgTitle"><div class="dlg" id="dlgBody"></div></dialog>
+<dialog id="lb" class="lb"><button class="icon-btn lb-x" id="lbClose" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="lbImg" alt=""></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  const KEY = "gedankenblasen.v1";          // NICHT ändern: hier liegen die Einträge
+  const NOTE_KEY = "gedankenblasen.hinweis";
+  const LANG_KEY = "gedankenblasen.sprache";
+  const APP_VERSION = 4;            // bei jedem Update zusammen mit sw.js hochzählen
+  const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
+
+  // ---------- Übersetzungen ----------
+  const I18N = {
+    de: {
+      locale: "de-DE", name: "Deutsch",
+      "info.aria": "Speicherung, Sicherung und Sprache",
+      "greet.night": "Gute Nacht", "greet.morning": "Guten Morgen", "greet.day": "Hallo", "greet.evening": "Guten Abend",
+      "heute.title": "{greet}. Zwei Minuten für dich.",
+      "heute.lead": "Halte kurz inne. Wie fühlt sich der Tag an? Die Fragen sind freiwillig, eine Stimmung genügt.",
+      "note.storage": "Deine Einträge bleiben nur auf diesem Gerät, nichts wird hochgeladen.",
+      "note.link": "So sicherst du sie", "note.close": "Hinweis ausblenden",
+      "mood.legend": "Wie fühlt sich dein Tag an?",
+      "mood.1": "Schwer", "mood.2": "Wackelig", "mood.3": "Okay", "mood.4": "Gut", "mood.5": "Leicht",
+      "q.now": "Wie geht es mir gerade?", "ph.now": "Müde, aber zufrieden …",
+      "q.mind": "Was beschäftigt mich?", "ph.mind": "Was gerade Raum in deinem Kopf einnimmt",
+      "q.nice": "Was war heute schön?", "ph.nice": "Auch Kleinigkeiten zählen",
+      "form.otherDay": "Für einen anderen Tag eintragen", "form.dateAria": "Datum des Eintrags", "form.date": "Datum",
+      "form.save": "Als Blase speichern", "form.hintPick": "Wähle zuerst eine Stimmung.", "form.hintEmpty": "Du kannst die Fragen auch leer lassen.",
+      "toast.saved": "Gespeichert. Schön, dass du dir die Zeit genommen hast.",
+      "blasen.title": "Deine Gedankenblasen", "blasen.lead": "Jede Blase ist ein Abend. Tippe eine an, um sie zu öffnen.",
+      "blasen.segAria": "Darstellung", "blasen.segBubbles": "Blasen", "blasen.segList": "Liste",
+      "sample.word": "Beispiel",
+      "aria.entry": "Eintrag vom {date}, Stimmung {mood}. Öffnen", "aria.sample": "Beispiel: {date}, Stimmung {mood}. Öffnen",
+      "field.empty": "Noch keine eigenen Blasen. Die drei hier sind nur Beispiele und verschwinden, sobald du deinen ersten Abend festhältst.",
+      "field.first": "Ersten Check-in machen",
+      "field.more": "Hier schweben deine {max} neuesten Blasen. Alle {n} Einträge findest du in der Liste und im Rückblick.",
+      "list.empty": "Hier erscheinen deine Einträge, sobald du den ersten gespeichert hast.", "list.toCheckin": "Zum Check-in",
+      "list.onlyMood": "Nur die Stimmung festgehalten",
+      "dlg.close": "Schließen", "dlg.sampleNote": "Das ist ein Beispiel, damit du siehst, wie eine Blase aussieht. Es wird nicht gespeichert.",
+      "dlg.nothing": "Nichts notiert", "dlg.edited": "bearbeitet", "dlg.time": "{t} Uhr",
+      "dlg.edit": "Bearbeiten", "dlg.delete": "Löschen", "dlg.backToDay": "Zurück zum Tag",
+      "edit.title": "Eintrag bearbeiten", "edit.save": "Änderungen speichern", "edit.cancel": "Abbrechen",
+      "toast.pickMood": "Bitte wähle eine Stimmung.", "toast.changes": "Änderungen gespeichert.",
+      "del.confirm": "Diesen Eintrag wirklich löschen? Das lässt sich nicht rückgängig machen.", "del.yes": "Ja, löschen", "del.keep": "Behalten",
+      "toast.deleted": "Eintrag gelöscht.",
+      "los.title": "Loslassen", "los.lead": "Ein kleines Ritual für Gedanken, die heute nicht mehr mit ins Bett sollen.",
+      "los.noteStrong": "Dieser Text wird nicht gespeichert.",
+      "los.noteText": "Er verschwindet, sobald die Blase platzt, und taucht nirgendwo wieder auf. Das Ritual löst kein Problem. Es schafft nur einen Moment Abstand.",
+      "los.q": "Was möchtest du für heute loslassen?", "los.ph": "Schreib es einfach auf, ganz ohne Ordnung.",
+      "los.go": "In eine Blase legen", "los.pop": "Blase platzen lassen",
+      "los.breath": "Atme einmal ruhig ein und aus. Wenn du bereit bist, tippe auf die Blase.",
+      "los.done": "Weg ist die Blase.",
+      "los.doneText": "Der Gedanke darf trotzdem wiederkommen, und das ist in Ordnung. Für den Moment hast du ihm etwas Abstand gegeben.",
+      "los.again": "Noch etwas loslassen",
+      "rb.title": "Rückblick", "rb.lead": "Die Farben zeigen, wie sich deine Tage angefühlt haben. Leere Tage sind einfach leer, das ist völlig in Ordnung.",
+      "rb.prev": "Vorheriger Monat", "rb.next": "Nächster Monat",
+      "rb.none": "{date}: kein Eintrag", "rb.has": "{date}: {count}, Stimmung {mood}",
+      "count.one": "1 Eintrag", "count.many": "{n} Einträge",
+      "day.none": "Kein Eintrag an diesem Tag.",
+      "day.ask": "Möchtest du rückblickend etwas für diesen Tag festhalten? Nur, wenn es sich gerade richtig anfühlt.",
+      "day.write": "Für diesen Tag eintragen",
+      "nav.aria": "Bereiche", "tab.heute": "Heute", "tab.blasen": "Blasen", "tab.loslassen": "Loslassen", "tab.rueckblick": "Rückblick",
+      "info.title": "Deine Einträge & Sicherung", "info.count": "{count} auf diesem Gerät",
+      "info.warn": "Achtung: Dieser Browser erlaubt hier gerade keinen lokalen Speicher. Neue Einträge gehen beim Schließen verloren. Lade eine Sicherung herunter.",
+      "info.p1": "Gedankenblasen speichert alles nur hier auf deinem Gerät. Nichts wird an einen Server geschickt, es gibt kein Konto.",
+      "info.p2": "Das heißt aber auch: Wenn du die App vom Home-Bildschirm löschst, Websitedaten in den Einstellungen entfernst oder das Gerät wechselst, können deine Einträge verloren gehen. Eine Sicherungsdatei schützt dich davor.",
+      "info.export": "Sicherung herunterladen", "info.copy": "Als Text kopieren", "info.import": "Sicherung einlesen",
+      "info.copyLabel": "Markiere den Text und speichere ihn z. B. in einer Notiz:",
+      "info.importHint": "Beim Einlesen werden Einträge aus der Datei ergänzt. Vorhandene Einträge bleiben erhalten.",
+      "info.lang": "Sprache",
+      "toast.storageFail": "Speichern hat nicht geklappt. Dein Browser erlaubt hier keinen lokalen Speicher. Lade eine Sicherung herunter.",
+      "toast.backupSaved": "Sicherung gespeichert.", "toast.backupCancel": "Sicherung abgebrochen.",
+      "toast.noDownload": "Herunterladen geht hier nicht. Kopiere die Sicherung als Text.",
+      "toast.shared": "Sicherung weitergegeben. Am iPhone z. B. über „In Dateien sichern“.",
+      "toast.downloaded": "Sicherung heruntergeladen.", "toast.copied": "Sicherung in die Zwischenablage kopiert.",
+      "toast.marked": "Text ist markiert. Kopiere ihn mit deinem Gerät.",
+      "toast.imported": "{count} übernommen.", "toast.importNone": "Alle Einträge aus der Datei waren schon vorhanden.",
+      "toast.importError": "Diese Datei kann ich nicht lesen. Wähle eine Gedankenblasen-Sicherung (.json).",
+      "backup.file": "gedankenblasen-sicherung",
+      "weather.legend": "Wie war das Wetter heute?", "weather.hint": "Freiwillig. Nochmal antippen hebt die Auswahl auf.",
+      "weather.1": "Sonnig", "weather.2": "Heiter", "weather.3": "Bewölkt", "weather.4": "Regen", "weather.5": "Gewitter",
+      "water.legend": "Wie viel Wasser hast du getrunken?", "water.hint": "Tippe auf ein Glas. Nochmal tippen macht es halb voll, dann leer.",
+      "water.value": "{n} von 5 Gläsern", "water.none": "Noch nichts eingetragen",
+      "water.glass": "Glas {i}: {state}", "water.full": "voll", "water.half": "halb voll", "water.empty": "leer",
+      "photos.legend": "Bilder vom Tag", "photos.add": "Bild hinzufügen",
+      "photos.hint": "Bis zu 4 Bilder. Sie bleiben nur auf diesem Gerät.",
+      "photos.remove": "Bild entfernen", "photos.max": "Höchstens 4 Bilder pro Eintrag.",
+      "photos.error": "Dieses Bild konnte ich nicht laden. Probier ein anderes.",
+      "photos.storeFail": "Bilder können in diesem Browser nicht gespeichert werden. Der Eintrag wurde ohne Bilder gespeichert.",
+      "photos.alt": "Bild vom {date}", "photos.open": "Bild vergrößern", "photos.missing": "Bild nicht gefunden",
+      "dlg.weather": "Wetter", "dlg.water": "Wasser",
+      "info.p3": "Die heruntergeladene Sicherung enthält auch deine Bilder. „Als Text kopieren“ enthält nur die Texte.",
+      "s1.now": "Ruhig. Der Spaziergang nach der Vorlesung hat gutgetan.", "s1.mind": "Die Abgabe nächste Woche.", "s1.nice": "Die Sonne um vier Uhr auf dem Schreibtisch.",
+      "s2.now": "Etwas angespannt.", "s2.mind": "Ein Gespräch, das noch nachhallt.", "s2.nice": "Tee mit Honig.",
+      "s3.now": "Leicht und dankbar.", "s3.nice": "Lange mit einer Freundin gelacht.",
+    },
+    en: {
+      locale: "en-GB", name: "English",
+      "info.aria": "Storage, backup and language",
+      "greet.night": "Good night", "greet.morning": "Good morning", "greet.day": "Hello", "greet.evening": "Good evening",
+      "heute.title": "{greet}. Two minutes for you.",
+      "heute.lead": "Pause for a moment. How does today feel? The questions are optional; choosing a mood is enough.",
+      "note.storage": "Your entries stay on this device only. Nothing is uploaded.",
+      "note.link": "How to back them up", "note.close": "Hide note",
+      "mood.legend": "How does your day feel?",
+      "mood.1": "Heavy", "mood.2": "Shaky", "mood.3": "Okay", "mood.4": "Good", "mood.5": "Light",
+      "q.now": "How am I feeling right now?", "ph.now": "Tired, but content …",
+      "q.mind": "What’s on my mind?", "ph.mind": "Whatever is taking up space in your head",
+      "q.nice": "What was lovely today?", "ph.nice": "Little things count too",
+      "form.otherDay": "Add an entry for another day", "form.dateAria": "Entry date", "form.date": "Date",
+      "form.save": "Save as a bubble", "form.hintPick": "Choose a mood first.", "form.hintEmpty": "You can leave the questions empty.",
+      "toast.saved": "Saved. Good that you took the time for yourself.",
+      "blasen.title": "Your thought bubbles", "blasen.lead": "Each bubble is one evening. Tap one to open it.",
+      "blasen.segAria": "View", "blasen.segBubbles": "Bubbles", "blasen.segList": "List",
+      "sample.word": "Example",
+      "aria.entry": "Entry from {date}, mood {mood}. Open", "aria.sample": "Example: {date}, mood {mood}. Open",
+      "field.empty": "No bubbles of your own yet. These three are only examples and will disappear once you capture your first evening.",
+      "field.first": "Do your first check-in",
+      "field.more": "Your {max} newest bubbles float here. You’ll find all {n} entries in the list and in Look back.",
+      "list.empty": "Your entries will appear here once you’ve saved the first one.", "list.toCheckin": "Go to check-in",
+      "list.onlyMood": "Mood only",
+      "dlg.close": "Close", "dlg.sampleNote": "This is an example so you can see what a bubble looks like. It isn’t saved.",
+      "dlg.nothing": "Nothing noted", "dlg.edited": "edited", "dlg.time": "{t}",
+      "dlg.edit": "Edit", "dlg.delete": "Delete", "dlg.backToDay": "Back to the day",
+      "edit.title": "Edit entry", "edit.save": "Save changes", "edit.cancel": "Cancel",
+      "toast.pickMood": "Please choose a mood.", "toast.changes": "Changes saved.",
+      "del.confirm": "Delete this entry? This can’t be undone.", "del.yes": "Yes, delete", "del.keep": "Keep it",
+      "toast.deleted": "Entry deleted.",
+      "los.title": "Let go", "los.lead": "A small ritual for thoughts you don’t want to take to bed tonight.",
+      "los.noteStrong": "This text is not saved.",
+      "los.noteText": "It disappears as soon as the bubble pops and won’t show up anywhere again. The ritual doesn’t solve any problem. It simply gives you a moment of distance.",
+      "los.q": "What would you like to let go of today?", "los.ph": "Just write it down, no need for order.",
+      "los.go": "Put it in a bubble", "los.pop": "Pop the bubble",
+      "los.breath": "Take one slow breath in and out. When you’re ready, tap the bubble.",
+      "los.done": "The bubble is gone.",
+      "los.doneText": "The thought may still come back, and that’s okay. For now, you’ve given it a little distance.",
+      "los.again": "Let go of something else",
+      "rb.title": "Look back", "rb.lead": "The colours show how your days felt. Empty days are simply empty, and that’s completely fine.",
+      "rb.prev": "Previous month", "rb.next": "Next month",
+      "rb.none": "{date}: no entry", "rb.has": "{date}: {count}, mood {mood}",
+      "count.one": "1 entry", "count.many": "{n} entries",
+      "day.none": "No entry on this day.",
+      "day.ask": "Would you like to capture something for this day in hindsight? Only if it feels right.",
+      "day.write": "Add an entry for this day",
+      "nav.aria": "Sections", "tab.heute": "Today", "tab.blasen": "Bubbles", "tab.loslassen": "Let go", "tab.rueckblick": "Look back",
+      "info.title": "Your entries & backup", "info.count": "{count} on this device",
+      "info.warn": "Heads-up: this browser doesn’t allow local storage here right now. New entries will be lost when you close it. Download a backup.",
+      "info.p1": "Gedankenblasen keeps everything right here on your device. Nothing is sent to a server, and there’s no account.",
+      "info.p2": "That also means: if you remove the app from your home screen, clear website data in your settings or switch devices, your entries can be lost. A backup file protects you from that.",
+      "info.export": "Download backup", "info.copy": "Copy as text", "info.import": "Import backup",
+      "info.copyLabel": "Select the text and keep it somewhere safe, e.g. in a note:",
+      "info.importHint": "Importing adds the entries from the file. Your existing entries stay as they are.",
+      "info.lang": "Language",
+      "toast.storageFail": "Saving didn’t work. Your browser doesn’t allow local storage here. Please download a backup.",
+      "toast.backupSaved": "Backup saved.", "toast.backupCancel": "Backup cancelled.",
+      "toast.noDownload": "Downloads don’t work here. Copy the backup as text instead.",
+      "toast.shared": "Backup shared. On iPhone, choose “Save to Files”.",
+      "toast.downloaded": "Backup downloaded.", "toast.copied": "Backup copied to the clipboard.",
+      "toast.marked": "The text is selected. Copy it with your device.",
+      "toast.imported": "{count} imported.", "toast.importNone": "All entries in this file were already here.",
+      "toast.importError": "I can’t read this file. Please choose a Gedankenblasen backup (.json).",
+      "backup.file": "gedankenblasen-backup",
+      "weather.legend": "What was the weather like today?", "weather.hint": "Optional. Tap again to clear.",
+      "weather.1": "Sunny", "weather.2": "Partly cloudy", "weather.3": "Cloudy", "weather.4": "Rainy", "weather.5": "Stormy",
+      "water.legend": "How much water did you drink?", "water.hint": "Tap a glass. Tap again for half full, then empty.",
+      "water.value": "{n} of 5 glasses", "water.none": "Nothing added yet",
+      "water.glass": "Glass {i}: {state}", "water.full": "full", "water.half": "half full", "water.empty": "empty",
+      "photos.legend": "Photos from the day", "photos.add": "Add photo",
+      "photos.hint": "Up to 4 photos. They stay on this device only.",
+      "photos.remove": "Remove photo", "photos.max": "Up to 4 photos per entry.",
+      "photos.error": "That photo couldn’t be loaded. Try another one.",
+      "photos.storeFail": "Photos can’t be stored in this browser. The entry was saved without photos.",
+      "photos.alt": "Photo from {date}", "photos.open": "Enlarge photo", "photos.missing": "Photo not found",
+      "dlg.weather": "Weather", "dlg.water": "Water",
+      "info.p3": "The downloaded backup includes your photos as well. “Copy as text” contains only the text.",
+      "s1.now": "Calm. The walk after my lecture did me good.", "s1.mind": "The deadline next week.", "s1.nice": "The sun on my desk at four o’clock.",
+      "s2.now": "A bit tense.", "s2.mind": "A conversation that’s still on my mind.", "s2.nice": "Tea with honey.",
+      "s3.now": "Light and grateful.", "s3.nice": "Laughed with a friend for ages.",
+    },
+    fr: {
+      locale: "fr-FR", name: "Français",
+      "info.aria": "Stockage, sauvegarde et langue",
+      "greet.night": "Bonne nuit", "greet.morning": "Bonjour", "greet.day": "Bonjour", "greet.evening": "Bonsoir",
+      "heute.title": "{greet}. Deux minutes pour toi.",
+      "heute.lead": `Prends un instant. Comment s’est passée ta journée${NB}? Les questions sont facultatives, une humeur suffit.`,
+      "note.storage": "Tes notes restent uniquement sur cet appareil. Rien n’est envoyé en ligne.",
+      "note.link": "Comment les sauvegarder", "note.close": "Masquer la remarque",
+      "mood.legend": `Comment te sens-tu aujourd’hui${NB}?`,
+      "mood.1": "Lourd", "mood.2": "Fragile", "mood.3": "Ça va", "mood.4": "Bien", "mood.5": "Léger",
+      "q.now": `Comment je me sens en ce moment${NB}?`, "ph.now": "Calme, un peu de fatigue …",
+      "q.mind": `Qu’est-ce qui me préoccupe${NB}?`, "ph.mind": "Ce qui prend de la place dans ta tête",
+      "q.nice": `Quel a été le beau moment de la journée${NB}?`, "ph.nice": "Les petites choses comptent aussi",
+      "form.otherDay": "Noter pour un autre jour", "form.dateAria": "Date de la note", "form.date": "Date",
+      "form.save": "Enregistrer en bulle", "form.hintPick": "Choisis d’abord une humeur.", "form.hintEmpty": "Tu peux laisser les questions vides.",
+      "toast.saved": "Enregistré. C’est bien d’avoir pris ce temps pour toi.",
+      "blasen.title": "Tes bulles de pensées", "blasen.lead": "Chaque bulle est une soirée. Touche-en une pour l’ouvrir.",
+      "blasen.segAria": "Affichage", "blasen.segBubbles": "Bulles", "blasen.segList": "Liste",
+      "sample.word": "Exemple",
+      "aria.entry": "Note du {date}, humeur {mood}. Ouvrir", "aria.sample": `Exemple${NB}: {date}, humeur {mood}. Ouvrir`,
+      "field.empty": "Pas encore de bulles à toi. Ces trois-là ne sont que des exemples et disparaîtront dès que tu noteras ta première soirée.",
+      "field.first": "Faire ton premier check-in",
+      "field.more": "Tes {max} bulles les plus récentes flottent ici. Tu retrouves tes {n} notes dans la liste et dans Bilan.",
+      "list.empty": "Tes notes apparaîtront ici dès que tu auras enregistré la première.", "list.toCheckin": "Aller au check-in",
+      "list.onlyMood": "Humeur seulement",
+      "dlg.close": "Fermer", "dlg.sampleNote": "Ceci est un exemple pour te montrer à quoi ressemble une bulle. Il n’est pas enregistré.",
+      "dlg.nothing": "Rien noté", "dlg.edited": "modifié", "dlg.time": "{t}",
+      "dlg.edit": "Modifier", "dlg.delete": "Supprimer", "dlg.backToDay": "Retour au jour",
+      "edit.title": "Modifier la note", "edit.save": "Enregistrer", "edit.cancel": "Annuler",
+      "toast.pickMood": "Choisis une humeur, s’il te plaît.", "toast.changes": "Modifications enregistrées.",
+      "del.confirm": `Supprimer vraiment cette note${NB}? C’est définitif.`, "del.yes": "Oui, supprimer", "del.keep": "Garder",
+      "toast.deleted": "Note supprimée.",
+      "los.title": "Lâcher prise", "los.lead": "Un petit rituel pour les pensées que tu ne veux pas emporter au lit ce soir.",
+      "los.noteStrong": "Ce texte n’est pas enregistré.",
+      "los.noteText": "Il disparaît dès que la bulle éclate et ne réapparaît nulle part. Le rituel ne résout aucun problème. Il t’offre simplement un moment de recul.",
+      "los.q": `De quoi aimerais-tu te libérer aujourd’hui${NB}?`, "los.ph": "Écris-le simplement, sans chercher à mettre de l’ordre.",
+      "los.go": "Mettre dans une bulle", "los.pop": "Faire éclater la bulle",
+      "los.breath": "Inspire et expire calmement. Quand tu le sens, touche la bulle.",
+      "los.done": "La bulle a disparu.",
+      "los.doneText": "La pensée peut revenir, et c’est normal. Pour l’instant, tu as pris un peu de distance.",
+      "los.again": "Lâcher autre chose",
+      "rb.title": "Bilan", "rb.lead": "Les couleurs montrent comment tu as vécu tes journées. Les jours vides sont simplement vides, et c’est tout à fait normal.",
+      "rb.prev": "Mois précédent", "rb.next": "Mois suivant",
+      "rb.none": `{date}${NB}: aucune note`, "rb.has": `{date}${NB}: {count}, humeur {mood}`,
+      "count.one": "1 note", "count.many": "{n} notes",
+      "day.none": "Aucune note ce jour-là.",
+      "day.ask": `Veux-tu noter quelque chose pour ce jour après coup${NB}? Seulement si tu en as envie.`,
+      "day.write": "Noter pour ce jour",
+      "nav.aria": "Sections", "tab.heute": "Aujourd’hui", "tab.blasen": "Bulles", "tab.loslassen": "Lâcher prise", "tab.rueckblick": "Bilan",
+      "info.title": "Tes notes et ta sauvegarde", "info.count": "{count} sur cet appareil",
+      "info.warn": `Attention${NB}: ce navigateur n’autorise pas le stockage local ici. Les nouvelles notes seront perdues à la fermeture. Télécharge une sauvegarde.`,
+      "info.p1": "Gedankenblasen garde tout ici, sur ton appareil. Rien n’est envoyé à un serveur, et il n’y a pas de compte.",
+      "info.p2": "Cela veut aussi dire que si tu supprimes l’app de l’écran d’accueil, effaces les données des sites dans les réglages ou changes d’appareil, tes notes peuvent être perdues. Un fichier de sauvegarde t’en protège.",
+      "info.export": "Télécharger une sauvegarde", "info.copy": "Copier en texte", "info.import": "Importer une sauvegarde",
+      "info.copyLabel": `Sélectionne le texte et garde-le, par exemple dans une note${NB}:`,
+      "info.importHint": "L’import ajoute les notes du fichier. Tes notes actuelles restent telles quelles.",
+      "info.lang": "Langue",
+      "toast.storageFail": "L’enregistrement a échoué. Ton navigateur n’autorise pas le stockage local ici. Télécharge une sauvegarde.",
+      "toast.backupSaved": "Sauvegarde enregistrée.", "toast.backupCancel": "Sauvegarde annulée.",
+      "toast.noDownload": "Le téléchargement ne fonctionne pas ici. Copie la sauvegarde en texte.",
+      "toast.shared": `Sauvegarde partagée. Sur iPhone, choisis «${NB}Enregistrer dans Fichiers${NB}».`,
+      "toast.downloaded": "Sauvegarde téléchargée.", "toast.copied": "Sauvegarde copiée dans le presse-papiers.",
+      "toast.marked": "Le texte est sélectionné. Copie-le avec ton appareil.",
+      "toast.imported": "{count} importée(s).", "toast.importNone": "Toutes les notes de ce fichier étaient déjà là.",
+      "toast.importError": "Je ne peux pas lire ce fichier. Choisis une sauvegarde Gedankenblasen (.json).",
+      "backup.file": "gedankenblasen-sauvegarde",
+      "weather.legend": `Quel temps a-t-il fait aujourd’hui${NB}?`, "weather.hint": "Facultatif. Touche à nouveau pour effacer.",
+      "weather.1": "Ensoleillé", "weather.2": "Éclaircies", "weather.3": "Nuageux", "weather.4": "Pluie", "weather.5": "Orage",
+      "water.legend": `Combien d’eau as-tu bu${NB}?`, "water.hint": "Touche un verre. Touche encore pour le remplir à moitié, puis le vider.",
+      "water.value": "{n} verre(s) sur 5", "water.none": "Rien de noté",
+      "water.glass": `Verre {i}${NB}: {state}`, "water.full": "plein", "water.half": "à moitié", "water.empty": "vide",
+      "photos.legend": "Photos du jour", "photos.add": "Ajouter une photo",
+      "photos.hint": "Jusqu’à 4 photos. Elles restent uniquement sur cet appareil.",
+      "photos.remove": "Retirer la photo", "photos.max": "4 photos maximum par note.",
+      "photos.error": "Impossible de charger cette photo. Essaie une autre.",
+      "photos.storeFail": "Les photos ne peuvent pas être enregistrées dans ce navigateur. La note a été enregistrée sans photos.",
+      "photos.alt": "Photo du {date}", "photos.open": "Agrandir la photo", "photos.missing": "Photo introuvable",
+      "dlg.weather": "Météo", "dlg.water": "Eau",
+      "info.p3": `La sauvegarde téléchargée contient aussi tes photos. «${NB}Copier en texte${NB}» ne contient que le texte.`,
+      "s1.now": "Calme. La promenade après le cours m’a fait du bien.", "s1.mind": "Le rendu de la semaine prochaine.", "s1.nice": "Le soleil sur mon bureau à seize heures.",
+      "s2.now": "Un peu tendu.", "s2.mind": "Une conversation qui me trotte encore dans la tête.", "s2.nice": "Un thé au miel.",
+      "s3.now": "Léger et reconnaissant.", "s3.nice": "J’ai longuement ri avec une amie.",
+    },
+  };
+  const LANGS = ["de", "en", "fr"];
+  function detectLang() {
+    try { const s = localStorage.getItem(LANG_KEY); if (LANGS.includes(s)) return s; } catch (e) {}
+    const list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "de"];
+    for (const l of list) { const k = String(l).slice(0, 2).toLowerCase(); if (LANGS.includes(k)) return k; }
+    return "en";
+  }
+  let lang = detectLang();
+  function t(key, vars) {
+    let s = (I18N[lang] && I18N[lang][key]) ?? I18N.de[key] ?? key;
+    if (vars) for (const k in vars) s = s.split("{" + k + "}").join(vars[k]);
+    return s;
+  }
+  function countText(n) { return n === 1 ? t("count.one") : t("count.many", { n }); }
+  let fmtLong, fmtShort, fmtMonth, fmtTime, fmtWd;
+  function makeFormatters() {
+    const loc = I18N[lang].locale;
+    fmtLong = new Intl.DateTimeFormat(loc, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    fmtShort = new Intl.DateTimeFormat(loc, { day: "numeric", month: "short" });
+    fmtMonth = new Intl.DateTimeFormat(loc, { month: "long", year: "numeric" });
+    fmtTime = new Intl.DateTimeFormat(loc, { hour: "2-digit", minute: "2-digit" });
+    fmtWd = new Intl.DateTimeFormat(loc, { weekday: "short" });
+  }
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+    const h = new Date().getHours();
+    const g = h < 5 ? "greet.night" : h < 11 ? "greet.morning" : h < 17 ? "greet.day" : "greet.evening";
+    $("#h-heute").textContent = t("heute.title", { greet: t(g) });
+    $("#legend").innerHTML = [1, 2, 3, 4, 5].map(m => `<span><i style="background:${MOOD_COLORS[m]}"></i>${esc(moodLabel(m))}</span>`).join("");
+  }
+  function setLang(l) {
+    if (!LANGS.includes(l) || l === lang) return;
+    lang = l;
+    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    makeFormatters(); applyStatic();
+    renderCheckin(); releaseState = "write"; renderRelease();
+    if (current === "blasen") renderBlasen();
+    if (current === "rueckblick") renderCal();
+  }
+
+  const MOOD_COLORS = [null, "var(--m1)", "var(--m2)", "var(--m3)", "var(--m4)", "var(--m5)"];
+  const moodLabel = m => t("mood." + m);
+  const QUESTIONS = ["now", "mind", "nice"];
+  const SAMPLE_BASE = [
+    { id: "s1", off: -1, mood: 4, weather: 2, water: 3.5, keys: { now: "s1.now", mind: "s1.mind", nice: "s1.nice" } },
+    { id: "s2", off: -2, mood: 2, weather: 4, water: 2, keys: { now: "s2.now", mind: "s2.mind", nice: "s2.nice" } },
+    { id: "s3", off: -4, mood: 5, weather: 1, water: 4, keys: { now: "s3.now", nice: "s3.nice" } },
+  ];
+  function samples() {
+    return SAMPLE_BASE.map(s => ({ id: s.id, date: offsetDate(s.off), mood: s.mood, weather: s.weather, water: s.water, photos: [], sample: true,
+      now: s.keys.now ? t(s.keys.now) : "", mind: s.keys.mind ? t(s.keys.mind) : "", nice: s.keys.nice ? t(s.keys.nice) : "" }));
+  }
+
+  // ---------- Speicher ----------
+  let storageOk = true;
+  let entries = load();
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr.filter(validEntry) : [];
+    } catch (e) { storageOk = false; return []; }
+  }
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); storageOk = true; return true; }
+    catch (e) { storageOk = false; toast(t("toast.storageFail")); return false; }
+  }
+  function validEntry(e) {
+    return e && typeof e.id === "string" && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number.isInteger(e.mood) && e.mood >= 1 && e.mood <= 5;
+  }
+
+  // ---------- Helfer ----------
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function iso(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function todayIso() { return iso(new Date()); }
+  function offsetDate(n) { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); }
+  function parseIso(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+  function uid() { return "e" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed) { let s = seed || 1; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
+  function sorted(list) { return [...list].sort((a, b) => (b.date + (b.createdAt || "")).localeCompare(a.date + (a.createdAt || ""))); }
+  const longDate = d => cap(fmtLong.format(d));
+
+  function face(m) {
+    const mouths = { 1: "M13 30 Q20 23 27 30", 2: "M14 29 Q20 26 26 29", 3: "M14 28 L26 28", 4: "M13 26 Q20 32 27 26", 5: "M12 25 Q20 35 28 25 Z" };
+    const eyes = m === 5
+      ? '<path d="M12 18 Q14.5 15.5 17 18 M23 18 Q25.5 15.5 28 18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+      : '<circle cx="14.5" cy="18" r="2.1" fill="currentColor"/><circle cx="25.5" cy="18" r="2.1" fill="currentColor"/>';
+    const mouth = m === 5
+      ? `<path d="${mouths[5]}" fill="currentColor" opacity=".85"/>`
+      : `<path d="${mouths[m]}" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+    const brows = m === 1 ? '<path d="M11 13.5 L16 12 M29 13.5 L24 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' : "";
+    return `<svg viewBox="0 0 40 40" aria-hidden="true">${brows}${eyes}${mouth}</svg>`;
+  }
+
+  // ---------- Wetter ----------
+  const WEATHER_COLORS = [null, "var(--m5)", "var(--m4)", "var(--w3)", "var(--m1)", "var(--m2)"];
+  const weatherLabel = w => t("weather." + w);
+  const SW = 'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  const SUN = `<circle cx="12" cy="12" r="4.2" style="fill:rgba(255,255,255,.65)" ${SW}/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none" ${SW}/>`;
+  const cloud = tf => `<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" transform="${tf}" style="fill:rgba(255,255,255,.8)" ${SW}/>`;
+  function weatherIcon(w) {
+    const inner = {
+      1: SUN,
+      2: `<g transform="translate(-1.5 -2.5) scale(.72)">${SUN}</g>${cloud("translate(1.5 2)")}`,
+      3: cloud("translate(0 0)"),
+      4: `${cloud("translate(0 -3.5)")}<path d="M9 18l-1 2.8M13 18l-1 2.8M17 18l-1 2.8" fill="none" ${SW}/>`,
+      5: `${cloud("translate(0 -3.5)")}<path d="M13 15.2l-2.4 3.6h3l-2.4 3.6" fill="none" ${SW}/>`,
+    }[w] || "";
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" style="overflow:visible">${inner}</svg>`;
+  }
+
+  // ---------- Wasser ----------
+  const GLASS = "M4 3h20l-2.6 29.2a2 2 0 0 1-2 1.8H8.6a2 2 0 0 1-2-1.8z";
+  let gid = 0;
+  function glassSVG(fill) {
+    const id = "gclip" + (++gid);
+    const y = fill >= 1 ? 7 : fill > 0 ? 20 : 36;
+    return `<svg viewBox="0 0 28 36" aria-hidden="true"><defs><clipPath id="${id}"><path d="${GLASS}"/></clipPath></defs>`
+      + (fill > 0 ? `<rect x="0" y="${y}" width="28" height="${36 - y}" style="fill:var(--m1)" clip-path="url(#${id})"/><path d="M5 ${y}h18" style="stroke:rgba(255,255,255,.7)" stroke-width="1.5" clip-path="url(#${id})"/>` : "")
+      + `<path d="${GLASS}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
+  }
+  const waterFmt = v => new Intl.NumberFormat(I18N[lang].locale, { maximumFractionDigits: 1 }).format(v);
+  const waterText = v => v ? t("water.value", { n: waterFmt(v) }) : t("water.none");
+  const glassFill = (v, i) => Math.max(0, Math.min(1, v - (i - 1)));
+  function glassesHTML(v) {
+    return [1, 2, 3, 4, 5].map(i => {
+      const f = glassFill(v, i);
+      const st = f >= 1 ? "water.full" : f > 0 ? "water.half" : "water.empty";
+      return `<button type="button" class="glass-btn" data-glass="${i}" aria-label="${esc(t("water.glass", { i, state: t(st) }))}">${glassSVG(f)}</button>`;
+    }).join("");
+  }
+  const miniGlasses = v => `<span class="mini-glasses" aria-hidden="true">${[1, 2, 3, 4, 5].map(i => glassSVG(glassFill(v, i))).join("")}</span>`;
+
+  // ---------- Bilder (IndexedDB, nur auf dem Gerät) ----------
+  const MAX_PHOTOS = 4;
+  const PhotoDB = (() => {
+    let dbp = null;
+    function open() {
+      if (!dbp) dbp = new Promise((res, rej) => {
+        try {
+          const r = indexedDB.open("gedankenblasen-fotos", 1);
+          r.onupgradeneeded = () => r.result.createObjectStore("fotos");
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
+        } catch (e) { rej(e); }
+      });
+      dbp.catch(() => { dbp = null; });
+      return dbp;
+    }
+    async function run(mode, fn) {
+      const db = await open();
+      return new Promise((res, rej) => {
+        const tx = db.transaction("fotos", mode);
+        const req = fn(tx.objectStore("fotos"));
+        tx.oncomplete = () => res(req ? req.result : undefined);
+        tx.onerror = () => rej(tx.error);
+        tx.onabort = () => rej(tx.error);
+      });
+    }
+    return {
+      put: (id, blob) => run("readwrite", s => s.put(blob, id)),
+      get: id => run("readonly", s => s.get(id)),
+      del: id => run("readwrite", s => s.delete(id)),
+    };
+  })();
+  const urlCache = new Map();
+  async function getPhotoURL(id) {
+    if (urlCache.has(id)) return urlCache.get(id);
+    try {
+      const blob = await PhotoDB.get(id);
+      if (!blob) return null;
+      const u = URL.createObjectURL(blob);
+      urlCache.set(id, u);
+      return u;
+    } catch (e) { return null; }
+  }
+  function dropUrl(id) { const u = urlCache.get(id); if (u) { URL.revokeObjectURL(u); urlCache.delete(id); } }
+  function fillImgs(root, local) {
+    root.querySelectorAll("img[data-pid]").forEach(img => {
+      const p = local && local.find(x => x.id === img.dataset.pid);
+      if (p && p.url) { img.src = p.url; return; }
+      getPhotoURL(img.dataset.pid).then(u => {
+        if (u) img.src = u;
+        else { img.closest(".photo-item").classList.add("missing"); img.alt = t("photos.missing"); }
+      });
+    });
+  }
+  async function shrink(file) {
+    const src = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+      const sc = Math.min(1, 1280 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.max(1, Math.round(img.naturalWidth * sc));
+      c.height = Math.max(1, Math.round(img.naturalHeight * sc));
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("blob")), "image/jpeg", 0.82));
+    } finally { URL.revokeObjectURL(src); }
+  }
+
+  // ---------- Formular-Zustand (Wetter, Wasser, Bilder) ----------
+  const forms = {};
+  const X_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const CAM_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.3" r="3.3"/></svg>';
+  function setupForm(prefix, e) {
+    const f = forms[prefix] = {
+      weather: e ? (e.weather || 0) : 0,
+      water: e ? (e.water || 0) : 0,
+      photos: (e && Array.isArray(e.photos) ? e.photos : []).map(id => ({ id })),
+      removed: [],
+    };
+    const gl = $("#" + prefix + "-water");
+    const paintWater = () => { gl.innerHTML = glassesHTML(f.water); $("#" + prefix + "-water-out").textContent = waterText(f.water); };
+    paintWater();
+    gl.addEventListener("click", ev => {
+      const b = ev.target.closest("[data-glass]");
+      if (!b) return;
+      const i = Number(b.dataset.glass);
+      const fill = glassFill(f.water, i);
+      f.water = fill >= 1 ? i - 0.5 : fill > 0 ? i - 1 : i;
+      paintWater();
+      const nb = gl.querySelector(`[data-glass="${i}"]`); if (nb) nb.focus();
+    });
+    document.querySelectorAll(`input[name="${prefix}-weather"]`).forEach(inp => inp.addEventListener("click", () => {
+      const v = Number(inp.value);
+      if (f.weather === v) { inp.checked = false; f.weather = 0; } else f.weather = v;
+    }));
+    const box = $("#" + prefix + "-photos");
+    box.addEventListener("click", ev => {
+      const b = ev.target.closest("[data-rm]");
+      if (!b) return;
+      const p = f.photos.splice(Number(b.dataset.rm), 1)[0];
+      if (p) { if (p.blob) URL.revokeObjectURL(p.url); else f.removed.push(p.id); }
+      renderFormPhotos(prefix);
+    });
+    $("#" + prefix + "-photo-input").addEventListener("change", async ev => {
+      const files = [...(ev.target.files || [])];
+      ev.target.value = "";
+      for (const file of files) {
+        if (f.photos.length >= MAX_PHOTOS) { toast(t("photos.max")); break; }
+        try {
+          const blob = await shrink(file);
+          f.photos.push({ id: "p" + uid(), blob, url: URL.createObjectURL(blob) });
+        } catch (err) { toast(t("photos.error")); }
+        renderFormPhotos(prefix);
+      }
+    });
+    renderFormPhotos(prefix);
+  }
+  function renderFormPhotos(prefix) {
+    const f = forms[prefix], box = $("#" + prefix + "-photos");
+    if (!f || !box) return;
+    box.innerHTML = f.photos.map((p, idx) => `<div class="photo-item"><img alt="" data-pid="${p.id}"><button type="button" class="rm" data-rm="${idx}" aria-label="${esc(t("photos.remove"))}">${X_ICON}</button></div>`).join("");
+    box.hidden = !f.photos.length;
+    fillImgs(box, f.photos);
+    $("#" + prefix + "-photo-add").hidden = f.photos.length >= MAX_PHOTOS;
+  }
+  async function commitPhotos(prefix) {
+    const f = forms[prefix];
+    const ids = [];
+    let failed = false;
+    for (const p of f.photos) {
+      if (p.blob) {
+        try { await PhotoDB.put(p.id, p.blob); ids.push(p.id); urlCache.set(p.id, p.url); }
+        catch (e) { failed = true; URL.revokeObjectURL(p.url); }
+      } else ids.push(p.id);
+    }
+    for (const id of f.removed) { try { await PhotoDB.del(id); } catch (e) {} dropUrl(id); }
+    if (failed) toast(t("photos.storeFail"));
+    if (ids.length && navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+    return ids;
+  }
+
+  // ---------- Navigation ----------
+  const TABS = ["heute", "blasen", "loslassen", "rueckblick"];
+  let current = "heute";
+  function go(tab, opts = {}) {
+    if (!TABS.includes(tab)) tab = "heute";
+    current = tab;
+    TABS.forEach(x => { $("#view-" + x).hidden = x !== tab; });
+    document.querySelectorAll("nav.tabs button").forEach(b => {
+      if (b.dataset.tab === tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+    if (tab === "blasen") renderBlasen(opts.fresh);
+    if (tab === "rueckblick") renderCal();
+    if (tab === "loslassen") renderRelease();
+    if (!opts.keepScroll) window.scrollTo({ top: 0 });
+  }
+  document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab)));
+
+  // ---------- Check-in ----------
+  function formHTML(prefix, e, withDate) {
+    const mood = e ? e.mood : 0;
+    const moods = [1, 2, 3, 4, 5].map(m => `
+      <div class="mood-opt">
+        <input type="radio" name="${prefix}-mood" id="${prefix}-mood-${m}" value="${m}" ${mood === m ? "checked" : ""}>
+        <label for="${prefix}-mood-${m}"><span class="dot" style="background:${MOOD_COLORS[m]};color:var(--bubble-ink)">${face(m)}</span><span class="lbl">${esc(moodLabel(m))}</span></label>
+      </div>`).join("");
+    const qs = QUESTIONS.map(k => `
+      <div class="q">
+        <label for="${prefix}-${k}">${esc(t("q." + k))}</label>
+        <textarea id="${prefix}-${k}" placeholder="${esc(t("ph." + k))}" rows="3">${esc(e ? e[k] : "")}</textarea>
+      </div>`).join("");
+    const weather = e ? (e.weather || 0) : 0;
+    const weathers = [1, 2, 3, 4, 5].map(w => `
+      <div class="mood-opt">
+        <input type="radio" name="${prefix}-weather" id="${prefix}-weather-${w}" value="${w}" ${weather === w ? "checked" : ""}>
+        <label for="${prefix}-weather-${w}"><span class="dot wdot" style="background:${WEATHER_COLORS[w]};color:var(--bubble-ink)">${weatherIcon(w)}</span><span class="lbl">${esc(weatherLabel(w))}</span></label>
+      </div>`).join("");
+    const extras = `
+      <fieldset><legend>${esc(t("weather.legend"))}</legend><div class="moods">${weathers}</div><p class="hint sub-hint">${esc(t("weather.hint"))}</p></fieldset>
+      <fieldset><legend>${esc(t("water.legend"))}</legend>
+        <div class="glasses" id="${prefix}-water"></div>
+        <p class="water-out" id="${prefix}-water-out" aria-live="polite"></p>
+        <p class="hint sub-hint">${esc(t("water.hint"))}</p>
+      </fieldset>`;
+    const photos = `
+      <div class="q">
+        <span class="q-title">${esc(t("photos.legend"))}</span>
+        <div class="photos" id="${prefix}-photos" hidden></div>
+        <div class="row"><label class="btn ghost small file-label" id="${prefix}-photo-add">${CAM_ICON}${esc(t("photos.add"))}<input type="file" id="${prefix}-photo-input" accept="image/*" multiple></label></div>
+        <small>${esc(t("photos.hint"))}</small>
+      </div>`;
+    const date = e ? e.date : todayIso();
+    const dateBlock = withDate ? `
+      <details class="when" ${date !== todayIso() ? "open" : ""}>
+        <summary>${esc(t("form.otherDay"))}</summary>
+        <input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}" aria-label="${esc(t("form.dateAria"))}">
+      </details>` : `<div class="q"><label for="${prefix}-date">${esc(t("form.date"))}</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
+    return `
+      <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
+      ${extras}
+      ${qs}
+      ${photos}
+      ${dateBlock}`;
+  }
+  function readForm(prefix) {
+    const m = document.querySelector(`input[name="${prefix}-mood"]:checked`);
+    const date = $("#" + prefix + "-date").value || todayIso();
+    const f = forms[prefix] || { weather: 0, water: 0 };
+    const out = { mood: m ? Number(m.value) : 0, date: date > todayIso() ? todayIso() : date, weather: f.weather, water: f.water };
+    QUESTIONS.forEach(k => { out[k] = $("#" + prefix + "-" + k).value.trim(); });
+    return out;
+  }
+
+  function renderCheckin(presetDate) {
+    const card = $("#checkinCard");
+    card.innerHTML = `
+      <form class="form" id="ciForm" novalidate>
+        ${formHTML("ci", presetDate ? { mood: 0, date: presetDate, now: "", mind: "", nice: "" } : null, true)}
+        <div class="form-foot">
+          <button class="btn" type="submit" id="ciSave" disabled>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="13" r="7"/><circle cx="17.5" cy="5.5" r="2"/></svg>
+            ${esc(t("form.save"))}
+          </button>
+          <p class="hint" id="ciHint">${esc(t("form.hintPick"))}</p>
+        </div>
+      </form>`;
+    const form = $("#ciForm");
+    setupForm("ci", presetDate ? { date: presetDate } : null);
+    form.addEventListener("change", ev => {
+      if (ev.target && ev.target.type === "file") return;
+      const ok = !!form.querySelector('input[name="ci-mood"]:checked');
+      $("#ciSave").disabled = !ok;
+      $("#ciHint").textContent = ok ? t("form.hintEmpty") : t("form.hintPick");
+    });
+    form.addEventListener("submit", async ev => {
+      ev.preventDefault();
+      const data = readForm("ci");
+      if (!data.mood) return;
+      $("#ciSave").disabled = true;
+      data.photos = await commitPhotos("ci");
+      const now = new Date().toISOString();
+      const entry = { id: uid(), ...data, createdAt: now, updatedAt: now };
+      entries.push(entry);
+      persist();
+      renderCheckin();
+      toast(t("toast.saved"));
+      go("blasen", { fresh: entry.id });
+    });
+  }
+
+  // ---------- Blasen ----------
+  let viewMode = "bubbles";
+  const MAX_BUBBLES = 30;
+  $("#segBubbles").addEventListener("click", () => setMode("bubbles"));
+  $("#segList").addEventListener("click", () => setMode("list"));
+  function setMode(m) {
+    viewMode = m;
+    $("#segBubbles").setAttribute("aria-pressed", m === "bubbles");
+    $("#segList").setAttribute("aria-pressed", m === "list");
+    $("#bubbleWrap").hidden = m !== "bubbles";
+    $("#list").hidden = m !== "list";
+    try { localStorage.setItem("gedankenblasen.ansicht", m); } catch (e) {}
+    renderBlasen();
+  }
+
+  function renderBlasen(freshId) {
+    if (viewMode === "list") { renderList(); return; }
+    const field = $("#field");
+    const real = sorted(entries);
+    const showSamples = real.length === 0;
+    const items = showSamples ? samples() : real.slice(0, MAX_BUBBLES);
+    const W = field.clientWidth || 340;
+    let H = Math.max(420, Math.min(760, 220 + items.length * 26));
+    const placed = [];
+    const nodes = [];
+    items.forEach(e => {
+      const len = (e.now + e.mind + e.nice).length;
+      const base = Math.min(W / 3.2, 120);
+      const size = Math.round(Math.max(72, Math.min(base, 74 + Math.sqrt(len) * 3.6)));
+      const r = rng(hash(e.id));
+      let x, y, ok = false;
+      for (let tr = 0; tr < 400 && !ok; tr++) {
+        if (tr > 0 && tr % 80 === 0) H += 70;
+        x = 10 + r() * Math.max(1, W - size - 20);
+        y = 14 + r() * Math.max(1, H - size - (showSamples ? 120 : 28));
+        ok = placed.every(p => Math.hypot((p.x + p.s / 2) - (x + size / 2), (p.y + p.s / 2) - (y + size / 2)) > (p.s + size) / 2 + 8);
+      }
+      placed.push({ x, y, s: size });
+      const d = parseIso(e.date);
+      const label = t(e.sample ? "aria.sample" : "aria.entry", { date: longDate(d), mood: moodLabel(e.mood) });
+      nodes.push(`<button type="button" class="bubble${e.sample ? " sample" : ""}${e.id === freshId ? " fresh" : ""}" data-id="${e.id}"
+        style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;--c:${MOOD_COLORS[e.mood]};--dur:${(6 + r() * 5).toFixed(2)}s;--delay:-${(r() * 6).toFixed(2)}s;--dx:${(r() * 8 - 4).toFixed(1)}px"
+        aria-label="${esc(label)}">${face(e.mood)}<span class="bd">${esc(e.sample ? t("sample.word") : fmtShort.format(d))}</span></button>`);
+    });
+    field.style.height = H + "px";
+    field.innerHTML = nodes.join("") + (showSamples ? `
+      <div class="field-empty">
+        <p>${esc(t("field.empty"))}</p>
+        <button class="btn small" type="button" data-go="heute">${esc(t("field.first"))}</button>
+      </div>` : "");
+    const more = $("#fieldMore");
+    if (!showSamples && real.length > MAX_BUBBLES) {
+      more.hidden = false;
+      more.textContent = t("field.more", { max: MAX_BUBBLES, n: real.length });
+    } else more.hidden = true;
+  }
+  $("#field").addEventListener("click", ev => {
+    const b = ev.target.closest(".bubble");
+    if (b) { openEntry(b.dataset.id); return; }
+    if (ev.target.closest("[data-go]")) go(ev.target.closest("[data-go]").dataset.go);
+  });
+  let resizeT;
+  window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(() => { if (current === "blasen") renderBlasen(); }, 200); });
+
+  function renderList() {
+    const list = $("#list");
+    const real = sorted(entries);
+    if (!real.length) {
+      list.innerHTML = `<div class="empty"><p>${esc(t("list.empty"))}</p><button class="btn small" type="button" data-go="heute">${esc(t("list.toCheckin"))}</button></div>`;
+      return;
+    }
+    const groups = new Map();
+    real.forEach(e => {
+      const k = e.date.slice(0, 7);
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(e);
+    });
+    list.innerHTML = [...groups].map(([k, arr]) => `
+      <div class="list-month">
+        <h3>${esc(cap(fmtMonth.format(parseIso(k + "-01"))))}</h3>
+        <div class="list-items">${arr.map(e => rowHTML(e)).join("")}</div>
+      </div>`).join("");
+  }
+  function rowHTML(e, from) {
+    const snippet = e.now || e.nice || e.mind || t("list.onlyMood");
+    const attr = from ? `data-from="${from}" data-dayentry="${e.id}"` : `data-id="${e.id}"`;
+    const nPh = (e.photos || []).length;
+    const icons = (e.weather ? `<span class="ri" title="${esc(weatherLabel(e.weather))}">${weatherIcon(e.weather)}</span>` : "")
+      + (nPh ? `<span class="ri">${CAM_ICON}<span>${nPh}</span></span>` : "");
+    return `<button type="button" class="entry-row" ${attr}>
+      <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
+      <span class="meta"><strong>${esc(longDate(parseIso(e.date)))} · ${esc(moodLabel(e.mood))}${icons ? ` <span class="row-icons" aria-hidden="true">${icons}</span>` : ""}</strong><span>${esc(snippet)}</span></span>
+    </button>`;
+  }
+  $("#list").addEventListener("click", ev => {
+    const r = ev.target.closest(".entry-row");
+    if (r) openEntry(r.dataset.id);
+    const g = ev.target.closest("[data-go]");
+    if (g) go(g.dataset.go);
+  });
+
+  // ---------- Dialog ----------
+  const dlg = $("#dlg"), body = $("#dlgBody");
+  let lastFocus = null;
+  function openDlg(html) {
+    lastFocus = document.activeElement;
+    body.innerHTML = html;
+    if (!dlg.open) dlg.showModal();
+    body.scrollTop = 0;
+    const f = body.querySelector("[autofocus]") || body.querySelector("button, textarea, input");
+    if (f) f.focus();
+  }
+  function closeDlg() { if (dlg.open) dlg.close(); }
+  dlg.addEventListener("close", () => { if (lastFocus && lastFocus.isConnected) lastFocus.focus(); });
+  dlg.addEventListener("click", ev => { if (ev.target === dlg) closeDlg(); });
+  const closeBtn = () => `<button class="icon-btn" type="button" data-close aria-label="${esc(t("dlg.close"))}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+
+  function findEntry(id) { return entries.find(e => e.id === id) || samples().find(e => e.id === id); }
+
+  function openEntry(id, from) {
+    const e = findEntry(id);
+    if (!e) return;
+    const d = parseIso(e.date);
+    const answers = QUESTIONS.map(k => `<div class="answer"><h4>${esc(t("q." + k))}</h4>${e[k] ? `<p>${esc(e[k])}</p>` : `<p class="none">${esc(t("dlg.nothing"))}</p>`}</div>`).join("");
+    const edited = e.updatedAt && e.createdAt && e.updatedAt !== e.createdAt ? ` · ${esc(t("dlg.edited"))}` : "";
+    const time = e.createdAt ? ` · ${esc(t("dlg.time", { t: fmtTime.format(new Date(e.createdAt)) }))}` : "";
+    const meta = [];
+    if (e.weather) meta.push(`<div class="meta-chip"><span class="wi" style="background:${WEATHER_COLORS[e.weather]}">${weatherIcon(e.weather)}</span><span><span class="meta-k">${esc(t("dlg.weather"))}</span>${esc(weatherLabel(e.weather))}</span></div>`);
+    if (e.water) meta.push(`<div class="meta-chip">${miniGlasses(e.water)}<span><span class="meta-k">${esc(t("dlg.water"))}</span>${esc(waterText(e.water))}</span></div>`);
+    const alt = t("photos.alt", { date: longDate(d) });
+    const ph = (e.photos || []);
+    const gallery = ph.length ? `<div class="answer"><h4>${esc(t("photos.legend"))}</h4><div class="photos">${ph.map(id =>
+      `<button type="button" class="photo-item photo-thumb" data-photo="${id}" aria-label="${esc(t("photos.open"))}"><img alt="${esc(alt)}" data-pid="${id}"></button>`).join("")}</div></div>` : "";
+    openDlg(`
+      <div class="dlg-head">
+        <span class="chip" style="background:${MOOD_COLORS[e.mood]}">${face(e.mood)}</span>
+        <div class="ttl"><h3 id="dlgTitle">${esc(longDate(d))}</h3><p>${esc(moodLabel(e.mood))}${time}${edited}</p></div>
+        ${closeBtn()}
+      </div>
+      ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
+      ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
+      ${answers}
+      ${gallery}
+      ${e.sample ? "" : `
+      <div id="actArea" class="row">
+        <button class="btn small" type="button" data-edit="${e.id}">${esc(t("dlg.edit"))}</button>
+        <button class="btn ghost small" type="button" data-askdel="${e.id}">${esc(t("dlg.delete"))}</button>
+        ${from ? `<button class="btn ghost small" type="button" data-day="${from}">${esc(t("dlg.backToDay"))}</button>` : ""}
+      </div>`}`);
+    fillImgs(body);
+  }
+
+  // Bild groß anzeigen
+  const lb = $("#lb"), lbImg = $("#lbImg");
+  function openLightbox(id, alt) {
+    getPhotoURL(id).then(u => {
+      if (!u) { toast(t("photos.missing")); return; }
+      lbImg.src = u; lbImg.alt = alt || "";
+      $("#lbClose").setAttribute("aria-label", t("dlg.close"));
+      if (!lb.open) lb.showModal();
+    });
+  }
+  lb.addEventListener("click", () => lb.close());
+
+  function openEdit(id) {
+    const e = entries.find(x => x.id === id);
+    if (!e) return;
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("edit.title"))}</h3><p>${esc(longDate(parseIso(e.date)))}</p></div>${closeBtn()}</div>
+      <form class="form" id="edForm" novalidate>
+        ${formHTML("ed", e, false)}
+        <div class="row">
+          <button class="btn" type="submit">${esc(t("edit.save"))}</button>
+          <button class="btn ghost" type="button" data-view="${e.id}">${esc(t("edit.cancel"))}</button>
+        </div>
+      </form>`);
+    setupForm("ed", e);
+    $("#edForm").addEventListener("submit", async ev => {
+      ev.preventDefault();
+      const data = readForm("ed");
+      if (!data.mood) { toast(t("toast.pickMood")); return; }
+      data.photos = await commitPhotos("ed");
+      Object.assign(e, data, { updatedAt: new Date().toISOString() });
+      persist();
+      refresh();
+      toast(t("toast.changes"));
+      openEntry(e.id);
+    });
+  }
+
+  function askDelete(id) {
+    const area = $("#actArea");
+    if (!area) return;
+    area.outerHTML = `<div class="confirm" id="actArea">
+      <p>${esc(t("del.confirm"))}</p>
+      <div class="row">
+        <button class="btn danger small" type="button" data-del="${id}">${esc(t("del.yes"))}</button>
+        <button class="btn ghost small" type="button" data-view="${id}">${esc(t("del.keep"))}</button>
+      </div></div>`;
+    body.querySelector("[data-view]").focus();
+  }
+
+  body.addEventListener("click", ev => {
+    const b = ev.target.closest("button");
+    if (!b) return;
+    if (b.hasAttribute("data-close")) closeDlg();
+    else if (b.dataset.photo) { const im = b.querySelector("img"); openLightbox(b.dataset.photo, im ? im.alt : ""); }
+    else if (b.dataset.edit) openEdit(b.dataset.edit);
+    else if (b.dataset.askdel) askDelete(b.dataset.askdel);
+    else if (b.dataset.view) openEntry(b.dataset.view);
+    else if (b.dataset.del) {
+      const gone = entries.find(e => e.id === b.dataset.del);
+      ((gone && gone.photos) || []).forEach(id => { PhotoDB.del(id).catch(() => {}); dropUrl(id); });
+      entries = entries.filter(e => e.id !== b.dataset.del);
+      persist(); closeDlg(); refresh(); toast(t("toast.deleted"));
+    }
+    else if (b.dataset.day) openDay(b.dataset.day);
+    else if (b.dataset.dayentry) openEntry(b.dataset.dayentry, b.dataset.from);
+    else if (b.dataset.writeday) { closeDlg(); renderCheckin(b.dataset.writeday); go("heute"); }
+    else if (b.dataset.lang) { setLang(b.dataset.lang); openInfo(); }
+  });
+
+  function refresh() {
+    if (current === "blasen") renderBlasen();
+    if (current === "rueckblick") renderCal();
+  }
+
+  // ---------- Loslassen ----------
+  let releaseState = "write";
+  function renderRelease() {
+    const card = $("#releaseCard");
+    if (releaseState === "write") {
+      card.innerHTML = `
+        <form class="form" id="relForm" novalidate>
+          <div class="q">
+            <label for="relText">${esc(t("los.q"))}</label>
+            <textarea id="relText" rows="5" placeholder="${esc(t("los.ph"))}" autocomplete="off"></textarea>
+          </div>
+          <div class="form-foot">
+            <button class="btn" type="submit" id="relGo" disabled>${esc(t("los.go"))}</button>
+          </div>
+        </form>`;
+      const ta = $("#relText"), btn = $("#relGo");
+      ta.addEventListener("input", () => { btn.disabled = !ta.value.trim(); });
+      $("#relForm").addEventListener("submit", ev => {
+        ev.preventDefault();
+        const text = ta.value.trim();
+        if (!text) return;
+        ta.value = "";
+        releaseState = "bubble";
+        card.innerHTML = `
+          <div class="release-stage" id="relStage">
+            <button type="button" class="release-bubble" id="relBubble" aria-label="${esc(t("los.pop"))}"><p></p></button>
+          </div>
+          <div class="after">
+            <p class="hint">${esc(t("los.breath"))}</p>
+            <button class="btn" type="button" id="relPop">${esc(t("los.pop"))}</button>
+          </div>`;
+        $("#relBubble p").textContent = text;
+        $("#relBubble").addEventListener("click", popIt);
+        $("#relPop").addEventListener("click", popIt);
+      });
+    } else if (releaseState === "done") {
+      card.innerHTML = `
+        <div class="after" style="padding:24px 0">
+          <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="6" fill="var(--m2)"/><circle cx="16" cy="22" r="3.5" fill="var(--m1)"/><circle cx="56" cy="20" r="3" fill="var(--m4)"/><circle cx="58" cy="52" r="4" fill="var(--m3)"/><circle cx="14" cy="54" r="2.5" fill="var(--m5)"/></svg>
+          <h3 tabindex="-1" id="relDone">${esc(t("los.done"))}</h3>
+          <p>${esc(t("los.doneText"))}</p>
+          <button class="btn ghost" type="button" id="relAgain">${esc(t("los.again"))}</button>
+        </div>`;
+      $("#relAgain").addEventListener("click", () => { releaseState = "write"; renderRelease(); $("#relText").focus(); });
+    }
+  }
+  function popIt() {
+    const b = $("#relBubble");
+    if (!b || b.classList.contains("pop")) return;
+    const stage = $("#relStage");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    b.classList.add("pop");
+    $("#relPop").disabled = true;
+    if (!reduce) {
+      for (let i = 0; i < 14; i++) {
+        const s = document.createElement("span");
+        s.className = "droplet";
+        const a = (i / 14) * Math.PI * 2 + Math.random() * .3;
+        const dist = 120 + Math.random() * 60;
+        s.style.setProperty("--tx", Math.cos(a) * dist + "px");
+        s.style.setProperty("--ty", Math.sin(a) * dist + "px");
+        s.style.background = MOOD_COLORS[(i % 5) + 1];
+        const sz = 6 + Math.random() * 10;
+        s.style.width = s.style.height = sz + "px";
+        stage.appendChild(s);
+      }
+    }
+    setTimeout(() => {
+      releaseState = "done";
+      renderRelease();
+      const h = $("#relDone"); if (h) h.focus();
+    }, reduce ? 550 : 950);
+  }
+
+  // ---------- Rückblick ----------
+  let calY, calM;
+  (() => { const d = new Date(); calY = d.getFullYear(); calM = d.getMonth(); })();
+  $("#calPrev").addEventListener("click", () => { calM--; if (calM < 0) { calM = 11; calY--; } renderCal(); });
+  $("#calNext").addEventListener("click", () => { calM++; if (calM > 11) { calM = 0; calY++; } renderCal(); });
+
+  function byDay() {
+    const m = new Map();
+    entries.forEach(e => { if (!m.has(e.date)) m.set(e.date, []); m.get(e.date).push(e); });
+    return m;
+  }
+  function renderCal() {
+    const now = new Date();
+    $("#calTitle").textContent = cap(fmtMonth.format(new Date(calY, calM, 1)));
+    $("#calNext").disabled = calY > now.getFullYear() || (calY === now.getFullYear() && calM >= now.getMonth());
+    $("#calNext").style.opacity = $("#calNext").disabled ? .35 : 1;
+    const days = byDay();
+    const first = new Date(calY, calM, 1);
+    const offset = (first.getDay() + 6) % 7;
+    const count = new Date(calY, calM + 1, 0).getDate();
+    const td = todayIso();
+    // Wochentage ab Montag (5. Jan. 2026 ist ein Montag)
+    let html = [0, 1, 2, 3, 4, 5, 6].map(i => `<div class="cal-wd" aria-hidden="true">${esc(cap(fmtWd.format(new Date(2026, 0, 5 + i)).replace(".", "")).slice(0, 3))}</div>`).join("");
+    for (let i = 0; i < offset; i++) html += `<div></div>`;
+    for (let d = 1; d <= count; d++) {
+      const key = `${calY}-${pad(calM + 1)}-${pad(d)}`;
+      const list = days.get(key) || [];
+      const future = key > td;
+      let style = "", cls = "cal-day", label;
+      const long = longDate(new Date(calY, calM, d));
+      if (list.length) {
+        const avg = Math.round(list.reduce((s, e) => s + e.mood, 0) / list.length);
+        style = `background:${MOOD_COLORS[avg]}`;
+        cls += " has";
+        label = t("rb.has", { date: long, count: countText(list.length), mood: moodLabel(avg) });
+      } else label = future ? long : t("rb.none", { date: long });
+      if (key === td) cls += " today";
+      html += `<button type="button" class="${cls}" style="${style}" data-date="${key}" ${future ? "disabled" : ""} aria-label="${esc(label)}">${d}${list.length > 1 ? `<span class="cnt" aria-hidden="true">${"•".repeat(Math.min(list.length, 3))}</span>` : ""}</button>`;
+    }
+    $("#calGrid").innerHTML = html;
+  }
+  $("#calGrid").addEventListener("click", ev => {
+    const b = ev.target.closest(".cal-day");
+    if (b && !b.disabled) openDay(b.dataset.date);
+  });
+  function openDay(date) {
+    const list = sorted(entries.filter(e => e.date === date));
+    const long = longDate(parseIso(date));
+    if (!list.length) {
+      openDlg(`
+        <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>${esc(t("day.none"))}</p></div>${closeBtn()}</div>
+        <p style="margin:0">${esc(t("day.ask"))}</p>
+        <div class="row"><button class="btn small" type="button" data-writeday="${date}">${esc(t("day.write"))}</button></div>`);
+      return;
+    }
+    if (list.length === 1) { openEntry(list[0].id); return; }
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(long)}</h3><p>${esc(countText(list.length))}</p></div>${closeBtn()}</div>
+      <div class="list-items">${list.map(e => rowHTML(e, date)).join("")}</div>`);
+  }
+
+  // ---------- Info, Sicherung & Sprache ----------
+  let downloads = null;
+  (async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use("downloads"); } catch (e) {} })();
+  const inArtifact = !!(window.claude && window.claude.use);
+
+  function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
+  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries) }, null, 2); }
+  function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); }); }
+  function dataURLToBlob(d) {
+    const comma = d.indexOf(",");
+    const mime = (d.slice(0, comma).match(/data:([^;]+)/) || [])[1] || "image/jpeg";
+    const bin = atob(d.slice(comma + 1));
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+  async function buildBackup() {
+    const fotos = {};
+    for (const e of entries) for (const id of (e.photos || [])) {
+      if (fotos[id]) continue;
+      try { const blob = await PhotoDB.get(id); if (blob) fotos[id] = await blobToDataURL(blob); } catch (err) {}
+    }
+    return JSON.stringify({ app: "Gedankenblasen", version: 2, exportiert: new Date().toISOString(), eintraege: sorted(entries), fotos }, null, 2);
+  }
+  let backupReady = null;
+
+  function openInfo() {
+    backupReady = null;
+    buildBackup().then(d => { backupReady = d; const b = $("#expBtn"); if (b && entries.length) b.disabled = false; });
+    const langBtns = LANGS.map(l => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" lang="${l}">${I18N[l].name}</button>`).join("");
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("info.title"))}</h3><p>${esc(t("info.count", { count: countText(entries.length) }))}</p></div>${closeBtn()}</div>
+      <div class="lang-row"><span class="hint" id="langLbl">${esc(t("info.lang"))} · Sprache · Language · Langue</span>
+        <div class="seg" role="group" aria-labelledby="langLbl">${langBtns}</div></div>
+      ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
+      <p style="margin:0">${esc(t("info.p1"))}</p>
+      <p style="margin:0">${esc(t("info.p2"))}</p>
+      <p style="margin:0">${esc(t("info.p3"))}</p>
+      <div class="row">
+        <button class="btn small" type="button" id="expBtn" ${entries.length && backupReady ? "" : "disabled"}>${esc(t("info.export"))}</button>
+        <button class="btn ghost small" type="button" id="copyBtn" ${entries.length ? "" : "disabled"}>${esc(t("info.copy"))}</button>
+        <label class="btn ghost small file-label">${esc(t("info.import"))}<input type="file" id="impFile" accept=".json,application/json"></label>
+      </div>
+      <div id="copyWrap" hidden>
+        <label for="copyArea" class="hint">${esc(t("info.copyLabel"))}</label>
+        <textarea id="copyArea" class="copy-area" readonly></textarea>
+      </div>
+      <p class="hint">${esc(t("info.importHint"))}</p>
+      <p class="hint" style="margin:0">Gedankenblasen · Version ${APP_VERSION}</p>`);
+    $("#expBtn").addEventListener("click", exportBackup);
+    $("#copyBtn").addEventListener("click", copyBackup);
+    $("#impFile").addEventListener("change", importBackup);
+  }
+  async function exportBackup() {
+    const data = backupReady || backupData();
+    if (downloads) {
+      try { await downloads.save({ filename: backupName(), data }); toast(t("toast.backupSaved")); }
+      catch (e) {
+        if (e && e.code === "declined") toast(t("toast.backupCancel"));
+        else { toast(t("toast.noDownload")); showCopy(data); }
+      }
+      return;
+    }
+    if (inArtifact) { showCopy(data); toast(t("toast.noDownload")); return; }
+    try {
+      const file = new File([data], backupName(), { type: "application/json" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "Gedankenblasen" });
+        toast(t("toast.shared"));
+        return;
+      }
+    } catch (e) { if (e && e.name === "AbortError") { toast(t("toast.backupCancel")); return; } }
+    try {
+      const url = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+      const a = document.createElement("a");
+      a.href = url; a.download = backupName(); document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      toast(t("toast.downloaded"));
+    } catch (e) { showCopy(data); }
+  }
+  function showCopy(data) {
+    $("#copyWrap").hidden = false;
+    const ta = $("#copyArea"); ta.value = data; ta.focus(); ta.select();
+  }
+  function copyBackup() {
+    const data = backupData();
+    const fallback = () => { showCopy(data); toast(t("toast.marked")); };
+    try {
+      navigator.clipboard.writeText(data).then(() => toast(t("toast.copied")), fallback);
+    } catch (e) { fallback(); }
+  }
+  function importBackup(ev) {
+    const file = ev.target.files && ev.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        const arr = Array.isArray(parsed) ? parsed : parsed.eintraege;
+        if (!Array.isArray(arr)) throw new Error();
+        const fotos = parsed && typeof parsed.fotos === "object" && parsed.fotos ? parsed.fotos : {};
+        const valid = arr.filter(validEntry).map(e => ({
+          id: e.id, date: e.date, mood: e.mood,
+          weather: Number.isInteger(e.weather) && e.weather >= 1 && e.weather <= 5 ? e.weather : 0,
+          water: typeof e.water === "number" && e.water >= 0 && e.water <= 5 ? Math.round(e.water * 2) / 2 : 0,
+          photos: Array.isArray(e.photos) ? e.photos.filter(p => typeof p === "string" && /^p[a-z0-9]+$/i.test(p)).slice(0, MAX_PHOTOS) : [],
+          now: String(e.now || ""), mind: String(e.mind || ""), nice: String(e.nice || ""),
+          createdAt: e.createdAt || new Date().toISOString(), updatedAt: e.updatedAt || e.createdAt || new Date().toISOString(),
+        }));
+        const ids = new Set(entries.map(e => e.id));
+        const added = valid.filter(e => !ids.has(e.id));
+        for (const e of added) {
+          const kept = [];
+          for (const id of e.photos) {
+            const d = fotos[id];
+            if (typeof d === "string" && d.startsWith("data:image/")) {
+              try { await PhotoDB.put(id, dataURLToBlob(d)); kept.push(id); } catch (err) {}
+            }
+          }
+          e.photos = kept;
+        }
+        entries = entries.concat(added);
+        persist(); refresh();
+        toast(added.length ? t("toast.imported", { count: countText(added.length) }) : t("toast.importNone"));
+        openInfo();
+      } catch (e) { toast(t("toast.importError")); }
+    };
+    reader.readAsText(file);
+  }
+  $("#infoBtn").addEventListener("click", openInfo);
+  document.addEventListener("click", ev => { if (ev.target.closest("[data-open-info]")) openInfo(); });
+
+  // Hinweis beim ersten Start
+  let noteSeen = false;
+  try { noteSeen = localStorage.getItem(NOTE_KEY) === "1"; } catch (e) {}
+  $("#storageNote").hidden = noteSeen;
+  $("#noteClose").addEventListener("click", () => { $("#storageNote").hidden = true; try { localStorage.setItem(NOTE_KEY, "1"); } catch (e) {} });
+
+  // ---------- Toast ----------
+  let toastT;
+  function toast(msg) {
+    const el = $("#toast");
+    el.textContent = msg; el.hidden = false;
+    clearTimeout(toastT);
+    toastT = setTimeout(() => { el.hidden = true; }, 3600);
+  }
+
+  // ---------- Start ----------
+  makeFormatters();
+  applyStatic();
+  try { const m = localStorage.getItem("gedankenblasen.ansicht"); if (m === "list") viewMode = "list"; } catch (e) {}
+  $("#segBubbles").setAttribute("aria-pressed", viewMode === "bubbles");
+  $("#segList").setAttribute("aria-pressed", viewMode === "list");
+  $("#bubbleWrap").hidden = viewMode !== "bubbles";
+  $("#list").hidden = viewMode !== "list";
+  renderCheckin();
+  const hash0 = (location.hash || "").replace("#", "");
+  go(TABS.includes(hash0) ? hash0 : "heute");
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {}); });
+}
+</script>
+</body>
+</html>

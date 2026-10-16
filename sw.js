@@ -1,6 +1,6 @@
 // Gedankenblasen – Offline-Unterstützung
 // Bei jeder neuen Version die Zahl erhöhen, damit Handys das Update laden.
-const VERSION = "gedankenblasen-v3";
+const VERSION = "gedankenblasen-v4";
 const SHELL = [
   "./",
   "./index.html",
@@ -52,8 +52,9 @@ self.addEventListener("fetch", event => {
   // App-Seite: erst online versuchen (für Updates), sonst gespeicherte Version
   if (req.mode === "navigate") {
     event.respondWith(
-      fetch(req)
-        .then(res => { const copy = res.clone(); caches.open(VERSION).then(c => c.put("./index.html", copy)); return res; })
+      // "no-cache": immer bei GitHub nachfragen, ob es eine neue Version gibt
+      fetch(req.url, { cache: "no-cache", credentials: "same-origin" })
+        .then(res => { if (res.ok) { const copy = res.clone(); caches.open(VERSION).then(c => c.put("./index.html", copy)); } return res; })
         .catch(() => caches.match("./index.html"))
     );
     return;
