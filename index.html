@@ -451,6 +451,61 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
   .sl line { animation: none !important; stroke-dashoffset: 0; }
 }
 
+/* v7: Absicht, Erinnerung, Rückblick, Zusammenhänge, Tour */
+input[type="text"] { width: 100%; border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--bg); padding: 12px 14px; min-height: 48px; }
+input[type="text"]:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.q.intent { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.q.intent .hint { font-size: .85rem; min-height: 1.2em; }
+.intent-note { align-items: flex-start; }
+.intent-note p { margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.memory-card { padding: 0; overflow: hidden; background: linear-gradient(120deg, rgba(244,227,155,.35), rgba(247,205,177,.25)), var(--surface); }
+.memory { width: 100%; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; align-items: center; text-align: left; border: 0; background: transparent; padding: 16px 18px; cursor: pointer; }
+.mem-bubble { position: relative; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; color: var(--bubble-ink);
+  background: radial-gradient(circle at 32% 26%, rgba(255,255,255,.9) 0 7%, rgba(255,255,255,0) 8%), var(--c); box-shadow: 0 0 0 3px rgba(244,210,120,.7), 0 0 22px rgba(244,210,120,.55); }
+.mem-bubble svg { width: 40px; height: 40px; position: relative; z-index: 1; }
+.mem-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mem-text > span:last-child { color: var(--muted); font-size: .92rem; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+#summaryCard h3, .corr-card h3 { margin-bottom: 12px; }
+.sum-text { display: flex; flex-direction: column; gap: 6px; max-width: 60ch; }
+.sum-text p { margin: 0; }
+.sum-text p:first-child { font-weight: 700; }
+.sum-text p:last-child { color: var(--muted); font-style: italic; }
+.corr-card { display: flex; flex-direction: column; gap: 18px; }
+.corr-card h3 { margin-bottom: 0; }
+.corr-sec { display: flex; flex-direction: column; gap: 8px; }
+.corr-sec h4 { margin: 0; font-size: .9rem; color: var(--muted); }
+.corr-row { display: grid; grid-template-columns: minmax(0, 8.5em) minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.corr-lbl { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: .88rem; }
+.corr-lbl > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.corr-ico { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
+.corr-ico svg { width: 18px; height: 18px; }
+.corr-moon { flex: none; position: relative; width: 26px; height: 26px; display: grid; place-items: center; color: var(--muted); }
+.corr-moon svg { width: 22px; height: 22px; }
+.corr-moon b { position: absolute; right: -2px; bottom: -2px; font-size: .62rem; color: var(--ink); }
+.corr-glass { flex: none; width: 26px; height: 26px; display: grid; place-items: center; color: var(--muted); }
+.corr-glass svg { width: 16px; height: 22px; }
+.corr-track { height: 12px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; }
+.corr-bar { display: block; height: 100%; border-radius: 999px; }
+.corr-val { display: flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+.corr-val small { color: var(--muted); font-size: .78rem; min-width: 2.2em; }
+.corr-face { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: var(--bubble-ink); }
+.corr-face svg { width: 18px; height: 18px; }
+dialog.tour { width: min(440px, calc(100vw - 24px)); }
+.tour-wrap { padding: 24px 22px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.tour-wrap h3 { font-size: 1.4rem; text-wrap: balance; }
+.tour-wrap > p { margin: 0; max-width: 34ch; }
+.tour-art { width: 160px; color: var(--muted); }
+.tour-art svg { width: 100%; height: auto; display: block; }
+.tour-step { margin: 0; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; }
+.tour-wrap .seg { align-self: center; flex-wrap: wrap; justify-content: center; }
+.tour-wrap .note { text-align: left; }
+.tour-dots { display: flex; gap: 6px; }
+.tour-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.tour-dots i.on { background: var(--accent); width: 22px; border-radius: 999px; }
+.tour-nav { justify-content: center; }
+.tour-skip { font-size: .92rem; }
+.tour-wrap .seg button { padding: 8px 12px; }
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -507,6 +562,8 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
+    <div class="card memory-card" id="memoryCard" hidden></div>
+    <div class="note intent-note" id="intentNote" hidden></div>
     <div class="card" id="checkinCard"></div>
   </section>
 
@@ -561,6 +618,8 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       <div class="cal-grid" id="calGrid" style="margin-top:14px"></div>
     </div>
     <div class="legend" id="legend"></div>
+    <div class="card" id="summaryCard"></div>
+    <div class="card corr-card" id="corrCard"></div>
     <div class="row"><button class="btn ghost small" type="button" id="pdfBtn">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg>
       <span data-i18n="pdf.btn"></span></button></div>
@@ -595,6 +654,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
     <button class="btn ghost small" type="button" id="breathSkip"></button>
   </div>
 </dialog>
+<dialog id="tour" class="tour" aria-labelledby="tourTitle"><div class="tour-wrap" id="tourBody"></div></dialog>
 <dialog id="lb" class="lb"><button class="icon-btn lb-x" id="lbClose" type="button" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><img id="lbImg" alt=""></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
@@ -606,7 +666,9 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
   const LANG_KEY = "gedankenblasen.sprache";
   const SLEEP_KEY = "gedankenblasen.schlaf";
   const SOUND_KEY = "gedankenblasen.toene";
-  const APP_VERSION = 6;            // bei jedem Update zusammen mit sw.js hochzählen
+  const INTENT_KEY = "gedankenblasen.absicht";
+  const TOUR_KEY = "gedankenblasen.tour";
+  const APP_VERSION = 7;            // bei jedem Update zusammen mit sw.js hochzählen
   const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
   const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
 
@@ -697,6 +759,27 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       "breath.open": "Erst kurz durchatmen", "breath.title": "Kurz durchatmen",
       "breath.in": "Einatmen …", "breath.out": "Ausatmen …", "breath.round": "Atemzug {i} von 3",
       "breath.done": "Schön. Du bist angekommen.", "breath.toCheckin": "Zum Check-in", "breath.skip": "Überspringen",
+      "q.o": "„", "q.c": "“",
+      "intent.label": "Heute möchte ich …", "intent.ph": "z. B. mir Zeit für einen Spaziergang nehmen", "intent.saved": "Gespeichert",
+      "intent.remind": "Heute Morgen hast du dir vorgenommen:", "intent.how": "Wie ist es gelaufen? Ganz ohne Bewertung.", "intent.title": "Absicht am Morgen",
+      "memory.year": "Heute vor einem Jahr", "memory.month": "Heute vor einem Monat",
+      "sum.title": "Dein {month}", "sum.few": "Ab 3 Abenden in diesem Monat entsteht hier eine kleine Zusammenfassung.",
+      "sum.count": "Du hast {count} festgehalten.", "sum.mood": "Am häufigsten fühlten sich deine Tage {mood} an.",
+      "sum.weather": "Das Wetter war meistens {w}.", "sum.water": "Im Schnitt hast du {n} Gläser Wasser notiert.",
+      "sum.sleep": "Deine Nächte waren im Schnitt {s}.", "sum.best": "An Tagen mit {w} ging es dir besonders gut.",
+      "sum.sleepLink": "Nach erholsamen Nächten ging es dir oft besser.",
+      "sum.photo1": "1 Foto erinnert dich an diesen Monat.", "sum.photos": "{n} Fotos erinnern dich an diesen Monat.",
+      "sum.close": "Schön, dass du dir die Zeit genommen hast.",
+      "corr.title": "Was mit deiner Stimmung zusammenhängt", "corr.weather": "Nach Wetter", "corr.sleep": "Nach Schlaf", "corr.water": "Nach Wasser",
+      "corr.few": "Ab 5 Abenden erscheinen hier erste Zusammenhänge.", "corr.need": "Noch zu wenige Daten.",
+      "corr.note": "Das sind Beobachtungen, keine Regeln. Jeder Tag ist anders.", "corr.aria": "{label}: im Schnitt {mood}, {n} Abende",
+      "water.g1": "0–1,5 Gläser", "water.g2": "2–3,5 Gläser", "water.g3": "4–5 Gläser",
+      "tour.t0": "Willkommen bei Gedankenblasen", "tour.p0": "Zwei Minuten am Abend, nur für dich: innehalten, spüren, wie der Tag war, und ihn sanft abschließen.",
+      "tour.t1": "So funktioniert’s", "tour.p1": "Jeden Abend wählst du eine Stimmung, alles andere ist freiwillig. Jeder Abend wird zu einer schwebenden Blase, und am Monatsende entsteht daraus ein Sternbild. Gedanken, die du nicht behalten willst, lässt du unter „Loslassen“ einfach platzen.",
+      "tour.t2": "Deine Gedanken bleiben bei dir", "tour.p2": "Alles wird nur auf diesem Handy gespeichert. Es gibt kein Konto und keinen Server. Mach ab und zu eine Sicherung über das Schild-Symbol oben rechts.",
+      "tour.home": "Tipp: Tippe in Safari auf Teilen und dann auf „Zum Home-Bildschirm“. Dann öffnet sich Gedankenblasen wie eine richtige App.",
+      "tour.next": "Weiter", "tour.back": "Zurück", "tour.start": "Los geht’s", "tour.skip": "Überspringen", "info.tour": "Einführung ansehen",
+      "tour.step": "Schritt {i} von 3",
       "dq.title": "Frage des Tages",
       "dq.0": "Wofür bist du heute dankbar?", "dq.1": "Was hat dich heute überrascht?", "dq.2": "Worauf freust du dich morgen?",
       "dq.3": "Wer hat dir heute gutgetan?", "dq.4": "Was hast du heute gelernt?", "dq.5": "Worauf bist du heute ein bisschen stolz?",
@@ -804,6 +887,27 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       "breath.open": "Take a breath first", "breath.title": "A moment to breathe",
       "breath.in": "Breathe in …", "breath.out": "Breathe out …", "breath.round": "Breath {i} of 3",
       "breath.done": "Lovely. You’ve arrived.", "breath.toCheckin": "Go to check-in", "breath.skip": "Skip",
+      "q.o": "“", "q.c": "”",
+      "intent.label": "Today I’d like to …", "intent.ph": "e.g. take time for a walk", "intent.saved": "Saved",
+      "intent.remind": "This morning you set out to:", "intent.how": "How did it go? No judgement.", "intent.title": "Morning intention",
+      "memory.year": "One year ago today", "memory.month": "One month ago today",
+      "sum.title": "Your {month}", "sum.few": "Once you have 3 evenings this month, a little summary appears here.",
+      "sum.count": "You captured {count}.", "sum.mood": "Most of your days felt {mood}.",
+      "sum.weather": "The weather was mostly {w}.", "sum.water": "On average you noted {n} glasses of water.",
+      "sum.sleep": "On average your nights were {s}.", "sum.best": "Days with {w} were especially good for you.",
+      "sum.sleepLink": "After restful nights you often felt better.",
+      "sum.photo1": "1 photo reminds you of this month.", "sum.photos": "{n} photos remind you of this month.",
+      "sum.close": "Lovely that you took the time.",
+      "corr.title": "What goes with your mood", "corr.weather": "By weather", "corr.sleep": "By sleep", "corr.water": "By water",
+      "corr.few": "Once you have 5 evenings, first patterns appear here.", "corr.need": "Not enough data yet.",
+      "corr.note": "These are observations, not rules. Every day is different.", "corr.aria": "{label}: on average {mood}, {n} evenings",
+      "water.g1": "0–1.5 glasses", "water.g2": "2–3.5 glasses", "water.g3": "4–5 glasses",
+      "tour.t0": "Welcome to Gedankenblasen", "tour.p0": "Two minutes in the evening, just for you: pause, notice how the day felt and close it gently.",
+      "tour.t1": "How it works", "tour.p1": "Each evening you choose a mood; everything else is optional. Every evening becomes a floating bubble, and at the end of the month they turn into a constellation. Thoughts you don’t want to keep, you simply pop under “Let go”.",
+      "tour.t2": "Your thoughts stay with you", "tour.p2": "Everything is stored only on this phone. There’s no account and no server. Make a backup now and then via the shield icon at the top right.",
+      "tour.home": "Tip: in Safari, tap Share and then “Add to Home Screen”. Gedankenblasen will then open like a real app.",
+      "tour.next": "Next", "tour.back": "Back", "tour.start": "Let’s go", "tour.skip": "Skip", "info.tour": "Show introduction",
+      "tour.step": "Step {i} of 3",
       "dq.title": "Question of the day",
       "dq.0": "What are you grateful for today?", "dq.1": "What surprised you today?", "dq.2": "What are you looking forward to tomorrow?",
       "dq.3": "Who was good for you today?", "dq.4": "What did you learn today?", "dq.5": "What are you a little proud of today?",
@@ -911,6 +1015,27 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       "breath.open": "Respirer un instant d’abord", "breath.title": "Un moment pour respirer",
       "breath.in": "Inspire …", "breath.out": "Expire …", "breath.round": "Respiration {i} sur 3",
       "breath.done": "Très bien. Tu es là.", "breath.toCheckin": "Aller au check-in", "breath.skip": "Passer",
+      "q.o": "« ", "q.c": " »",
+      "intent.label": "Aujourd’hui, j’aimerais …", "intent.ph": "p. ex. prendre le temps d’une promenade", "intent.saved": "Enregistré",
+      "intent.remind": `Ce matin, tu voulais${NB}:`, "intent.how": `Comment ça s’est passé${NB}? Sans jugement.`, "intent.title": "Intention du matin",
+      "memory.year": "Il y a un an aujourd’hui", "memory.month": "Il y a un mois aujourd’hui",
+      "sum.title": "Ton mois · {month}", "sum.few": "Dès 3 soirées ce mois-ci, un petit résumé apparaîtra ici.",
+      "sum.count": "Tu as noté {count}.", "sum.mood": "La plupart de tes journées étaient {mood}.",
+      "sum.weather": "Le temps était surtout {w}.", "sum.water": "En moyenne, tu as noté {n} verres d’eau.",
+      "sum.sleep": "En moyenne, tes nuits étaient {s}.", "sum.best": "Les jours {w} t’ont fait particulièrement du bien.",
+      "sum.sleepLink": "Après des nuits reposantes, tu te sentais souvent mieux.",
+      "sum.photo1": "1 photo te rappelle ce mois.", "sum.photos": "{n} photos te rappellent ce mois.",
+      "sum.close": "C’est bien d’avoir pris ce temps.",
+      "corr.title": "Ce qui va avec ton humeur", "corr.weather": "Selon la météo", "corr.sleep": "Selon le sommeil", "corr.water": "Selon l’eau",
+      "corr.few": "Dès 5 soirées, les premiers liens apparaissent ici.", "corr.need": "Pas encore assez de données.",
+      "corr.note": "Ce sont des observations, pas des règles. Chaque jour est différent.", "corr.aria": `{label}${NB}: en moyenne {mood}, {n} soirées`,
+      "water.g1": "0–1,5 verre", "water.g2": "2–3,5 verres", "water.g3": "4–5 verres",
+      "tour.t0": "Bienvenue dans Gedankenblasen", "tour.p0": `Deux minutes le soir, rien que pour toi${NB}: faire une pause, sentir comment s’est passée la journée et la clore en douceur.`,
+      "tour.t1": "Comment ça marche", "tour.p1": `Chaque soir, tu choisis une humeur, tout le reste est facultatif. Chaque soirée devient une bulle qui flotte, et à la fin du mois, elles forment une constellation. Les pensées que tu ne veux pas garder, tu les fais simplement éclater sous «${NB}Lâcher prise${NB}».`,
+      "tour.t2": "Tes pensées restent chez toi", "tour.p2": "Tout est enregistré uniquement sur ce téléphone. Pas de compte, pas de serveur. Fais de temps en temps une sauvegarde via l’icône du bouclier en haut à droite.",
+      "tour.home": `Astuce${NB}: dans Safari, touche Partager puis «${NB}Sur l’écran d’accueil${NB}». Gedankenblasen s’ouvrira alors comme une vraie app.`,
+      "tour.next": "Suivant", "tour.back": "Retour", "tour.start": "C’est parti", "tour.skip": "Passer", "info.tour": "Revoir l’introduction",
+      "tour.step": "Étape {i} sur 3",
       "dq.title": "Question du jour",
       "dq.0": `Pour quoi es-tu reconnaissant·e aujourd’hui${NB}?`, "dq.1": `Qu’est-ce qui t’a surpris·e aujourd’hui${NB}?`, "dq.2": `Qu’est-ce qui te réjouit pour demain${NB}?`,
       "dq.3": `Qui t’a fait du bien aujourd’hui${NB}?`, "dq.4": `Qu’as-tu appris aujourd’hui${NB}?`, "dq.5": `De quoi es-tu un peu fier·ère aujourd’hui${NB}?`,
@@ -972,7 +1097,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
     lang = l;
     try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
     makeFormatters(); applyStatic();
-    renderCheckin(); renderMorning(); releaseState = "write"; renderRelease();
+    renderCheckin(); renderMorning(); renderMemory(); renderIntentNote(); releaseState = "write"; renderRelease();
     if (current === "blasen") renderBlasen();
     if (current === "rueckblick") renderCal();
   }
@@ -1259,8 +1384,23 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       <h3>${esc(t("sleep.legend"))}</h3>
       <div class="moons">${[1, 2, 3, 4, 5].map(i => `<button type="button" class="moon-btn" data-moon="${i}" aria-pressed="${v === i}" aria-label="${esc(t("sleep.aria", { i, label: t("sleep." + i) }))}">${moonSVG(i <= v)}</button>`).join("")}</div>
       <p class="water-out" aria-live="polite">${v ? esc(t("sleep." + v)) : ""}</p>
-      <p class="hint sub-hint">${esc(t("sleep.hint"))}</p>`;
+      <p class="hint sub-hint">${esc(t("sleep.hint"))}</p>
+      <div class="q intent">
+        <label for="intentInput">${esc(t("intent.label"))}</label>
+        <input type="text" id="intentInput" maxlength="140" autocomplete="off" placeholder="${esc(t("intent.ph"))}" value="${esc(intentFor(todayIso()))}">
+        <span class="hint" id="intentSaved" aria-live="polite"></span>
+      </div>`;
   }
+  let intentT;
+  $("#morningCard").addEventListener("input", ev => {
+    if (ev.target.id !== "intentInput") return;
+    const v = ev.target.value.trim(), d = todayIso();
+    if (v) intentMap[d] = v; else delete intentMap[d];
+    saveIntents();
+    clearTimeout(intentT);
+    const sv = $("#intentSaved"); sv.textContent = "";
+    intentT = setTimeout(() => { sv.textContent = "✓ " + t("intent.saved"); }, 600);
+  });
   $("#morningCard").addEventListener("click", ev => {
     const b = ev.target.closest("[data-moon]");
     if (!b) return;
@@ -1402,6 +1542,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       doc.text(ml, M + IND, y + 10); y += 10 + ml.length * 4.4 + 2;
       const qa = QUESTIONS.map(k => [t("q." + k), e[k]]);
       if (e.dqa) qa.push([t("dq." + e.dq), e.dqa]);
+      if (intentFor(e.date)) qa.unshift([t("intent.title"), intentFor(e.date)]);
       for (const [q, a] of qa) {
         if (!a) continue;
         ensure(12);
@@ -1457,6 +1598,147 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
     } catch (e) { toast(t("pdf.fail")); }
     finally { btn.disabled = false; }
   });
+
+  // ---------- Absicht am Morgen ----------
+  function loadMap(key) { try { const o = JSON.parse(localStorage.getItem(key) || "{}"); return o && typeof o === "object" ? o : {}; } catch (e) { return {}; } }
+  let intentMap = loadMap(INTENT_KEY);
+  function saveIntents() { try { localStorage.setItem(INTENT_KEY, JSON.stringify(intentMap)); } catch (e) { toast(t("toast.storageFail")); } }
+  const intentFor = d => (typeof intentMap[d] === "string" ? intentMap[d] : "");
+  const quote = s => t("q.o") + s + t("q.c");
+  function logicalToday() { return new Date().getHours() < 4 ? offsetDate(-1) : todayIso(); }
+  function renderIntentNote() {
+    const box = $("#intentNote");
+    const h = new Date().getHours();
+    const txt = intentFor(logicalToday());
+    box.hidden = !(txt && (h >= 14 || h < 4));
+    if (box.hidden) return;
+    box.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      <p><span class="hint" style="display:block">${esc(t("intent.remind"))}</span><strong>${esc(quote(txt))}</strong><span class="hint" style="display:block">${esc(t("intent.how"))}</span></p>`;
+  }
+
+  // ---------- Heute vor einem Jahr / Monat ----------
+  function renderMemory() {
+    const card = $("#memoryCard");
+    const d = new Date();
+    const y1 = iso(new Date(d.getFullYear() - 1, d.getMonth(), d.getDate()));
+    const m1 = iso(new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()));
+    let kind = "memory.year";
+    let e = sorted(entries.filter(x => x.date === y1))[0];
+    if (!e) { e = sorted(entries.filter(x => x.date === m1))[0]; kind = "memory.month"; }
+    card.hidden = !e;
+    if (!e) return;
+    const snippet = e.nice || e.now || e.dqa || e.mind || t("list.onlyMood");
+    const ph = (e.photos || [])[0];
+    card.innerHTML = `<button type="button" class="memory" data-mem="${e.id}">
+      <span class="mem-bubble" style="--c:${MOOD_COLORS[e.mood]}">${ph ? `<img class="bph" alt="" data-pid="${ph}">` : ""}${face(e.mood)}</span>
+      <span class="mem-text"><span class="dq-tag">${esc(t(kind))}</span><strong>${esc(longDate(parseIso(e.date)))} · ${esc(moodLabel(e.mood))}</strong><span>${esc(snippet)}</span></span>
+    </button>`;
+    fillImgs(card);
+  }
+  $("#memoryCard").addEventListener("click", ev => { const b = ev.target.closest("[data-mem]"); if (b) openEntry(b.dataset.mem); });
+
+  // ---------- Monatsrückblick in Worten ----------
+  const avg = arr => arr.reduce((s, v) => s + v, 0) / arr.length;
+  function mostCommon(values) {
+    const cnt = new Map();
+    values.forEach(v => cnt.set(v, (cnt.get(v) || 0) + 1));
+    let best = null, n = 0;
+    cnt.forEach((c, v) => { if (c > n) { n = c; best = v; } });
+    return best;
+  }
+  function renderSummary() {
+    const card = $("#summaryCard");
+    const pre = `${calY}-${pad(calM + 1)}`;
+    const month = fmtMonth.format(new Date(calY, calM, 1));
+    const list = entries.filter(e => e.date.startsWith(pre));
+    const title = `<h3>${esc(t("sum.title", { month: lang === "fr" ? month : cap(month) }))}</h3>`;
+    if (list.length < 3) { card.innerHTML = title + `<p class="hint" style="margin:0">${esc(t("sum.few"))}</p>`; return; }
+    const out = [t("sum.count", { count: countText(list.length) })];
+    out.push(t("sum.mood", { mood: quote(moodLabel(mostCommon(list.map(e => e.mood)))) }));
+    const ws = list.filter(e => e.weather);
+    if (ws.length >= 2) out.push(t("sum.weather", { w: quote(weatherLabel(mostCommon(ws.map(e => e.weather)))) }));
+    const wa = list.filter(e => e.water);
+    if (wa.length >= 2) out.push(t("sum.water", { n: waterFmt(Math.round(avg(wa.map(e => e.water)) * 2) / 2) }));
+    const sl = list.map(e => sleepFor(e.date)).filter(Boolean);
+    if (sl.length >= 2) out.push(t("sum.sleep", { s: quote(t("sleep." + Math.round(avg(sl)))) }));
+    const all = avg(list.map(e => e.mood));
+    let best = null;
+    for (let w = 1; w <= 5; w++) {
+      const g = list.filter(e => e.weather === w);
+      if (g.length >= 2) { const a = avg(g.map(e => e.mood)); if (a - all >= 0.4 && (!best || a > best.a)) best = { w, a }; }
+    }
+    if (best) out.push(t("sum.best", { w: quote(weatherLabel(best.w)) }));
+    const hi = list.filter(e => sleepFor(e.date) >= 4), lo = list.filter(e => { const s = sleepFor(e.date); return s && s <= 2; });
+    if (hi.length >= 2 && lo.length >= 2 && avg(hi.map(e => e.mood)) - avg(lo.map(e => e.mood)) >= 0.5) out.push(t("sum.sleepLink"));
+    const nph = list.reduce((s, e) => s + (e.photos || []).length, 0);
+    if (nph) out.push(nph === 1 ? t("sum.photo1") : t("sum.photos", { n: nph }));
+    out.push(t("sum.close"));
+    card.innerHTML = title + `<div class="sum-text">${out.map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+  }
+
+  // ---------- Zusammenhänge: Wetter, Schlaf, Wasser × Stimmung ----------
+  function renderCorr() {
+    const card = $("#corrCard");
+    const head = `<h3>${esc(t("corr.title"))}</h3>`;
+    if (entries.length < 5) { card.innerHTML = head + `<p class="hint" style="margin:0">${esc(t("corr.few"))}</p>`; return; }
+    const groups = {
+      weather: [1, 2, 3, 4, 5].map(w => ({ label: weatherLabel(w), icon: `<span class="corr-ico" style="background:${WEATHER_COLORS[w]}">${weatherIcon(w)}</span>`, list: entries.filter(e => e.weather === w) })),
+      sleep: [1, 2, 3, 4, 5].map(s => ({ label: t("sleep." + s), icon: `<span class="corr-moon">${moonSVG(true)}<b>${s}</b></span>`, list: entries.filter(e => sleepFor(e.date) === s) })),
+      water: [[0, 1.5, "water.g1"], [2, 3.5, "water.g2"], [4, 5, "water.g3"]].map(([a, b, k]) => ({ label: t(k), icon: `<span class="corr-glass">${glassSVG(a === 0 ? 0.5 : 1)}</span>`, list: entries.filter(e => e.water >= a && e.water <= b && (a > 0 || e.water > 0)) })),
+    };
+    const section = (key, title) => {
+      const rows = groups[key].filter(g => g.list.length);
+      if (rows.length < 2) return `<div class="corr-sec"><h4>${esc(title)}</h4><p class="hint" style="margin:0">${esc(t("corr.need"))}</p></div>`;
+      return `<div class="corr-sec"><h4>${esc(title)}</h4>${rows.map(g => {
+        const a = avg(g.list.map(e => e.mood)), m = Math.round(a);
+        const w = Math.max(6, (a - 1) / 4 * 100);
+        return `<div class="corr-row" role="img" aria-label="${esc(t("corr.aria", { label: g.label, mood: moodLabel(m), n: g.list.length }))}">
+          <span class="corr-lbl">${g.icon}<span>${esc(g.label)}</span></span>
+          <span class="corr-track"><span class="corr-bar" style="width:${w.toFixed(0)}%;background:${MOOD_COLORS[m]}"></span></span>
+          <span class="corr-val"><span class="corr-face" style="background:${MOOD_COLORS[m]}">${face(m)}</span><small>${g.list.length}×</small></span>
+        </div>`;
+      }).join("")}</div>`;
+    };
+    card.innerHTML = head + section("weather", t("corr.weather")) + section("sleep", t("corr.sleep")) + section("water", t("corr.water"))
+      + `<p class="hint" style="margin:0">${esc(t("corr.note"))}</p>`;
+  }
+
+  // ---------- Willkommens-Tour ----------
+  const tourDlg = $("#tour");
+  let tourStep = 0;
+  const TOUR_ART = [
+    `<svg viewBox="0 0 120 90" aria-hidden="true"><circle cx="48" cy="52" r="30" style="fill:var(--m2)"/><circle cx="86" cy="28" r="16" style="fill:var(--m1)"/><circle cx="92" cy="68" r="10" style="fill:var(--m4)"/><circle cx="22" cy="20" r="7" style="fill:var(--m5)"/><circle cx="38" cy="40" r="6" fill="#fff" opacity=".8"/><circle cx="81" cy="22" r="3.5" fill="#fff" opacity=".8"/></svg>`,
+    `<svg viewBox="0 0 120 90" aria-hidden="true"><circle cx="30" cy="50" r="20" style="fill:var(--m4)"/><circle cx="24" cy="43" r="4" fill="#fff" opacity=".8"/><path d="M58 50h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M68 44l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="82" y="22" width="34" height="56" rx="12" style="fill:#2A2450"/><circle cx="92" cy="36" r="2.6" fill="#fff"/><circle cx="105" cy="46" r="2.2" fill="#fff"/><circle cx="96" cy="62" r="2.8" fill="#fff"/><path d="M92 36L105 46L96 62" stroke="#fff" stroke-opacity=".6" fill="none"/></svg>`,
+    `<svg viewBox="0 0 120 90" aria-hidden="true"><path d="M60 10c14 0 26 5 26 5v24c0 18-12 30-26 36-14-6-26-18-26-36V15s12-5 26-5z" style="fill:var(--accent-soft)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M49 44l8 8 15-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  ];
+  const isStandalone = () => (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  function renderTour() {
+    const langBtns = LANGS.map(l => `<button type="button" data-tlang="${l}" aria-pressed="${l === lang}" lang="${l}">${I18N[l].name}</button>`).join("");
+    $("#tourBody").innerHTML = `
+      <div class="tour-art">${TOUR_ART[tourStep]}</div>
+      <p class="hint tour-step">${esc(t("tour.step", { i: tourStep + 1 }))}</p>
+      <h3 id="tourTitle">${esc(t("tour.t" + tourStep))}</h3>
+      <p>${esc(t("tour.p" + tourStep))}</p>
+      ${tourStep === 0 ? `<div class="seg" role="group" aria-label="${esc(t("info.lang"))}">${langBtns}</div>` : ""}
+      ${tourStep === 2 && !isStandalone() ? `<div class="note"><p>${esc(t("tour.home"))}</p></div>` : ""}
+      <div class="tour-dots" aria-hidden="true">${[0, 1, 2].map(i => `<i class="${i === tourStep ? "on" : ""}"></i>`).join("")}</div>
+      <div class="row tour-nav">
+        ${tourStep > 0 ? `<button class="btn ghost" type="button" data-tour-back>${esc(t("tour.back"))}</button>` : ""}
+        <button class="btn" type="button" data-tour-next>${esc(t(tourStep < 2 ? "tour.next" : "tour.start"))}</button>
+      </div>
+      ${tourStep < 2 ? `<button class="link-btn tour-skip" type="button" data-tour-skip>${esc(t("tour.skip"))}</button>` : ""}`;
+    const nb = $("#tourBody [data-tour-next]"); if (nb) nb.focus();
+  }
+  function openTour() { tourStep = 0; renderTour(); if (!tourDlg.open) tourDlg.showModal(); }
+  $("#tourBody").addEventListener("click", ev => {
+    const b = ev.target.closest("button");
+    if (!b) return;
+    if (b.dataset.tlang) { setLang(b.dataset.tlang); renderTour(); return; }
+    if (b.hasAttribute("data-tour-back")) { tourStep = Math.max(0, tourStep - 1); renderTour(); return; }
+    if (b.hasAttribute("data-tour-next")) { if (tourStep < 2) { tourStep++; renderTour(); } else tourDlg.close(); return; }
+    if (b.hasAttribute("data-tour-skip")) tourDlg.close();
+  });
+  tourDlg.addEventListener("close", () => { try { localStorage.setItem(TOUR_KEY, "1"); } catch (e) {} sound("soft"); });
 
   // ---------- Navigation ----------
   const TABS = ["heute", "blasen", "loslassen", "rueckblick"];
@@ -1997,6 +2279,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       </div>
       ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
       ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
+      ${intentFor(e.date) ? `<div class="answer"><h4>${esc(t("intent.title"))}</h4><p>${esc(quote(intentFor(e.date)))}</p></div>` : ""}
       ${answers}
       ${dqHtml}
       ${gallery}
@@ -2077,9 +2360,11 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
     else if (b.dataset.dayentry) openEntry(b.dataset.dayentry, b.dataset.from);
     else if (b.dataset.writeday) { closeDlg(); renderCheckin(b.dataset.writeday); go("heute"); }
     else if (b.dataset.lang) { setLang(b.dataset.lang); openInfo(); }
+    else if (b.hasAttribute("data-tour")) { closeDlg(); openTour(); }
   });
 
   function refresh() {
+    renderMemory();
     if (current === "blasen") renderBlasen();
     if (current === "rueckblick") renderCal();
   }
@@ -2199,6 +2484,8 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       html += `<button type="button" class="${cls}" style="${style}" data-date="${key}" ${future ? "disabled" : ""} aria-label="${esc(label)}">${d}${list.length > 1 ? `<span class="cnt" aria-hidden="true">${"•".repeat(Math.min(list.length, 3))}</span>` : ""}</button>`;
     }
     $("#calGrid").innerHTML = html;
+    renderSummary();
+    renderCorr();
     renderJar();
   }
   $("#calGrid").addEventListener("click", ev => {
@@ -2227,7 +2514,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
   const inArtifact = !!(window.claude && window.claude.use);
 
   function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
-  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap }, null, 2); }
+  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap }, null, 2); }
   function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); }); }
   function dataURLToBlob(d) {
     const comma = d.indexOf(",");
@@ -2243,7 +2530,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
       if (fotos[id]) continue;
       try { const blob = await PhotoDB.get(id); if (blob) fotos[id] = await blobToDataURL(blob); } catch (err) {}
     }
-    return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, fotos }, null, 2);
+    return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap, fotos }, null, 2);
   }
   let backupReady = null;
 
@@ -2262,6 +2549,7 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
           <span class="track" aria-hidden="true"></span>
           <span><strong>${esc(t("sound.label"))}</strong><br><span class="hint">${esc(t("sound.hint"))}</span></span>
         </label>
+        <div><button class="btn ghost small" type="button" data-tour>${esc(t("info.tour"))}</button></div>
       </div>
       ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
       <p style="margin:0">${esc(t("info.p1"))}</p>
@@ -2350,6 +2638,12 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
           }
           saveSleep();
         }
+        if (parsed && parsed.absichten && typeof parsed.absichten === "object") {
+          for (const [d, v] of Object.entries(parsed.absichten)) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(d) && typeof v === "string" && v.trim() && !intentFor(d)) intentMap[d] = v.slice(0, 140);
+          }
+          saveIntents();
+        }
         const ids = new Set(entries.map(e => e.id));
         const added = valid.filter(e => !ids.has(e.id));
         for (const e of added) {
@@ -2398,8 +2692,13 @@ dialog.breath { width: min(420px, calc(100vw - 24px)); }
   $("#list").hidden = viewMode !== "list";
   renderCheckin();
   renderMorning();
+  renderMemory();
+  renderIntentNote();
   const hash0 = (location.hash || "").replace("#", "");
   go(TABS.includes(hash0) ? hash0 : "heute");
+  let tourSeen = true;
+  try { tourSeen = localStorage.getItem(TOUR_KEY) === "1"; } catch (e) {}
+  if (!tourSeen && !entries.length) openTour();
 })();
 </script>
 <script>
