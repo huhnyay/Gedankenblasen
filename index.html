@@ -597,6 +597,22 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
 .ir-bar { flex: none; width: 90px; height: 8px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; }
 .ir-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--m2), var(--m4) 60%, var(--m5)); min-width: 8px; }
 .ir-note { margin-top: 4px !important; color: var(--muted); font-style: italic; }
+/* v10 – Vorhaben-Karte */
+.intent-card { display: flex; flex-direction: column; gap: 12px; }
+.intent-head { display: flex; align-items: center; gap: 8px; margin: 0; }
+.intent-head svg { color: var(--accent); }
+.intent-write { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.intent-write .row { margin: 0; }
+.intent-show { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.intent-show .link-btn { font-size: .9rem; }
+.intent-yday { border-top: 1px solid var(--line); padding-top: 12px; }
+.intent-yday summary { cursor: pointer; list-style: none; display: flex; flex-direction: column; gap: 2px; padding: 4px 36px 4px 0; position: relative; }
+.intent-yday summary::-webkit-details-marker { display: none; }
+.intent-yday summary::after { content: ""; position: absolute; right: 8px; top: 50%; width: 10px; height: 10px; border-right: 2.5px solid var(--accent); border-bottom: 2.5px solid var(--accent); transform: translateY(-70%) rotate(45deg); transition: transform .2s; }
+.intent-yday[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) { .intent-yday summary::after { transition: none; } }
+.intent-yday .intent-block { margin-top: 8px; }
+.answer .intent-block { margin-top: 8px; }
 
 /* Toast */
 .toast {
@@ -655,7 +671,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       </button>
     </div>
     <div class="card memory-card" id="memoryCard" hidden></div>
-    <div class="note intent-note" id="intentNote" hidden></div>
+    <div class="card intent-card" id="intentCard"></div>
     <div class="card" id="checkinCard"></div>
   </section>
 
@@ -766,7 +782,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   const PREMIUM_KEY = "gedankenblasen.premium";
   const RITUAL_KEY = "gedankenblasen.ritual";
   const REM_KEY = "gedankenblasen.erinnerung";
-  const APP_VERSION = 9;            // bei jedem Update zusammen mit sw.js hochzählen
+  const APP_VERSION = 10;            // bei jedem Update zusammen mit sw.js hochzählen
   const JSPDF_URL = "vendor/jspdf.umd.min.js";
   const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
 
@@ -863,6 +879,10 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "intent.s0": "Diesmal nicht, auch okay", "intent.s1": "Kaum", "intent.s2": "Teilweise", "intent.s3": "Größtenteils", "intent.s4": "Voll und ganz",
       "intent.unrated": "Schieb den Regler, wenn du magst.", "intent.notePh": "Magst du noch etwas dazu sagen? (freiwillig)", "intent.result": "Wie es lief",
       "intent.reset": "Auswahl entfernen",
+      "intent.card": "Dein Vorhaben für heute", "intent.set": "Merken", "intent.edit": "Ändern",
+      "intent.anytime": "Ganz egal, wann – morgens, mittags oder spontan. Wie es lief, kannst du eintragen, sobald du magst.",
+      "intent.howNow": "Wie läuft’s? Schieb den Regler, wann immer du willst – ganz ohne Bewertung.",
+      "intent.yesterday": "Gestern hattest du dir vorgenommen:",
       "memory.year": "Heute vor einem Jahr", "memory.month": "Heute vor einem Monat",
       "sum.title": "Dein {month}", "sum.few": "Ab 3 Abenden in diesem Monat entsteht hier eine kleine Zusammenfassung.",
       "sum.count": "Du hast {count} festgehalten.", "sum.mood": "Am häufigsten fühlten sich deine Tage {mood} an.",
@@ -887,6 +907,16 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "dq.21": "Was hast du heute zum ersten Mal gemacht?", "dq.22": "Welches Gefühl war heute am stärksten?", "dq.23": "Was hat dich heute mit anderen verbunden?",
       "dq.24": "Wofür hattest du heute zu wenig Zeit?", "dq.25": "Was hat dir heute gutgetan, ohne dass du es geplant hattest?", "dq.26": "Welche kleine Sache hat deinen Tag besser gemacht?",
       "dq.27": "Was würdest du deinem Ich von heute Morgen erzählen?", "dq.28": "Wo warst du heute gern?", "dq.29": "Was darfst du heute einfach gut sein lassen?",
+      "dq.30": "Welche Farbe hätte dein Tag heute?", "dq.31": "Was hast du heute losgelassen?", "dq.32": "Wobei hast du heute die Zeit vergessen?",
+      "dq.33": "Was hat dich heute berührt?", "dq.34": "Wem möchtest du noch Danke sagen?", "dq.35": "Was hat dir dein Körper heute erzählt?",
+      "dq.36": "Welches Geräusch hat deinen Tag begleitet?", "dq.37": "Was hat dich heute geärgert – und was steckt vielleicht dahinter?", "dq.38": "Was hast du heute gut gemacht?",
+      "dq.39": "Welche Pause hat dir heute gutgetan?", "dq.40": "Was hat dich heute an früher erinnert?", "dq.41": "Was war heute einfach schön anzusehen?",
+      "dq.42": "Wofür hast du heute Mut gebraucht?", "dq.43": "Was möchtest du von heute mitnehmen?", "dq.44": "Was hättest du heute gebraucht?",
+      "dq.45": "Mit welchem Wort würdest du deinen Tag beschreiben?", "dq.46": "Wann hast du heute tief durchgeatmet?", "dq.47": "Was hat dich heute neugierig gemacht?",
+      "dq.48": "Welche Nachricht hat dich heute gefreut?", "dq.49": "Was ist dir heute draußen aufgefallen?", "dq.50": "Was war heute dein Lieblingsmoment?",
+      "dq.51": "Was darf heute unerledigt bleiben?", "dq.52": "Wem hast du heute zugehört?", "dq.53": "Was hat dir heute Sicherheit gegeben?",
+      "dq.54": "Was hat dir heute besonders gut geschmeckt?", "dq.55": "Was hat dich heute gestresst – und was hat geholfen?", "dq.56": "Welcher Gedanke kam heute immer wieder?",
+      "dq.57": "Was würdest du heute gern noch einmal erleben?", "dq.58": "Wer oder was war heute überraschend freundlich?", "dq.59": "Was wünschst du dir für die nächsten Tage?",
       "blasen.segYear": "Jahr", "year.hint": "Dein Jahr als Sternenkarte · {count}",
       "theme.label": "Design", "theme.auto": "Automatisch", "theme.light": "Hell", "theme.dark": "Dunkel",
       "rem.title": "Abend-Erinnerung", "rem.hint": "Legt eine tägliche Erinnerung in deinem Kalender an. Das klappt ganz ohne Server oder Konto, und du kannst sie dort jederzeit wieder löschen.",
@@ -1025,6 +1055,10 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "intent.s0": "Not this time, and that’s okay", "intent.s1": "Barely", "intent.s2": "Partly", "intent.s3": "Mostly", "intent.s4": "Completely",
       "intent.unrated": "Move the slider if you like.", "intent.notePh": "Anything you’d like to add? (optional)", "intent.result": "How it went",
       "intent.reset": "Clear",
+      "intent.card": "Your intention for today", "intent.set": "Keep it", "intent.edit": "Edit",
+      "intent.anytime": "Any time – morning, midday or on a whim. You can note how it went whenever you like.",
+      "intent.howNow": "How’s it going? Move the slider whenever you like – no judgement.",
+      "intent.yesterday": "Yesterday you set out to:",
       "memory.year": "One year ago today", "memory.month": "One month ago today",
       "sum.title": "Your {month}", "sum.few": "Once you have 3 evenings this month, a little summary appears here.",
       "sum.count": "You captured {count}.", "sum.mood": "Most of your days felt {mood}.",
@@ -1049,6 +1083,16 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "dq.21": "What did you do for the first time today?", "dq.22": "Which feeling was strongest today?", "dq.23": "What connected you with others today?",
       "dq.24": "What did you have too little time for today?", "dq.25": "What was good for you today without being planned?", "dq.26": "Which little thing made your day better?",
       "dq.27": "What would you tell this morning’s you?", "dq.28": "Where did you enjoy being today?", "dq.29": "What can you simply let be today?",
+      "dq.30": "What colour would your day be?", "dq.31": "What did you let go of today?", "dq.32": "When did you lose track of time today?",
+      "dq.33": "What touched you today?", "dq.34": "Who would you still like to thank?", "dq.35": "What did your body tell you today?",
+      "dq.36": "Which sound was with you today?", "dq.37": "What annoyed you today – and what might be behind it?", "dq.38": "What did you do well today?",
+      "dq.39": "Which break did you good today?", "dq.40": "What reminded you of the past today?", "dq.41": "What was simply nice to look at today?",
+      "dq.42": "What did you need courage for today?", "dq.43": "What would you like to take with you from today?", "dq.44": "What would you have needed today?",
+      "dq.45": "Which word would describe your day?", "dq.46": "When did you take a deep breath today?", "dq.47": "What made you curious today?",
+      "dq.48": "Which message made you happy today?", "dq.49": "What did you notice outside today?", "dq.50": "What was your favourite moment today?",
+      "dq.51": "What can stay undone today?", "dq.52": "Who did you listen to today?", "dq.53": "What made you feel safe today?",
+      "dq.54": "What tasted especially good today?", "dq.55": "What stressed you today – and what helped?", "dq.56": "Which thought kept coming back today?",
+      "dq.57": "What would you like to experience again from today?", "dq.58": "Who or what was surprisingly kind today?", "dq.59": "What do you wish for the next few days?",
       "blasen.segYear": "Year", "year.hint": "Your year as a star map · {count}",
       "theme.label": "Appearance", "theme.auto": "Automatic", "theme.light": "Light", "theme.dark": "Dark",
       "rem.title": "Evening reminder", "rem.hint": "Adds a daily reminder to your calendar. No server or account needed, and you can delete it there at any time.",
@@ -1187,6 +1231,10 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "intent.s0": "Pas cette fois, et c’est ok", "intent.s1": "À peine", "intent.s2": "En partie", "intent.s3": "En grande partie", "intent.s4": "Complètement",
       "intent.unrated": "Déplace le curseur si tu veux.", "intent.notePh": `Tu veux ajouter quelque chose${NB}? (facultatif)`, "intent.result": "Comment ça s’est passé",
       "intent.reset": "Effacer",
+      "intent.card": "Ton intention du jour", "intent.set": "Garder", "intent.edit": "Modifier",
+      "intent.anytime": "Quand tu veux – le matin, à midi ou spontanément. Tu peux noter comment ça s’est passé quand tu le souhaites.",
+      "intent.howNow": `Comment ça se passe${NB}? Déplace le curseur quand tu veux – sans jugement.`,
+      "intent.yesterday": `Hier, tu voulais${NB}:`,
       "memory.year": "Il y a un an aujourd’hui", "memory.month": "Il y a un mois aujourd’hui",
       "sum.title": "Ton mois · {month}", "sum.few": "Dès 3 soirées ce mois-ci, un petit résumé apparaîtra ici.",
       "sum.count": "Tu as noté {count}.", "sum.mood": "La plupart de tes journées étaient {mood}.",
@@ -1211,6 +1259,16 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "dq.21": `Qu’as-tu fait pour la première fois aujourd’hui${NB}?`, "dq.22": `Quelle émotion a été la plus forte aujourd’hui${NB}?`, "dq.23": `Qu’est-ce qui t’a relié·e aux autres aujourd’hui${NB}?`,
       "dq.24": `Pour quoi as-tu manqué de temps aujourd’hui${NB}?`, "dq.25": `Qu’est-ce qui t’a fait du bien aujourd’hui sans que tu l’aies prévu${NB}?`, "dq.26": `Quelle petite chose a rendu ta journée meilleure${NB}?`,
       "dq.27": `Que raconterais-tu à toi-même de ce matin${NB}?`, "dq.28": `Où as-tu aimé être aujourd’hui${NB}?`, "dq.29": `Qu’est-ce que tu peux simplement laisser comme ça aujourd’hui${NB}?`,
+      "dq.30": `De quelle couleur serait ta journée${NB}?`, "dq.31": `Qu’as-tu lâché aujourd’hui${NB}?`, "dq.32": `Quand as-tu perdu la notion du temps aujourd’hui${NB}?`,
+      "dq.33": `Qu’est-ce qui t’a touché·e aujourd’hui${NB}?`, "dq.34": `À qui aimerais-tu encore dire merci${NB}?`, "dq.35": `Qu’est-ce que ton corps t’a dit aujourd’hui${NB}?`,
+      "dq.36": `Quel son a accompagné ta journée${NB}?`, "dq.37": `Qu’est-ce qui t’a agacé·e aujourd’hui – et qu’y a-t-il peut-être derrière${NB}?`, "dq.38": `Qu’as-tu bien fait aujourd’hui${NB}?`,
+      "dq.39": `Quelle pause t’a fait du bien aujourd’hui${NB}?`, "dq.40": `Qu’est-ce qui t’a rappelé le passé aujourd’hui${NB}?`, "dq.41": `Qu’est-ce qui était simplement beau à voir aujourd’hui${NB}?`,
+      "dq.42": `Pour quoi as-tu eu besoin de courage aujourd’hui${NB}?`, "dq.43": `Qu’aimerais-tu garder de cette journée${NB}?`, "dq.44": `De quoi aurais-tu eu besoin aujourd’hui${NB}?`,
+      "dq.45": `Quel mot décrirait ta journée${NB}?`, "dq.46": `Quand as-tu respiré profondément aujourd’hui${NB}?`, "dq.47": `Qu’est-ce qui a éveillé ta curiosité aujourd’hui${NB}?`,
+      "dq.48": `Quel message t’a fait plaisir aujourd’hui${NB}?`, "dq.49": `Qu’as-tu remarqué dehors aujourd’hui${NB}?`, "dq.50": `Quel a été ton moment préféré aujourd’hui${NB}?`,
+      "dq.51": `Qu’est-ce qui peut rester inachevé aujourd’hui${NB}?`, "dq.52": `Qui as-tu écouté aujourd’hui${NB}?`, "dq.53": `Qu’est-ce qui t’a donné un sentiment de sécurité aujourd’hui${NB}?`,
+      "dq.54": `Qu’est-ce qui t’a particulièrement plu à manger aujourd’hui${NB}?`, "dq.55": `Qu’est-ce qui t’a stressé·e aujourd’hui – et qu’est-ce qui a aidé${NB}?`, "dq.56": `Quelle pensée est revenue sans cesse aujourd’hui${NB}?`,
+      "dq.57": `Qu’aimerais-tu revivre de cette journée${NB}?`, "dq.58": `Qui ou quoi a été étonnamment gentil aujourd’hui${NB}?`, "dq.59": `Que te souhaites-tu pour les prochains jours${NB}?`,
       "blasen.segYear": "Année", "year.hint": "Ton année en carte du ciel · {count}",
       "theme.label": "Apparence", "theme.auto": "Automatique", "theme.light": "Clair", "theme.dark": "Sombre",
       "rem.title": "Rappel du soir", "rem.hint": "Ajoute un rappel quotidien à ton calendrier. Sans serveur ni compte, et tu peux le supprimer à tout moment.",
@@ -1580,7 +1638,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   }
 
   // ---------- Frage des Tages ----------
-  const DQ_COUNT = 30;
+  const DQ_COUNT = 60;
   function dqIndex(dateIso) { const [y, m, d] = dateIso.split("-").map(Number); return Math.floor(Date.UTC(y, m - 1, d) / 86400000) % DQ_COUNT; }
 
   // ---------- Schlaf (morgens) ----------
@@ -1600,23 +1658,8 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       <h3>${esc(t("sleep.legend"))}</h3>
       <div class="moons">${[1, 2, 3, 4, 5].map(i => `<button type="button" class="moon-btn" data-moon="${i}" aria-pressed="${v === i}" aria-label="${esc(t("sleep.aria", { i, label: t("sleep." + i) }))}">${moonSVG(i <= v)}</button>`).join("")}</div>
       <p class="water-out" aria-live="polite">${v ? esc(t("sleep." + v)) : ""}</p>
-      <p class="hint sub-hint">${esc(t("sleep.hint"))}</p>
-      <div class="q intent">
-        <label for="intentInput">${esc(t("intent.label"))}</label>
-        <input type="text" id="intentInput" maxlength="140" autocomplete="off" placeholder="${esc(t("intent.ph"))}" value="${esc(intentFor(todayIso()))}">
-        <span class="hint" id="intentSaved" aria-live="polite"></span>
-      </div>`;
+      <p class="hint sub-hint">${esc(t("sleep.hint"))}</p>`;
   }
-  let intentT;
-  $("#morningCard").addEventListener("input", ev => {
-    if (ev.target.id !== "intentInput") return;
-    const v = ev.target.value.trim(), d = todayIso();
-    if (v) intentMap[d] = v; else delete intentMap[d];
-    saveIntents();
-    clearTimeout(intentT);
-    const sv = $("#intentSaved"); sv.textContent = "";
-    intentT = setTimeout(() => { sv.textContent = "✓ " + t("intent.saved"); }, 600);
-  });
   $("#morningCard").addEventListener("click", ev => {
     const b = ev.target.closest("[data-moon]");
     if (!b) return;
@@ -1758,7 +1801,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       doc.text(ml, M + IND, y + 10); y += 10 + ml.length * 4.4 + 2;
       const qa = QUESTIONS.map(k => [t("q." + k), e[k]]);
       if (e.dqa) qa.push([t("dq." + e.dq), e.dqa]);
-      if (intentFor(e.date)) qa.unshift([t("intent.title"), quote(intentFor(e.date)) + (irValid(e.ir) ? "  ·  " + t("intent.result") + ": " + t("intent.s" + e.ir) : "") + (e.irNote ? "\n" + e.irNote : "")]);
+      if (intentFor(e.date)) { const r = irFor(e.date) || { ir: null, note: "" }; qa.unshift([t("intent.title"), quote(intentFor(e.date)) + (r.ir !== null ? "  ·  " + t("intent.result") + ": " + t("intent.s" + r.ir) : "") + (r.note ? "\n" + r.note : "")]); }
       for (const [q, a] of qa) {
         if (!a) continue;
         ensure(12);
@@ -1822,15 +1865,123 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   const intentFor = d => (typeof intentMap[d] === "string" ? intentMap[d] : "");
   const quote = s => t("q.o") + s + t("q.c");
   function logicalToday() { return new Date().getHours() < 4 ? offsetDate(-1) : todayIso(); }
-  function renderIntentNote() {
-    const box = $("#intentNote");
-    const h = new Date().getHours();
-    const txt = intentFor(logicalToday());
-    box.hidden = true;  // seit Version 9 direkt im Check-in
-    if (box.hidden) return;
-    box.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
-      <p><span class="hint" style="display:block">${esc(t("intent.remind"))}</span><strong>${esc(quote(txt))}</strong><span class="hint" style="display:block">${esc(t("intent.how"))}</span></p>`;
+  function shiftIso(d, n) { const x = parseIso(d); x.setDate(x.getDate() + n); return iso(x); }
+  const irValid = v => Number.isInteger(v) && v >= 0 && v <= 4;
+  // Wie es lief – unabhängig vom Eintrag gespeichert (Datum → { ir, note })
+  const IR_KEY = "gedankenblasen.absichtErgebnis";
+  let irMap = loadMap(IR_KEY);
+  function saveIr() { try { localStorage.setItem(IR_KEY, JSON.stringify(irMap)); } catch (e) { toast(t("toast.storageFail")); } }
+  function irFor(d) {
+    const o = irMap[d];
+    if (o && typeof o === "object") {
+      const ir = irValid(o.ir) ? o.ir : null, note = typeof o.note === "string" ? o.note : "";
+      return ir !== null || note ? { ir, note } : null;
+    }
+    const e = entries.find(x => x.date === d && (irValid(x.ir) || x.irNote));
+    return e ? { ir: irValid(e.ir) ? e.ir : null, note: e.irNote || "" } : null;
   }
+  (() => { // Version 9 → 10: Bewertungen aus Einträgen übernehmen
+    let moved = false;
+    for (const e of entries) if ((irValid(e.ir) || e.irNote) && !irMap[e.date]) { irMap[e.date] = { ir: irValid(e.ir) ? e.ir : null, note: e.irNote || "" }; moved = true; }
+    if (moved) saveIr();
+  })();
+  function intentWidget(prefix, d, howKey) {
+    const r = irFor(d), ir = r ? r.ir : null;
+    const lbl = ir === null ? t("intent.unrated") : t("intent.s" + ir);
+    return `
+      <div class="intent-block" id="${prefix}-intent">
+        <label class="intent-how" for="${prefix}-ir">${esc(t(howKey))}</label>
+        <output class="intent-val${ir === null ? " unrated" : ""}" id="${prefix}-ir-out" for="${prefix}-ir">${esc(lbl)}</output>
+        <input type="range" class="intent-range${ir === null ? " unrated" : ""}" id="${prefix}-ir" min="0" max="4" step="1" value="${ir === null ? 2 : ir}" aria-valuetext="${esc(lbl)}">
+        <div class="intent-ends" aria-hidden="true"><span>${esc(t("intent.s0"))}</span><span>${esc(t("intent.s4"))}</span></div>
+        <button type="button" class="link-btn intent-reset" id="${prefix}-ir-reset" ${ir === null ? "hidden" : ""}>${esc(t("intent.reset"))}</button>
+        <label class="sr-only" for="${prefix}-irnote">${esc(t("intent.notePh"))}</label>
+        <textarea id="${prefix}-irnote" rows="2" placeholder="${esc(t("intent.notePh"))}">${esc(r ? r.note : "")}</textarea>
+      </div>`;
+  }
+  function bindIntent(prefix, d) {
+    const rg = $("#" + prefix + "-ir");
+    if (!rg) return;
+    const out = $("#" + prefix + "-ir-out"), rs = $("#" + prefix + "-ir-reset"), nt = $("#" + prefix + "-irnote");
+    let cur = (irFor(d) || { ir: null }).ir, noteT;
+    const store = () => {
+      const note = nt.value.trim().slice(0, 1000);
+      if (cur === null && !note) irMap[d] = { ir: null, note: "" }; else irMap[d] = { ir: cur, note };
+      saveIr();
+    };
+    const paint = () => {
+      rg.classList.toggle("unrated", cur === null); out.classList.toggle("unrated", cur === null);
+      out.textContent = cur === null ? t("intent.unrated") : t("intent.s" + cur);
+      rg.setAttribute("aria-valuetext", out.textContent);
+      rs.hidden = cur === null;
+    };
+    rg.addEventListener("input", () => { cur = Number(rg.value); paint(); store(); });
+    rg.addEventListener("change", () => { sound("soft"); toast(t("intent.saved")); });
+    rs.addEventListener("click", () => { cur = null; rg.value = 2; paint(); store(); rg.focus(); });
+    nt.addEventListener("input", () => { clearTimeout(noteT); noteT = setTimeout(store, 400); });
+    nt.addEventListener("blur", () => { clearTimeout(noteT); store(); });
+  }
+  let intentEditing = false;
+  function renderIntentNote() {
+    const box = $("#intentCard");
+    if (!box) return;
+    const d = logicalToday(), y = shiftIso(d, -1);
+    const txt = intentFor(d), ytxt = intentFor(y), yr = irFor(y);
+    const sun = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>`;
+    let html = `<h3 class="intent-head">${sun}<span>${esc(t("intent.card"))}</span></h3>`;
+    if (!txt || intentEditing) {
+      html += `
+        <form class="q intent-write" id="intentForm" novalidate>
+          <label for="intentInput">${esc(t("intent.label"))}</label>
+          <input type="text" id="intentInput" maxlength="140" autocomplete="off" enterkeyhint="done" placeholder="${esc(t("intent.ph"))}" value="${esc(txt)}">
+          <div class="row"><button class="btn small" type="submit" id="intentSet" ${txt ? "" : "disabled"}>${esc(t("intent.set"))}</button></div>
+          <p class="hint sub-hint">${esc(t("intent.anytime"))}</p>
+        </form>`;
+    } else {
+      html += `
+        <div class="intent-show">
+          <p class="intent-quote">${esc(quote(txt))}</p>
+          <button type="button" class="link-btn" id="intentEdit">${esc(t("intent.edit"))}</button>
+        </div>
+        ${intentWidget("ic", d, "intent.howNow")}`;
+    }
+    if (ytxt && !(yr && yr.ir !== null)) {
+      html += `
+        <details class="intent-yday">
+          <summary><span class="hint">${esc(t("intent.yesterday"))}</span> <strong>${esc(quote(ytxt))}</strong></summary>
+          ${intentWidget("iy", y, "intent.how")}
+        </details>`;
+    }
+    box.innerHTML = html;
+    const form = $("#intentForm");
+    if (form) {
+      const inp = $("#intentInput"), btn = $("#intentSet");
+      inp.addEventListener("input", () => {
+        const v = inp.value.trim();
+        if (v) intentMap[d] = v; else delete intentMap[d];
+        saveIntents();
+        btn.disabled = !v;
+      });
+      form.addEventListener("submit", ev => {
+        ev.preventDefault();
+        if (!inp.value.trim()) return;
+        intentEditing = false; sound("soft"); toast(t("intent.saved"));
+        renderIntentNote();
+        const e2 = $("#intentEdit"); if (e2) e2.focus();
+      });
+    }
+    const ed = $("#intentEdit");
+    if (ed) ed.addEventListener("click", () => { intentEditing = true; renderIntentNote(); const i = $("#intentInput"); if (i) { i.focus(); i.select(); } });
+    bindIntent("ic", d);
+    bindIntent("iy", y);
+  }
+  // Neuer Tag, während die App offen war → Karte auffrischen
+  let lastLogical = logicalToday();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") return;
+    const n = logicalToday();
+    if (n !== lastLogical) { lastLogical = n; intentEditing = false; renderIntentNote(); renderMorning(); }
+  });
 
   // ---------- Heute vor einem Jahr / Monat ----------
   function renderMemory() {
@@ -2141,7 +2292,6 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab)));
 
   // ---------- Check-in ----------
-  const irValid = v => Number.isInteger(v) && v >= 0 && v <= 4;
   function intentBlock(prefix, e) {
     const d = e && e.date ? e.date : todayIso();
     const txt = intentFor(d);
@@ -2207,7 +2357,6 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       </details>` : `<div class="q"><label for="${prefix}-date">${esc(t("form.date"))}</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
     return `
       <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
-      ${intentBlock(prefix, e)}
       ${extras}
       ${qs}
       ${dqBlock}
@@ -2692,7 +2841,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       </div>
       ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
       ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
-      ${intentFor(e.date) ? `<div class="answer"><h4>${esc(t("intent.title"))}</h4><p>${esc(quote(intentFor(e.date)))}</p>${irValid(e.ir) ? `<div class="ir-show"><span class="ir-bar"><i style="width:${e.ir / 4 * 100}%"></i></span><span>${esc(t("intent.s" + e.ir))}</span></div>` : ""}${e.irNote ? `<p class="ir-note">${esc(e.irNote)}</p>` : ""}</div>` : ""}
+      ${intentFor(e.date) ? `<div class="answer"><h4>${esc(t("intent.title"))}</h4><p class="intent-quote">${esc(quote(intentFor(e.date)))}</p>${e.sample ? "" : intentWidget("dlg", e.date, "intent.how")}</div>` : ""}
       ${answers}
       ${dqHtml}
       ${gallery}
@@ -2702,6 +2851,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
         <button class="btn ghost small" type="button" data-askdel="${e.id}">${esc(t("dlg.delete"))}</button>
         ${from ? `<button class="btn ghost small" type="button" data-day="${from}">${esc(t("dlg.backToDay"))}</button>` : ""}
       </div>`}`);
+    if (!e.sample) bindIntent("dlg", e.date);
     fillImgs(body);
   }
 
@@ -2950,7 +3100,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   const inArtifact = !!(window.claude && window.claude.use);
 
   function backupName() { return `${t("backup.file")}-${todayIso()}.json`; }
-  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap }, null, 2); }
+  function backupData() { return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap, absichtErgebnisse: irMap }, null, 2); }
   function blobToDataURL(b) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); }); }
   function dataURLToBlob(d) {
     const comma = d.indexOf(",");
@@ -2966,7 +3116,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       if (fotos[id]) continue;
       try { const blob = await PhotoDB.get(id); if (blob) fotos[id] = await blobToDataURL(blob); } catch (err) {}
     }
-    return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap, fotos }, null, 2);
+    return JSON.stringify({ app: "Gedankenblasen", version: 3, exportiert: new Date().toISOString(), eintraege: sorted(entries), schlaf: sleepMap, absichten: intentMap, absichtErgebnisse: irMap, fotos }, null, 2);
   }
   let backupReady = null;
 
@@ -3095,6 +3245,12 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
             if (/^\d{4}-\d{2}-\d{2}$/.test(d) && typeof v === "string" && v.trim() && !intentFor(d)) intentMap[d] = v.slice(0, 140);
           }
           saveIntents();
+        }
+        if (parsed && parsed.absichtErgebnisse && typeof parsed.absichtErgebnisse === "object") {
+          for (const [d, v] of Object.entries(parsed.absichtErgebnisse)) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(d) && v && typeof v === "object" && !irFor(d) && (irValid(v.ir) || typeof v.note === "string")) irMap[d] = { ir: irValid(v.ir) ? v.ir : null, note: String(v.note || "").slice(0, 1000) };
+          }
+          saveIr();
         }
         const ids = new Set(entries.map(e => e.id));
         const added = valid.filter(e => !ids.has(e.id));
