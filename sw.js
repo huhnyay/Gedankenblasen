@@ -1,6 +1,6 @@
 // Gedankenblasen – Offline-Unterstützung
 // Bei jeder neuen Version die Zahl erhöhen, damit Handys das Update laden.
-const VERSION = "gedankenblasen-v7";
+const VERSION = "gedankenblasen-v8";
 const SHELL = [
   "./",
   "./index.html",
@@ -9,7 +9,14 @@ const SHELL = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
-  "./icons/favicon-32.png"
+  "./icons/favicon-32.png",
+  "./fonts/fredoka-latin-400-normal.woff2",
+  "./fonts/fredoka-latin-500-normal.woff2",
+  "./fonts/fredoka-latin-600-normal.woff2",
+  "./fonts/atkinson-hyperlegible-latin-400-normal.woff2",
+  "./fonts/atkinson-hyperlegible-latin-700-normal.woff2",
+  "./fonts/atkinson-hyperlegible-latin-400-italic.woff2",
+  "./vendor/jspdf.umd.min.js"
 ];
 
 self.addEventListener("install", event => {
@@ -29,7 +36,6 @@ self.addEventListener("fetch", event => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // Schriften von Google: einmal laden, danach aus dem Speicher
   // Schriften und die PDF-Bibliothek: einmal laden, danach aus dem Speicher
   if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com" || url.hostname === "cdnjs.cloudflare.com") {
     event.respondWith(

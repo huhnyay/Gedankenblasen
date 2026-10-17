@@ -14,10 +14,14 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<script>try{var t=localStorage.getItem('gedankenblasen.design');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <style>
+@font-face { font-family: "Fredoka"; font-weight: 400; font-style: normal; font-display: swap; src: url("fonts/fredoka-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fredoka"; font-weight: 500; font-style: normal; font-display: swap; src: url("fonts/fredoka-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fredoka"; font-weight: 600; font-style: normal; font-display: swap; src: url("fonts/fredoka-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-style: normal; font-display: swap; src: url("fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 700; font-style: normal; font-display: swap; src: url("fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-style: italic; font-display: swap; src: url("fonts/atkinson-hyperlegible-latin-400-italic.woff2") format("woff2"); }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; }
 [hidden] { display: none !important; }
@@ -506,6 +510,70 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
 .tour-skip { font-size: .92rem; }
 .tour-wrap .seg button { padding: 8px 12px; }
 
+/* v8: Einstellungen, Premium, Rituale, Jahr, Datenschutz, Feedback */
+.rem { display: flex; flex-direction: column; gap: 6px; }
+.rem .hint { font-size: .85rem; margin: 0; }
+.rem-row { align-items: center; }
+input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--surface); padding: 8px 12px; min-height: 40px; }
+.prem-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.prem-badge { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #5A4300; background: linear-gradient(120deg, #F4E39B, #F7CDB1); border-radius: 999px; padding: 2px 8px; }
+.prem-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.prem-list li { display: flex; gap: 10px; align-items: flex-start; }
+.prem-list li::before { content: "✦"; color: var(--accent); }
+.prem-list li.soon { color: var(--muted); }
+.prem-price { display: flex; flex-direction: column; gap: 2px; background: var(--bg); border-radius: var(--r-md); padding: 12px 14px; }
+.rituals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ritual { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px 10px; border-radius: var(--r-md); border: 2px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink); font-weight: 700; font-size: .9rem; }
+.ritual.on { border-color: var(--accent); background: var(--accent-soft); }
+.ritual.locked { color: var(--muted); }
+.ritual small.prem-badge { font-size: .6rem; padding: 1px 6px; }
+.wind-stage { overflow: hidden; }
+.leaf { position: relative; width: min(74vw, 270px); max-width: 100%; min-height: 150px; border: 0; padding: 26px 30px; cursor: pointer; color: var(--bubble-ink);
+  border-radius: 75% 0 75% 0; background: linear-gradient(135deg, #CFE6C9, #A8D3A9 60%, #8FC39A); box-shadow: 0 18px 40px rgba(60,90,60,.18), inset -10px -14px 26px rgba(30,60,30,.12);
+  display: grid; place-items: center; animation: sway 4s ease-in-out infinite alternate; transform-origin: 20% 80%; }
+.leaf::after { content: ""; position: absolute; left: 14%; right: 14%; top: 50%; height: 2px; background: rgba(255,255,255,.55); transform: rotate(-33deg); }
+.leaf p { position: relative; z-index: 1; margin: 0; font-size: .98rem; line-height: 1.45; text-align: center; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+@keyframes sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+.leaf.away { animation: blowaway 1.4s cubic-bezier(.5,.05,.7,.4) forwards; }
+@keyframes blowaway { 0% { transform: rotate(0); opacity: 1; } 30% { transform: translate(-20px, 10px) rotate(-10deg); } 100% { transform: translate(140vw, -220px) rotate(220deg) scale(.4); opacity: 0; } }
+.gust { position: absolute; left: -40%; height: 2px; width: 40%; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--line), transparent); opacity: 0; }
+.gust.g1 { top: 30%; } .gust.g2 { top: 55%; width: 55%; } .gust.g3 { top: 75%; }
+.blowing .gust { animation: gust 1s ease-out forwards; }
+.blowing .gust.g2 { animation-delay: .1s; } .blowing .gust.g3 { animation-delay: .2s; }
+@keyframes gust { 0% { transform: translateX(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateX(380%); opacity: 0; } }
+.lantern-stage { border-radius: var(--r-lg); background: radial-gradient(120% 90% at 50% 0%, #3E3570, #191529 75%); overflow: hidden; transition: background 1s; }
+.tiny-star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: .7; animation: twinkle 3s ease-in-out infinite alternate; }
+.tiny-star.s1 { left: 18%; top: 16%; } .tiny-star.s2 { left: 76%; top: 24%; animation-delay: -1s; } .tiny-star.s3 { left: 60%; top: 10%; animation-delay: -2s; }
+.lantern { position: relative; width: 170px; min-height: 200px; border: 0; cursor: pointer; padding: 34px 20px 26px; color: #4A2A10; display: grid; place-items: center;
+  border-radius: 46% 46% 30% 30% / 40% 40% 24% 24%; background: radial-gradient(circle at 50% 70%, #FFE7A8, #F7C27A 55%, #E79A5E); box-shadow: 0 0 40px rgba(255,200,120,.55), 0 0 90px rgba(255,180,90,.3);
+  animation: hover 3.5s ease-in-out infinite alternate; }
+.lantern::before { content: ""; position: absolute; top: -8px; left: 38%; right: 38%; height: 10px; border-radius: 4px; background: #B9774A; }
+.lantern .flame { position: absolute; bottom: 14px; left: 50%; width: 12px; height: 18px; margin-left: -6px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 50% 70%, #fff, #FFD36E 60%, rgba(255,160,60,0)); animation: flicker .2s infinite alternate; }
+.lantern p { position: relative; margin: 0 0 18px; font-size: .92rem; line-height: 1.4; text-align: center; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+@keyframes hover { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+@keyframes flicker { from { transform: scale(1); opacity: .9; } to { transform: scale(1.12, .92); opacity: 1; } }
+.lantern.rise { animation: rise-up 3.2s ease-in forwards; }
+@keyframes rise-up { 0% { transform: translateY(0) scale(1); } 70% { opacity: 1; } 100% { transform: translateY(-420px) scale(.08); opacity: 0; } }
+.rising.lantern-stage::after { content: ""; position: absolute; left: 50%; top: 10%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: #FFE7A8; box-shadow: 0 0 14px #FFD36E; opacity: 0; animation: newstar 1s 2.6s ease-out forwards; }
+@keyframes newstar { to { opacity: 1; transform: scale(1.4); } }
+.year-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.year-cell { position: relative; aspect-ratio: 1; max-width: 100%; border: 0; padding: 0; border-radius: var(--r-md); cursor: pointer; overflow: hidden;
+  background: radial-gradient(120% 100% at 50% 0%, #3E3570, #191529 75%); color: #fff; }
+.year-cell svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.year-cell .ml line { stroke: rgba(255,255,255,.45); stroke-width: .8; }
+.year-cell .ym { position: absolute; left: 8px; right: 8px; bottom: 6px; display: flex; justify-content: space-between; align-items: baseline; font-size: .8rem; }
+.year-cell .ym small { opacity: .7; font-variant-numeric: tabular-nums; }
+.year-cell.empty { background: var(--accent-soft); color: var(--muted); }
+.year-cell:disabled { opacity: .35; cursor: default; }
+.year-cell:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.priv-short { margin: 0; font-weight: 700; }
+.check { display: flex; gap: 8px; align-items: center; font-size: .92rem; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  .leaf, .lantern, .lantern .flame, .tiny-star { animation: none !important; }
+  .leaf.away, .lantern.rise { animation: fadeout .5s linear forwards !important; animation-duration: .5s !important; }
+}
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -576,6 +644,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
     <div class="seg" role="group" data-i18n-aria="blasen.segAria">
       <button type="button" id="segBubbles" aria-pressed="true" data-i18n="blasen.segBubbles"></button>
       <button type="button" id="segList" aria-pressed="false" data-i18n="blasen.segList"></button>
+      <button type="button" id="segYear" aria-pressed="false" data-i18n="blasen.segYear"></button>
     </div>
     <div class="chips" id="chips" role="group"></div>
     <div id="bubbleWrap">
@@ -585,6 +654,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
         <button class="icon-btn" type="button" id="bmNext" data-i18n-aria="rb.next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="field" id="field"></div>
+      <div class="year-grid" id="yearGrid" hidden></div>
       <div class="field-foot"><p class="hint" id="fieldHint"></p><button class="btn ghost small" type="button" id="starToggle" hidden></button></div>
     </div>
     <div class="list" id="list" hidden></div>
@@ -668,8 +738,12 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
   const SOUND_KEY = "gedankenblasen.toene";
   const INTENT_KEY = "gedankenblasen.absicht";
   const TOUR_KEY = "gedankenblasen.tour";
-  const APP_VERSION = 7;            // bei jedem Update zusammen mit sw.js hochzählen
-  const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+  const THEME_KEY = "gedankenblasen.design";
+  const PREMIUM_KEY = "gedankenblasen.premium";
+  const RITUAL_KEY = "gedankenblasen.ritual";
+  const REM_KEY = "gedankenblasen.erinnerung";
+  const APP_VERSION = 8;            // bei jedem Update zusammen mit sw.js hochzählen
+  const JSPDF_URL = "vendor/jspdf.umd.min.js";
   const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
 
   // ---------- Übersetzungen ----------
@@ -711,7 +785,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "toast.deleted": "Eintrag gelöscht.",
       "los.title": "Loslassen", "los.lead": "Ein kleines Ritual für Gedanken, die heute nicht mehr mit ins Bett sollen.",
       "los.noteStrong": "Dieser Text wird nicht gespeichert.",
-      "los.noteText": "Er verschwindet, sobald die Blase platzt, und taucht nirgendwo wieder auf. Das Ritual löst kein Problem. Es schafft nur einen Moment Abstand.",
+      "los.noteText": "Er verschwindet am Ende des Rituals und taucht nirgendwo wieder auf. Das Ritual löst kein Problem. Es schafft nur einen Moment Abstand.",
       "los.q": "Was möchtest du für heute loslassen?", "los.ph": "Schreib es einfach auf, ganz ohne Ordnung.",
       "los.go": "In eine Blase legen", "los.pop": "Blase platzen lassen",
       "los.breath": "Atme einmal ruhig ein und aus. Wenn du bereit bist, tippe auf die Blase.",
@@ -780,6 +854,37 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "tour.home": "Tipp: Tippe in Safari auf Teilen und dann auf „Zum Home-Bildschirm“. Dann öffnet sich Gedankenblasen wie eine richtige App.",
       "tour.next": "Weiter", "tour.back": "Zurück", "tour.start": "Los geht’s", "tour.skip": "Überspringen", "info.tour": "Einführung ansehen",
       "tour.step": "Schritt {i} von 3",
+      "dq.12": "Was hast du heute für jemanden getan?", "dq.13": "Wann hast du dich heute ruhig gefühlt?", "dq.14": "Was hat dich heute zum Nachdenken gebracht?",
+      "dq.15": "Wofür möchtest du dir heute selbst danken?", "dq.16": "Was war heute schwieriger als gedacht?", "dq.17": "Was war heute leichter als gedacht?",
+      "dq.18": "Welcher Moment heute war nur für dich?", "dq.19": "Was möchtest du morgen anders machen?", "dq.20": "Worüber hast du heute gelacht?",
+      "dq.21": "Was hast du heute zum ersten Mal gemacht?", "dq.22": "Welches Gefühl war heute am stärksten?", "dq.23": "Was hat dich heute mit anderen verbunden?",
+      "dq.24": "Wofür hattest du heute zu wenig Zeit?", "dq.25": "Was hat dir heute gutgetan, ohne dass du es geplant hattest?", "dq.26": "Welche kleine Sache hat deinen Tag besser gemacht?",
+      "dq.27": "Was würdest du deinem Ich von heute Morgen erzählen?", "dq.28": "Wo warst du heute gern?", "dq.29": "Was darfst du heute einfach gut sein lassen?",
+      "blasen.segYear": "Jahr", "year.hint": "Dein Jahr als Sternenkarte · {count}",
+      "theme.label": "Design", "theme.auto": "Automatisch", "theme.light": "Hell", "theme.dark": "Dunkel",
+      "rem.title": "Abend-Erinnerung", "rem.hint": "Legt eine tägliche Erinnerung in deinem Kalender an. Das klappt ganz ohne Server oder Konto, und du kannst sie dort jederzeit wieder löschen.",
+      "rem.time": "Uhrzeit", "rem.add": "Zum Kalender hinzufügen", "rem.summary": "Zwei Minuten für dich", "rem.desc": "Zeit für deine Gedankenblasen.",
+      "prem.badge": "Premium", "prem.title": "Gedankenblasen Premium", "prem.lead": "Extras für alle, die noch mehr aus ihren Abenden machen möchten.",
+      "prem.f1": "Neue Loslassen-Rituale: Wind und Laterne", "prem.f2": "Farbthemen (bald)", "prem.f3": "Eigene Abendfragen (bald)", "prem.f4": "Schöne Momente als Bild teilen (bald)",
+      "prem.price": "Beispielpreis: 1,99 € im Monat oder 14,99 € im Jahr", "prem.concept": "Konzept, noch nicht kaufbar.",
+      "prem.test": "Testmodus: Es wird nichts berechnet. Die echte Bezahlung kommt erst, wenn sie geklärt ist.",
+      "prem.unlock": "Im Testmodus freischalten", "prem.relock": "Testmodus beenden", "prem.status": "Premium", "prem.on": "Aktiv (Testmodus)", "prem.off": "Nicht aktiv",
+      "prem.more": "Mehr erfahren", "prem.toastOn": "Premium im Testmodus freigeschaltet ✨", "prem.toastOff": "Testmodus beendet.",
+      "ritual.aria": "Ritual wählen", "ritual.bubble": "Blase", "ritual.wind": "Wind", "ritual.lantern": "Laterne",
+      "los.blow": "Vom Wind forttragen lassen", "los.lift": "Laterne steigen lassen",
+      "los.breathWind": "Atme ruhig aus. Wenn du bereit bist, lass den Wind das Blatt mitnehmen.",
+      "los.breathLantern": "Schau der Laterne kurz zu. Wenn du bereit bist, lass sie steigen.",
+      "los.doneWind": "Der Wind hat es mitgenommen.", "los.doneLantern": "Die Laterne ist jetzt ein Stern.",
+      "priv.open": "Datenschutz", "priv.title": "Datenschutz",
+      "priv.short": "Kurz gesagt: Deine Einträge, Fotos und Einstellungen bleiben auf deinem Gerät. Es gibt kein Konto, keine Werbung, kein Tracking und keine Cookies.",
+      "priv.h1": "Wo deine Daten liegen", "priv.p1": "Im Speicher deines Browsers bzw. der App auf deinem Home-Bildschirm. Nur du kannst sie sehen. Wenn du die App löschst oder Websitedaten entfernst, sind sie weg. Dafür gibt es die Sicherung.",
+      "priv.h2": "Was beim Öffnen übertragen wird", "priv.p2": "Die App wird von GitHub Pages geladen. Dabei sieht GitHub technisch bedingt deine IP-Adresse, wie bei jeder Website. Schriften und Werkzeuge sind direkt in der App enthalten, es werden keine weiteren Dienste geladen.",
+      "priv.h3": "Dateien, die du erstellst", "priv.p3": "Sicherung, PDF, Kalender-Erinnerung und Feedback entstehen auf deinem Gerät. Wohin du sie schickst, entscheidest allein du.",
+      "priv.h4": "Kein Ersatz für Hilfe", "priv.p4": "Gedankenblasen ist ein Tagebuch, keine Therapie. Wenn es dir nicht gut geht, sprich mit Menschen, denen du vertraust, oder hol dir Unterstützung, zum Beispiel bei der TelefonSeelsorge: 0800 111 0 111 (kostenlos, rund um die Uhr).",
+      "priv.foot": "Stand: Oktober 2026 · Ein Studienprojekt.",
+      "fb.open": "Feedback geben", "fb.title": "Feedback", "fb.lead": "Was gefällt dir, was fehlt, was klemmt? Dein Feedback hilft, die App besser zu machen.",
+      "fb.wish": "Wunsch", "fb.bug": "Fehler", "fb.praise": "Lob", "fb.ph": "Schreib einfach drauflos …", "fb.meta": "App-Version und Gerät mitsenden",
+      "fb.send": "Feedback teilen", "fb.copied": "Kopiert. Schick es einfach an die Person, von der du die App hast.", "fb.thanks": "Danke für dein Feedback!", "fb.empty": "Schreib zuerst ein paar Worte.",
       "dq.title": "Frage des Tages",
       "dq.0": "Wofür bist du heute dankbar?", "dq.1": "Was hat dich heute überrascht?", "dq.2": "Worauf freust du dich morgen?",
       "dq.3": "Wer hat dir heute gutgetan?", "dq.4": "Was hast du heute gelernt?", "dq.5": "Worauf bist du heute ein bisschen stolz?",
@@ -839,7 +944,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "toast.deleted": "Entry deleted.",
       "los.title": "Let go", "los.lead": "A small ritual for thoughts you don’t want to take to bed tonight.",
       "los.noteStrong": "This text is not saved.",
-      "los.noteText": "It disappears as soon as the bubble pops and won’t show up anywhere again. The ritual doesn’t solve any problem. It simply gives you a moment of distance.",
+      "los.noteText": "It disappears at the end of the ritual and won’t show up anywhere again. The ritual doesn’t solve any problem. It simply gives you a moment of distance.",
       "los.q": "What would you like to let go of today?", "los.ph": "Just write it down, no need for order.",
       "los.go": "Put it in a bubble", "los.pop": "Pop the bubble",
       "los.breath": "Take one slow breath in and out. When you’re ready, tap the bubble.",
@@ -908,6 +1013,37 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "tour.home": "Tip: in Safari, tap Share and then “Add to Home Screen”. Gedankenblasen will then open like a real app.",
       "tour.next": "Next", "tour.back": "Back", "tour.start": "Let’s go", "tour.skip": "Skip", "info.tour": "Show introduction",
       "tour.step": "Step {i} of 3",
+      "dq.12": "What did you do for someone today?", "dq.13": "When did you feel calm today?", "dq.14": "What made you think today?",
+      "dq.15": "What would you like to thank yourself for today?", "dq.16": "What was harder than expected today?", "dq.17": "What was easier than expected today?",
+      "dq.18": "Which moment today was just for you?", "dq.19": "What would you like to do differently tomorrow?", "dq.20": "What made you laugh today?",
+      "dq.21": "What did you do for the first time today?", "dq.22": "Which feeling was strongest today?", "dq.23": "What connected you with others today?",
+      "dq.24": "What did you have too little time for today?", "dq.25": "What was good for you today without being planned?", "dq.26": "Which little thing made your day better?",
+      "dq.27": "What would you tell this morning’s you?", "dq.28": "Where did you enjoy being today?", "dq.29": "What can you simply let be today?",
+      "blasen.segYear": "Year", "year.hint": "Your year as a star map · {count}",
+      "theme.label": "Appearance", "theme.auto": "Automatic", "theme.light": "Light", "theme.dark": "Dark",
+      "rem.title": "Evening reminder", "rem.hint": "Adds a daily reminder to your calendar. No server or account needed, and you can delete it there at any time.",
+      "rem.time": "Time", "rem.add": "Add to calendar", "rem.summary": "Two minutes for you", "rem.desc": "Time for your thought bubbles.",
+      "prem.badge": "Premium", "prem.title": "Gedankenblasen Premium", "prem.lead": "Extras for anyone who wants to get even more out of their evenings.",
+      "prem.f1": "New letting-go rituals: wind and lantern", "prem.f2": "Colour themes (soon)", "prem.f3": "Your own evening questions (soon)", "prem.f4": "Share lovely moments as an image (soon)",
+      "prem.price": "Example price: €1.99 per month or €14.99 per year", "prem.concept": "Concept, not available to buy yet.",
+      "prem.test": "Test mode: nothing is charged. Real payment will only come once it has been sorted out.",
+      "prem.unlock": "Unlock in test mode", "prem.relock": "End test mode", "prem.status": "Premium", "prem.on": "Active (test mode)", "prem.off": "Not active",
+      "prem.more": "Learn more", "prem.toastOn": "Premium unlocked in test mode ✨", "prem.toastOff": "Test mode ended.",
+      "ritual.aria": "Choose a ritual", "ritual.bubble": "Bubble", "ritual.wind": "Wind", "ritual.lantern": "Lantern",
+      "los.blow": "Let the wind carry it away", "los.lift": "Let the lantern rise",
+      "los.breathWind": "Breathe out slowly. When you’re ready, let the wind take the leaf.",
+      "los.breathLantern": "Watch the lantern for a moment. When you’re ready, let it rise.",
+      "los.doneWind": "The wind has taken it.", "los.doneLantern": "The lantern is a star now.",
+      "priv.open": "Privacy", "priv.title": "Privacy",
+      "priv.short": "In short: your entries, photos and settings stay on your device. There’s no account, no ads, no tracking and no cookies.",
+      "priv.h1": "Where your data lives", "priv.p1": "In your browser’s storage or the app on your home screen. Only you can see it. If you delete the app or clear website data, it’s gone. That’s what the backup is for.",
+      "priv.h2": "What is transferred when you open the app", "priv.p2": "The app is loaded from GitHub Pages. For technical reasons GitHub sees your IP address, as with any website. Fonts and tools are built into the app; no other services are loaded.",
+      "priv.h3": "Files you create", "priv.p3": "Backups, PDFs, the calendar reminder and feedback are created on your device. Where you send them is entirely up to you.",
+      "priv.h4": "Not a substitute for help", "priv.p4": "Gedankenblasen is a journal, not therapy. If you’re not doing well, talk to people you trust or reach out for support, for example a local helpline.",
+      "priv.foot": "Last updated: October 2026 · A student project.",
+      "fb.open": "Give feedback", "fb.title": "Feedback", "fb.lead": "What do you like, what’s missing, what’s not working? Your feedback helps make the app better.",
+      "fb.wish": "Wish", "fb.bug": "Bug", "fb.praise": "Praise", "fb.ph": "Just start writing …", "fb.meta": "Include app version and device",
+      "fb.send": "Share feedback", "fb.copied": "Copied. Just send it to the person who gave you the app.", "fb.thanks": "Thanks for your feedback!", "fb.empty": "Write a few words first.",
       "dq.title": "Question of the day",
       "dq.0": "What are you grateful for today?", "dq.1": "What surprised you today?", "dq.2": "What are you looking forward to tomorrow?",
       "dq.3": "Who was good for you today?", "dq.4": "What did you learn today?", "dq.5": "What are you a little proud of today?",
@@ -967,7 +1103,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "toast.deleted": "Note supprimée.",
       "los.title": "Lâcher prise", "los.lead": "Un petit rituel pour les pensées que tu ne veux pas emporter au lit ce soir.",
       "los.noteStrong": "Ce texte n’est pas enregistré.",
-      "los.noteText": "Il disparaît dès que la bulle éclate et ne réapparaît nulle part. Le rituel ne résout aucun problème. Il t’offre simplement un moment de recul.",
+      "los.noteText": "Il disparaît à la fin du rituel et ne réapparaît nulle part. Le rituel ne résout aucun problème. Il t’offre simplement un moment de recul.",
       "los.q": `De quoi aimerais-tu te libérer aujourd’hui${NB}?`, "los.ph": "Écris-le simplement, sans chercher à mettre de l’ordre.",
       "los.go": "Mettre dans une bulle", "los.pop": "Faire éclater la bulle",
       "los.breath": "Inspire et expire calmement. Quand tu le sens, touche la bulle.",
@@ -1036,6 +1172,37 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       "tour.home": `Astuce${NB}: dans Safari, touche Partager puis «${NB}Sur l’écran d’accueil${NB}». Gedankenblasen s’ouvrira alors comme une vraie app.`,
       "tour.next": "Suivant", "tour.back": "Retour", "tour.start": "C’est parti", "tour.skip": "Passer", "info.tour": "Revoir l’introduction",
       "tour.step": "Étape {i} sur 3",
+      "dq.12": `Qu’as-tu fait pour quelqu’un aujourd’hui${NB}?`, "dq.13": `Quand t’es-tu senti·e calme aujourd’hui${NB}?`, "dq.14": `Qu’est-ce qui t’a fait réfléchir aujourd’hui${NB}?`,
+      "dq.15": `De quoi aimerais-tu te remercier aujourd’hui${NB}?`, "dq.16": `Qu’est-ce qui a été plus difficile que prévu aujourd’hui${NB}?`, "dq.17": `Qu’est-ce qui a été plus facile que prévu aujourd’hui${NB}?`,
+      "dq.18": `Quel moment d’aujourd’hui était rien que pour toi${NB}?`, "dq.19": `Qu’aimerais-tu faire autrement demain${NB}?`, "dq.20": `Qu’est-ce qui t’a fait rire aujourd’hui${NB}?`,
+      "dq.21": `Qu’as-tu fait pour la première fois aujourd’hui${NB}?`, "dq.22": `Quelle émotion a été la plus forte aujourd’hui${NB}?`, "dq.23": `Qu’est-ce qui t’a relié·e aux autres aujourd’hui${NB}?`,
+      "dq.24": `Pour quoi as-tu manqué de temps aujourd’hui${NB}?`, "dq.25": `Qu’est-ce qui t’a fait du bien aujourd’hui sans que tu l’aies prévu${NB}?`, "dq.26": `Quelle petite chose a rendu ta journée meilleure${NB}?`,
+      "dq.27": `Que raconterais-tu à toi-même de ce matin${NB}?`, "dq.28": `Où as-tu aimé être aujourd’hui${NB}?`, "dq.29": `Qu’est-ce que tu peux simplement laisser comme ça aujourd’hui${NB}?`,
+      "blasen.segYear": "Année", "year.hint": "Ton année en carte du ciel · {count}",
+      "theme.label": "Apparence", "theme.auto": "Automatique", "theme.light": "Clair", "theme.dark": "Sombre",
+      "rem.title": "Rappel du soir", "rem.hint": "Ajoute un rappel quotidien à ton calendrier. Sans serveur ni compte, et tu peux le supprimer à tout moment.",
+      "rem.time": "Heure", "rem.add": "Ajouter au calendrier", "rem.summary": "Deux minutes pour toi", "rem.desc": "C’est l’heure de tes bulles de pensées.",
+      "prem.badge": "Premium", "prem.title": "Gedankenblasen Premium", "prem.lead": "Des extras pour profiter encore plus de tes soirées.",
+      "prem.f1": "Nouveaux rituels pour lâcher prise\u202F: vent et lanterne", "prem.f2": "Thèmes de couleurs (bientôt)", "prem.f3": "Tes propres questions du soir (bientôt)", "prem.f4": "Partager de beaux moments en image (bientôt)",
+      "prem.price": "Prix d’exemple\u202F: 1,99 € par mois ou 14,99 € par an", "prem.concept": "Concept, pas encore disponible à l’achat.",
+      "prem.test": "Mode test\u202F: rien n’est facturé. Le vrai paiement viendra une fois la question réglée.",
+      "prem.unlock": "Débloquer en mode test", "prem.relock": "Quitter le mode test", "prem.status": "Premium", "prem.on": "Actif (mode test)", "prem.off": "Inactif",
+      "prem.more": "En savoir plus", "prem.toastOn": "Premium débloqué en mode test ✨", "prem.toastOff": "Mode test terminé.",
+      "ritual.aria": "Choisir un rituel", "ritual.bubble": "Bulle", "ritual.wind": "Vent", "ritual.lantern": "Lanterne",
+      "los.blow": "Laisser le vent l’emporter", "los.lift": "Faire monter la lanterne",
+      "los.breathWind": "Expire calmement. Quand tu le sens, laisse le vent emporter la feuille.",
+      "los.breathLantern": "Regarde un instant la lanterne. Quand tu le sens, laisse-la monter.",
+      "los.doneWind": "Le vent l’a emporté.", "los.doneLantern": "La lanterne est devenue une étoile.",
+      "priv.open": "Confidentialité", "priv.title": "Confidentialité",
+      "priv.short": "En bref\u202F: tes notes, photos et réglages restent sur ton appareil. Pas de compte, pas de publicité, pas de suivi et pas de cookies.",
+      "priv.h1": "Où se trouvent tes données", "priv.p1": "Dans le stockage de ton navigateur ou de l’app sur ton écran d’accueil. Toi seul·e peux les voir. Si tu supprimes l’app ou les données du site, elles disparaissent. C’est à ça que sert la sauvegarde.",
+      "priv.h2": "Ce qui est transmis à l’ouverture", "priv.p2": "L’app est chargée depuis GitHub Pages. Pour des raisons techniques, GitHub voit ton adresse IP, comme pour tout site web. Les polices et les outils sont intégrés à l’app\u202F; aucun autre service n’est chargé.",
+      "priv.h3": "Les fichiers que tu crées", "priv.p3": "Sauvegarde, PDF, rappel de calendrier et retour sont créés sur ton appareil. C’est toi seul·e qui décides où les envoyer.",
+      "priv.h4": "Pas un substitut à l’aide", "priv.p4": "Gedankenblasen est un journal, pas une thérapie. Si tu ne vas pas bien, parle à des personnes de confiance ou cherche du soutien, par exemple auprès d’une ligne d’écoute locale.",
+      "priv.foot": "Mise à jour\u202F: octobre 2026 · Un projet étudiant.",
+      "fb.open": "Donner un avis", "fb.title": "Ton avis", "fb.lead": "Qu’est-ce qui te plaît, qu’est-ce qui manque, qu’est-ce qui coince\u202F? Ton avis aide à améliorer l’app.",
+      "fb.wish": "Souhait", "fb.bug": "Bug", "fb.praise": "Compliment", "fb.ph": "Écris simplement …", "fb.meta": "Joindre la version de l’app et l’appareil",
+      "fb.send": "Partager mon avis", "fb.copied": "Copié. Envoie-le simplement à la personne qui t’a donné l’app.", "fb.thanks": "Merci pour ton avis\u202F!", "fb.empty": "Écris d’abord quelques mots.",
       "dq.title": "Question du jour",
       "dq.0": `Pour quoi es-tu reconnaissant·e aujourd’hui${NB}?`, "dq.1": `Qu’est-ce qui t’a surpris·e aujourd’hui${NB}?`, "dq.2": `Qu’est-ce qui te réjouit pour demain${NB}?`,
       "dq.3": `Qui t’a fait du bien aujourd’hui${NB}?`, "dq.4": `Qu’as-tu appris aujourd’hui${NB}?`, "dq.5": `De quoi es-tu un peu fier·ère aujourd’hui${NB}?`,
@@ -1364,7 +1531,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
   }
 
   // ---------- Frage des Tages ----------
-  const DQ_COUNT = 12;
+  const DQ_COUNT = 30;
   function dqIndex(dateIso) { const [y, m, d] = dateIso.split("-").map(Number); return Math.floor(Date.UTC(y, m - 1, d) / 86400000) % DQ_COUNT; }
 
   // ---------- Schlaf (morgens) ----------
@@ -1740,6 +1907,172 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
   });
   tourDlg.addEventListener("close", () => { try { localStorage.setItem(TOUR_KEY, "1"); } catch (e) {} sound("soft"); });
 
+  // ---------- Design: Automatisch / Hell / Dunkel ----------
+  let theme = "auto";
+  try { const v = localStorage.getItem(THEME_KEY); if (v === "light" || v === "dark") theme = v; } catch (e) {}
+  function applyTheme() {
+    const r = document.documentElement;
+    if (theme === "auto") r.removeAttribute("data-theme"); else r.setAttribute("data-theme", theme);
+    document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+      const darkMeta = (m.getAttribute("media") || "").includes("dark");
+      const dark = theme === "dark" || (theme === "auto" && darkMeta);
+      m.setAttribute("content", dark ? "#1A1727" : "#F1EEF6");
+    });
+  }
+  function setTheme(v) { theme = v; try { localStorage.setItem(THEME_KEY, v); } catch (e) {} applyTheme(); }
+  applyTheme();
+
+  // ---------- Premium (Testmodus, ohne echte Bezahlung) ----------
+  let premium = false;
+  try { premium = localStorage.getItem(PREMIUM_KEY) === "test"; } catch (e) {}
+  function setPremium(on) {
+    premium = on;
+    try { if (on) localStorage.setItem(PREMIUM_KEY, "test"); else localStorage.removeItem(PREMIUM_KEY); } catch (e) {}
+    if (!on && RITUALS.find(r => r.k === ritual).prem) { ritual = "bubble"; saveRitual(); }
+    if (releaseState === "write") renderRelease();
+  }
+  function openPremium() {
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><span class="prem-badge">${esc(t("prem.badge"))}</span><h3 id="dlgTitle">${esc(t("prem.title"))}</h3><p>${esc(t("prem.lead"))}</p></div>${closeBtn()}</div>
+      <ul class="prem-list">${["prem.f1", "prem.f2", "prem.f3", "prem.f4"].map((k, i) => `<li class="${i ? "soon" : ""}">${esc(t(k))}</li>`).join("")}</ul>
+      <div class="prem-price"><strong>${esc(t("prem.price"))}</strong><span class="hint">${esc(t("prem.concept"))}</span></div>
+      <div class="note"><p>${esc(t("prem.test"))}</p></div>
+      <div class="row">${premium
+        ? `<button class="btn ghost" type="button" data-premium-off>${esc(t("prem.relock"))}</button>`
+        : `<button class="btn" type="button" data-premium-on>${esc(t("prem.unlock"))}</button>`}</div>`);
+  }
+
+  // ---------- Loslassen-Rituale ----------
+  const RITUALS = [
+    { k: "bubble", prem: false, icon: '<circle cx="12" cy="12" r="8"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/>' },
+    { k: "wind", prem: true, icon: '<path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/>' },
+    { k: "lantern", prem: true, icon: '<path d="M9 4h6M8 7h8l1.5 9.5a2 2 0 0 1-2 2.5h-7a2 2 0 0 1-2-2.5z"/><path d="M12 19v2"/><path d="M12 10.5c1.3 1 1.3 3 0 4-1.3-1-1.3-3 0-4z" fill="currentColor" stroke="none"/>' },
+  ];
+  let ritual = "bubble";
+  try { const v = localStorage.getItem(RITUAL_KEY); if (RITUALS.some(r => r.k === v)) ritual = v; } catch (e) {}
+  if (!premium && RITUALS.find(r => r.k === ritual).prem) ritual = "bubble";
+  function saveRitual() { try { localStorage.setItem(RITUAL_KEY, ritual); } catch (e) {} }
+  function ritualPicker() {
+    return `<div class="rituals" role="radiogroup" aria-label="${esc(t("ritual.aria"))}">${RITUALS.map(r => {
+      const locked = r.prem && !premium;
+      return `<button type="button" class="ritual${ritual === r.k ? " on" : ""}${locked ? " locked" : ""}" role="radio" aria-checked="${ritual === r.k}" data-ritual="${r.k}">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${r.icon}</svg>
+        <span>${esc(t("ritual." + r.k))}</span>${r.prem ? `<small class="prem-badge">${locked ? "🔒 " : ""}${esc(t("prem.badge"))}</small>` : ""}</button>`;
+    }).join("")}</div>`;
+  }
+  function whoosh() {
+    if (!soundOn) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      actx = actx || new AC(); if (actx.state === "suspended") actx.resume();
+      const len = Math.floor(actx.sampleRate * 1.1), buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / len);
+      const src = actx.createBufferSource(); src.buffer = buf;
+      const f = actx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 650; f.Q.value = 0.7;
+      const g = actx.createGain(); g.gain.value = 0.22;
+      src.connect(f); f.connect(g); g.connect(actx.destination); src.start();
+    } catch (e) {}
+  }
+
+  // ---------- Jahres-Himmel ----------
+  let yrY = new Date().getFullYear();
+  function miniSky(list) {
+    if (!list.length) return `<svg viewBox="0 0 100 100" aria-hidden="true"></svg>`;
+    const pts = [];
+    list.forEach(e => {
+      const r = rng(hash(e.id + "*"));
+      let best = null, bd = -1;
+      for (let k = 0; k < 40; k++) {
+        const c = { e, x: 12 + r() * 76, y: 14 + r() * 72 };
+        const d = pts.length ? Math.min(...pts.map(q => Math.hypot(q.x - c.x, q.y - c.y))) : 999;
+        if (d > bd) { bd = d; best = c; }
+        if (d > 18) break;
+      }
+      pts.push(best);
+    });
+    const tour = [pts[0]], rest = pts.slice(1);
+    while (rest.length) { const l = tour[tour.length - 1]; let bi = 0, b = Infinity; rest.forEach((q, i) => { const d = Math.hypot(q.x - l.x, q.y - l.y); if (d < b) { b = d; bi = i; } }); tour.push(rest.splice(bi, 1)[0]); }
+    const lines = tour.slice(1).map((p, i) => `<line x1="${tour[i].x.toFixed(1)}" y1="${tour[i].y.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}"/>`).join("");
+    const dots = pts.map(p => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.6" style="fill:rgb(${HEX[p.e.mood].join(",")})"/>`).join("");
+    return `<svg viewBox="0 0 100 100" aria-hidden="true"><g class="ml">${lines}</g>${dots}</svg>`;
+  }
+  function renderYear() {
+    const now = new Date(), grid = $("#yearGrid");
+    $("#bmTitle").textContent = String(yrY);
+    const fm = firstMonth();
+    const prev = $("#bmPrev"), next = $("#bmNext");
+    prev.disabled = !fm || yrY <= fm[0]; next.disabled = yrY >= now.getFullYear();
+    prev.style.opacity = prev.disabled ? .35 : 1; next.style.opacity = next.disabled ? .35 : 1;
+    const fmtShortMonth = new Intl.DateTimeFormat(I18N[lang].locale, { month: "short" });
+    let total = 0;
+    grid.innerHTML = Array.from({ length: 12 }, (_, m) => {
+      const key = `${yrY}-${pad(m + 1)}`;
+      const list = entries.filter(e => e.date.startsWith(key)).sort((a, b) => a.date.localeCompare(b.date));
+      total += list.length;
+      const future = yrY > now.getFullYear() || (yrY === now.getFullYear() && m > now.getMonth());
+      const label = cap(fmtMonth.format(new Date(yrY, m, 1)));
+      return `<button type="button" class="year-cell${list.length ? "" : " empty"}" data-ym="${yrY}-${m}" ${future ? "disabled" : ""} aria-label="${esc(label + ": " + countText(list.length))}">
+        ${miniSky(list)}<span class="ym"><strong>${esc(cap(fmtShortMonth.format(new Date(yrY, m, 1))).replace(".", ""))}</strong><small>${list.length || "·"}</small></span></button>`;
+    }).join("");
+    $("#fieldHint").textContent = t("year.hint", { count: countText(total) });
+    $("#starToggle").hidden = true;
+  }
+  $("#yearGrid").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-ym]");
+    if (!b || b.disabled) return;
+    const [y, m] = b.dataset.ym.split("-").map(Number);
+    bmY = y; bmM = m; starMode = null;
+    setMode("bubbles");
+  });
+
+  // ---------- Abend-Erinnerung (Kalender, ohne Server) ----------
+  let remTime = "21:00";
+  try { const v = localStorage.getItem(REM_KEY); if (/^\d{2}:\d{2}$/.test(v)) remTime = v; } catch (e) {}
+  function icsHref(time) {
+    const [hh, mm] = time.split(":");
+    const d = new Date(); const day = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
+    const appUrl = location.href.split("#")[0];
+    const lines = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Gedankenblasen//Erinnerung//DE", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+      "BEGIN:VEVENT", `UID:gedankenblasen-erinnerung-${Date.now()}@gedankenblasen`, `DTSTAMP:${stamp}`,
+      `DTSTART:${day}T${hh}${mm}00`, "DURATION:PT5M", "RRULE:FREQ=DAILY",
+      `SUMMARY:${t("rem.summary")} 🫧`, `DESCRIPTION:${t("rem.desc")}`, `URL:${appUrl}`, "TRANSP:TRANSPARENT",
+      "BEGIN:VALARM", "ACTION:DISPLAY", `DESCRIPTION:${t("rem.summary")}`, "TRIGGER:PT0M", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"];
+    return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
+  }
+
+  // ---------- Datenschutz & Feedback ----------
+  function openPrivacy() {
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("priv.title"))}</h3></div>${closeBtn()}</div>
+      <p class="priv-short">${esc(t("priv.short"))}</p>
+      ${[1, 2, 3, 4].map(i => `<div class="answer"><h4>${esc(t("priv.h" + i))}</h4><p>${esc(t("priv.p" + i))}</p></div>`).join("")}
+      <p class="hint" style="margin:0">${esc(t("priv.foot"))}</p>`);
+  }
+  let fbType = "wish";
+  function openFeedback() {
+    openDlg(`
+      <div class="dlg-head"><div class="ttl"><h3 id="dlgTitle">${esc(t("fb.title"))}</h3><p>${esc(t("fb.lead"))}</p></div>${closeBtn()}</div>
+      <div class="seg" role="group" aria-label="${esc(t("fb.title"))}">${["wish", "bug", "praise"].map(k => `<button type="button" data-fbtype="${k}" aria-pressed="${fbType === k}">${esc(t("fb." + k))}</button>`).join("")}</div>
+      <label class="sr-only" for="fbText">${esc(t("fb.title"))}</label>
+      <textarea id="fbText" rows="5" placeholder="${esc(t("fb.ph"))}"></textarea>
+      <label class="check"><input type="checkbox" id="fbMeta" checked> <span>${esc(t("fb.meta"))}</span></label>
+      <div class="row"><button class="btn" type="button" data-fbsend>${esc(t("fb.send"))}</button></div>`);
+  }
+  async function sendFeedback() {
+    const txt = ($("#fbText").value || "").trim();
+    if (!txt) { toast(t("fb.empty")); $("#fbText").focus(); return; }
+    const meta = $("#fbMeta").checked ? `\n\n— Gedankenblasen v${APP_VERSION} · ${lang.toUpperCase()} · ${isStandalone() ? "Home-Bildschirm" : "Browser"} · ${(navigator.userAgent.match(/\(([^)]+)\)/) || [, ""])[1].slice(0, 60)}` : "";
+    const msg = `${t("fb.title")} (${t("fb." + fbType)}):\n${txt}${meta}`;
+    try {
+      if (navigator.share) { await navigator.share({ title: "Gedankenblasen", text: msg }); toast(t("fb.thanks")); closeDlg(); return; }
+    } catch (e) { if (e && e.name === "AbortError") return; }
+    try { await navigator.clipboard.writeText(msg); toast(t("fb.copied")); closeDlg(); }
+    catch (e) { const ta = $("#fbText"); ta.value = msg; ta.select(); toast(t("toast.marked")); }
+  }
+
   // ---------- Navigation ----------
   const TABS = ["heute", "blasen", "loslassen", "rueckblick"];
   let current = "heute";
@@ -1878,17 +2211,25 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
 
   $("#segBubbles").addEventListener("click", () => setMode("bubbles"));
   $("#segList").addEventListener("click", () => setMode("list"));
+  $("#segYear").addEventListener("click", () => setMode("year"));
+  function updateSeg() {
+    $("#segBubbles").setAttribute("aria-pressed", viewMode === "bubbles");
+    $("#segList").setAttribute("aria-pressed", viewMode === "list");
+    $("#segYear").setAttribute("aria-pressed", viewMode === "year");
+    $("#bubbleWrap").hidden = viewMode === "list";
+    $("#list").hidden = viewMode !== "list";
+    $("#chips").hidden = viewMode === "year";
+    $("#field").hidden = viewMode === "year";
+    $("#yearGrid").hidden = viewMode !== "year";
+  }
   function setMode(m) {
     viewMode = m;
-    $("#segBubbles").setAttribute("aria-pressed", m === "bubbles");
-    $("#segList").setAttribute("aria-pressed", m === "list");
-    $("#bubbleWrap").hidden = m !== "bubbles";
-    $("#list").hidden = m !== "list";
+    updateSeg();
     try { localStorage.setItem("gedankenblasen.ansicht", m); } catch (e) {}
     renderBlasen();
   }
-  $("#bmPrev").addEventListener("click", () => { bmM--; if (bmM < 0) { bmM = 11; bmY--; } starMode = null; renderBlasen(); });
-  $("#bmNext").addEventListener("click", () => { bmM++; if (bmM > 11) { bmM = 0; bmY++; } starMode = null; renderBlasen(); });
+  $("#bmPrev").addEventListener("click", () => { if (viewMode === "year") { yrY--; renderBlasen(); return; } bmM--; if (bmM < 0) { bmM = 11; bmY--; } starMode = null; renderBlasen(); });
+  $("#bmNext").addEventListener("click", () => { if (viewMode === "year") { yrY++; renderBlasen(); return; } bmM++; if (bmM > 11) { bmM = 0; bmY++; } starMode = null; renderBlasen(); });
   $("#starToggle").addEventListener("click", () => {
     const past = !isCurrentMonth();
     const nowStars = starMode === null ? past : starMode;
@@ -1970,6 +2311,7 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
     stopSim();
     renderChips();
     if (viewMode === "list") { renderList(); return; }
+    if (viewMode === "year") { renderYear(); return; }
     if (freshId) {
       const fe = entries.find(e => e.id === freshId);
       if (fe) { bmY = Number(fe.date.slice(0, 4)); bmM = Number(fe.date.slice(5, 7)) - 1; starMode = null; }
@@ -2361,6 +2703,14 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
     else if (b.dataset.writeday) { closeDlg(); renderCheckin(b.dataset.writeday); go("heute"); }
     else if (b.dataset.lang) { setLang(b.dataset.lang); openInfo(); }
     else if (b.hasAttribute("data-tour")) { closeDlg(); openTour(); }
+    else if (b.dataset.themeSet) { setTheme(b.dataset.themeSet); body.querySelectorAll("[data-theme-set]").forEach(x => x.setAttribute("aria-pressed", x.dataset.themeSet === theme)); }
+    else if (b.hasAttribute("data-premium-open")) openPremium();
+    else if (b.hasAttribute("data-premium-on")) { setPremium(true); toast(t("prem.toastOn")); sound("soft"); closeDlg(); }
+    else if (b.hasAttribute("data-premium-off")) { setPremium(false); toast(t("prem.toastOff")); closeDlg(); }
+    else if (b.hasAttribute("data-privacy")) openPrivacy();
+    else if (b.hasAttribute("data-feedback")) openFeedback();
+    else if (b.dataset.fbtype) { fbType = b.dataset.fbtype; body.querySelectorAll("[data-fbtype]").forEach(x => x.setAttribute("aria-pressed", x.dataset.fbtype === fbType)); }
+    else if (b.hasAttribute("data-fbsend")) sendFeedback();
   });
 
   function refresh() {
@@ -2369,13 +2719,14 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
     if (current === "rueckblick") renderCal();
   }
 
-  // ---------- Loslassen ----------
-  let releaseState = "write";
+  // ---------- Loslassen (Blase · Wind · Laterne) ----------
+  let releaseState = "write", doneRitual = "bubble";
   function renderRelease() {
     const card = $("#releaseCard");
     if (releaseState === "write") {
       card.innerHTML = `
         <form class="form" id="relForm" novalidate>
+          ${ritualPicker()}
           <div class="q">
             <label for="relText">${esc(t("los.q"))}</label>
             <textarea id="relText" rows="5" placeholder="${esc(t("los.ph"))}" autocomplete="off"></textarea>
@@ -2386,62 +2737,76 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
         </form>`;
       const ta = $("#relText"), btn = $("#relGo");
       ta.addEventListener("input", () => { btn.disabled = !ta.value.trim(); });
+      card.querySelector(".rituals").addEventListener("click", ev => {
+        const b = ev.target.closest("[data-ritual]");
+        if (!b) return;
+        const r = RITUALS.find(x => x.k === b.dataset.ritual);
+        if (r.prem && !premium) { openPremium(); return; }
+        ritual = r.k; saveRitual();
+        card.querySelectorAll("[data-ritual]").forEach(x => { const on = x.dataset.ritual === ritual; x.classList.toggle("on", on); x.setAttribute("aria-checked", on); });
+        sound("soft");
+      });
       $("#relForm").addEventListener("submit", ev => {
         ev.preventDefault();
         const text = ta.value.trim();
         if (!text) return;
         ta.value = "";
-        releaseState = "bubble";
-        card.innerHTML = `
-          <div class="release-stage" id="relStage">
-            <button type="button" class="release-bubble" id="relBubble" aria-label="${esc(t("los.pop"))}"><p></p></button>
-          </div>
+        releaseState = "stage"; doneRitual = ritual;
+        const stage = {
+          bubble: `<div class="release-stage" id="relStage"><button type="button" class="release-bubble" id="relObj" aria-label="${esc(t("los.pop"))}"><p></p></button></div>`,
+          wind: `<div class="release-stage wind-stage" id="relStage"><i class="gust g1"></i><i class="gust g2"></i><i class="gust g3"></i><button type="button" class="leaf" id="relObj" aria-label="${esc(t("los.blow"))}"><p></p></button></div>`,
+          lantern: `<div class="release-stage lantern-stage" id="relStage"><i class="tiny-star s1"></i><i class="tiny-star s2"></i><i class="tiny-star s3"></i><button type="button" class="lantern" id="relObj" aria-label="${esc(t("los.lift"))}"><span class="flame"></span><p></p></button></div>`,
+        }[ritual];
+        const hint = { bubble: "los.breath", wind: "los.breathWind", lantern: "los.breathLantern" }[ritual];
+        const label = { bubble: "los.pop", wind: "los.blow", lantern: "los.lift" }[ritual];
+        card.innerHTML = `${stage}
           <div class="after">
-            <p class="hint">${esc(t("los.breath"))}</p>
-            <button class="btn" type="button" id="relPop">${esc(t("los.pop"))}</button>
+            <p class="hint">${esc(t(hint))}</p>
+            <button class="btn" type="button" id="relPop">${esc(t(label))}</button>
           </div>`;
-        $("#relBubble p").textContent = text;
-        $("#relBubble").addEventListener("click", popIt);
-        $("#relPop").addEventListener("click", popIt);
+        $("#relObj p").textContent = text;
+        $("#relObj").addEventListener("click", releaseIt);
+        $("#relPop").addEventListener("click", releaseIt);
       });
     } else if (releaseState === "done") {
+      const title = { bubble: "los.done", wind: "los.doneWind", lantern: "los.doneLantern" }[doneRitual];
       card.innerHTML = `
         <div class="after" style="padding:24px 0">
           <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="6" fill="var(--m2)"/><circle cx="16" cy="22" r="3.5" fill="var(--m1)"/><circle cx="56" cy="20" r="3" fill="var(--m4)"/><circle cx="58" cy="52" r="4" fill="var(--m3)"/><circle cx="14" cy="54" r="2.5" fill="var(--m5)"/></svg>
-          <h3 tabindex="-1" id="relDone">${esc(t("los.done"))}</h3>
+          <h3 tabindex="-1" id="relDone">${esc(t(title))}</h3>
           <p>${esc(t("los.doneText"))}</p>
           <button class="btn ghost" type="button" id="relAgain">${esc(t("los.again"))}</button>
         </div>`;
       $("#relAgain").addEventListener("click", () => { releaseState = "write"; renderRelease(); $("#relText").focus(); });
     }
   }
-  function popIt() {
-    const b = $("#relBubble");
-    if (!b || b.classList.contains("pop")) return;
+  function releaseIt() {
+    const obj = $("#relObj");
+    if (!obj || obj.classList.contains("gone")) return;
     const stage = $("#relStage");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    b.classList.add("pop");
-    sound("pop");
+    obj.classList.add("gone");
     $("#relPop").disabled = true;
-    if (!reduce) {
-      for (let i = 0; i < 14; i++) {
-        const s = document.createElement("span");
-        s.className = "droplet";
-        const a = (i / 14) * Math.PI * 2 + Math.random() * .3;
-        const dist = 120 + Math.random() * 60;
-        s.style.setProperty("--tx", Math.cos(a) * dist + "px");
-        s.style.setProperty("--ty", Math.sin(a) * dist + "px");
+    let wait = reduce ? 550 : 950;
+    if (doneRitual === "bubble") {
+      obj.classList.add("pop"); sound("pop");
+      if (!reduce) for (let i = 0; i < 14; i++) {
+        const s = document.createElement("span"); s.className = "droplet";
+        const a = (i / 14) * Math.PI * 2 + Math.random() * .3, dist = 120 + Math.random() * 60;
+        s.style.setProperty("--tx", Math.cos(a) * dist + "px"); s.style.setProperty("--ty", Math.sin(a) * dist + "px");
         s.style.background = MOOD_COLORS[(i % 5) + 1];
-        const sz = 6 + Math.random() * 10;
-        s.style.width = s.style.height = sz + "px";
+        const sz = 6 + Math.random() * 10; s.style.width = s.style.height = sz + "px";
         stage.appendChild(s);
       }
+    } else if (doneRitual === "wind") {
+      stage.classList.add("blowing"); obj.classList.add("away"); whoosh();
+      wait = reduce ? 550 : 1500;
+    } else {
+      stage.classList.add("rising"); obj.classList.add("rise"); sound("soft");
+      setTimeout(() => sound("breath"), 1800);
+      wait = reduce ? 550 : 3300;
     }
-    setTimeout(() => {
-      releaseState = "done";
-      renderRelease();
-      const h = $("#relDone"); if (h) h.focus();
-    }, reduce ? 550 : 950);
+    setTimeout(() => { releaseState = "done"; renderRelease(); const h = $("#relDone"); if (h) h.focus(); }, wait);
   }
 
   // ---------- Rückblick ----------
@@ -2544,12 +2909,24 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
         <h4>${esc(t("settings.title"))}</h4>
         <div class="lang-row"><span class="hint" id="langLbl">${esc(t("info.lang"))} · Sprache · Language · Langue</span>
           <div class="seg" role="group" aria-labelledby="langLbl">${langBtns}</div></div>
+        <div class="lang-row"><span class="hint" id="themeLbl">${esc(t("theme.label"))}</span>
+          <div class="seg" role="group" aria-labelledby="themeLbl">${["auto", "light", "dark"].map(k => `<button type="button" data-theme-set="${k}" aria-pressed="${theme === k}">${esc(t("theme." + k))}</button>`).join("")}</div></div>
         <label class="switch" for="soundToggle">
           <input type="checkbox" id="soundToggle" role="switch" ${soundOn ? "checked" : ""}>
           <span class="track" aria-hidden="true"></span>
           <span><strong>${esc(t("sound.label"))}</strong><br><span class="hint">${esc(t("sound.hint"))}</span></span>
         </label>
-        <div><button class="btn ghost small" type="button" data-tour>${esc(t("info.tour"))}</button></div>
+        <div class="rem">
+          <strong>${esc(t("rem.title"))}</strong>
+          <span class="hint">${esc(t("rem.hint"))}</span>
+          <div class="row rem-row"><label class="sr-only" for="remTime">${esc(t("rem.time"))}</label><input type="time" id="remTime" value="${remTime}">
+            <a class="btn ghost small" id="remLink" href="${icsHref(remTime)}" download="gedankenblasen-erinnerung.ics">${esc(t("rem.add"))}</a></div>
+        </div>
+        <div class="prem-row"><span><strong>${esc(t("prem.status"))}</strong> · <span class="hint">${esc(t(premium ? "prem.on" : "prem.off"))}</span></span>
+          <button class="btn ghost small" type="button" data-premium-open>${esc(t("prem.more"))}</button></div>
+        <div class="row"><button class="btn ghost small" type="button" data-tour>${esc(t("info.tour"))}</button>
+          <button class="btn ghost small" type="button" data-privacy>${esc(t("priv.open"))}</button>
+          <button class="btn ghost small" type="button" data-feedback>${esc(t("fb.open"))}</button></div>
       </div>
       ${storageOk ? "" : `<div class="confirm"><p>${esc(t("info.warn"))}</p></div>`}
       <p style="margin:0">${esc(t("info.p1"))}</p>
@@ -2566,6 +2943,9 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
       </div>
       <p class="hint">${esc(t("info.importHint"))}</p>
       <p class="hint" style="margin:0">Gedankenblasen · Version ${APP_VERSION}</p>`);
+    $("#remTime").addEventListener("change", ev => {
+      if (/^\d{2}:\d{2}$/.test(ev.target.value)) { remTime = ev.target.value; try { localStorage.setItem(REM_KEY, remTime); } catch (e) {} $("#remLink").href = icsHref(remTime); }
+    });
     $("#soundToggle").addEventListener("change", ev => {
       soundOn = ev.target.checked;
       try { localStorage.setItem(SOUND_KEY, soundOn ? "1" : "0"); } catch (e) {}
@@ -2685,11 +3065,8 @@ dialog.tour { width: min(440px, calc(100vw - 24px)); }
   // ---------- Start ----------
   makeFormatters();
   applyStatic();
-  try { const m = localStorage.getItem("gedankenblasen.ansicht"); if (m === "list") viewMode = "list"; } catch (e) {}
-  $("#segBubbles").setAttribute("aria-pressed", viewMode === "bubbles");
-  $("#segList").setAttribute("aria-pressed", viewMode === "list");
-  $("#bubbleWrap").hidden = viewMode !== "bubbles";
-  $("#list").hidden = viewMode !== "list";
+  try { const m = localStorage.getItem("gedankenblasen.ansicht"); if (m === "list" || m === "year") viewMode = m; } catch (e) {}
+  updateSeg();
   renderCheckin();
   renderMorning();
   renderMemory();
