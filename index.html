@@ -574,6 +574,30 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   .leaf.away, .lantern.rise { animation: fadeout .5s linear forwards !important; animation-duration: .5s !important; }
 }
 
+/* v9: Absicht mit Schieberegler */
+.intent-block { display: flex; flex-direction: column; gap: 6px; background: var(--accent-soft); border-radius: var(--r-md); padding: 14px 16px; }
+.intent-quote { margin: 0; font-weight: 700; font-size: 1.05rem; }
+.intent-how { font-weight: 700; margin-top: 6px; }
+.intent-val { font-family: var(--font-display); font-size: 1.15rem; color: var(--ink); min-height: 1.4em; }
+.intent-val.unrated { font-family: var(--font-body); font-size: .92rem; color: var(--muted); }
+.intent-range { --p: 50%; -webkit-appearance: none; appearance: none; width: 100%; height: 34px; background: transparent; cursor: pointer; margin: 0; }
+.intent-range::-webkit-slider-runnable-track { height: 10px; border-radius: 999px; background: linear-gradient(90deg, var(--m2), var(--m4) 60%, var(--m5)); }
+.intent-range::-moz-range-track { height: 10px; border-radius: 999px; background: linear-gradient(90deg, var(--m2), var(--m4) 60%, var(--m5)); }
+.intent-range::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -10px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-shadow: 0 3px 10px rgba(60,40,100,.25); }
+.intent-range::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-shadow: 0 3px 10px rgba(60,40,100,.25); }
+.intent-range.unrated::-webkit-slider-runnable-track { background: var(--line); }
+.intent-range.unrated::-moz-range-track { background: var(--line); }
+.intent-range.unrated::-webkit-slider-thumb { border-color: var(--muted); opacity: .85; }
+.intent-range:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 999px; }
+.intent-ends { display: flex; justify-content: space-between; gap: 12px; font-size: .78rem; color: var(--muted); }
+.intent-ends span:last-child { text-align: right; }
+.intent-reset { align-self: flex-start; font-size: .85rem; }
+.intent-block textarea { background: var(--surface); min-height: 60px; }
+.ir-show { display: flex; align-items: center; gap: 10px; margin-top: 6px; font-weight: 700; font-size: .92rem; }
+.ir-bar { flex: none; width: 90px; height: 8px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; }
+.ir-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--m2), var(--m4) 60%, var(--m5)); min-width: 8px; }
+.ir-note { margin-top: 4px !important; color: var(--muted); font-style: italic; }
+
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -742,7 +766,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   const PREMIUM_KEY = "gedankenblasen.premium";
   const RITUAL_KEY = "gedankenblasen.ritual";
   const REM_KEY = "gedankenblasen.erinnerung";
-  const APP_VERSION = 8;            // bei jedem Update zusammen mit sw.js hochzählen
+  const APP_VERSION = 9;            // bei jedem Update zusammen mit sw.js hochzählen
   const JSPDF_URL = "vendor/jspdf.umd.min.js";
   const NB = " "; // schmales Leerzeichen für Französisch (vor ? ! :)
 
@@ -836,6 +860,9 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "q.o": "„", "q.c": "“",
       "intent.label": "Heute möchte ich …", "intent.ph": "z. B. mir Zeit für einen Spaziergang nehmen", "intent.saved": "Gespeichert",
       "intent.remind": "Heute Morgen hast du dir vorgenommen:", "intent.how": "Wie ist es gelaufen? Ganz ohne Bewertung.", "intent.title": "Absicht am Morgen",
+      "intent.s0": "Diesmal nicht, auch okay", "intent.s1": "Kaum", "intent.s2": "Teilweise", "intent.s3": "Größtenteils", "intent.s4": "Voll und ganz",
+      "intent.unrated": "Schieb den Regler, wenn du magst.", "intent.notePh": "Magst du noch etwas dazu sagen? (freiwillig)", "intent.result": "Wie es lief",
+      "intent.reset": "Auswahl entfernen",
       "memory.year": "Heute vor einem Jahr", "memory.month": "Heute vor einem Monat",
       "sum.title": "Dein {month}", "sum.few": "Ab 3 Abenden in diesem Monat entsteht hier eine kleine Zusammenfassung.",
       "sum.count": "Du hast {count} festgehalten.", "sum.mood": "Am häufigsten fühlten sich deine Tage {mood} an.",
@@ -995,6 +1022,9 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "q.o": "“", "q.c": "”",
       "intent.label": "Today I’d like to …", "intent.ph": "e.g. take time for a walk", "intent.saved": "Saved",
       "intent.remind": "This morning you set out to:", "intent.how": "How did it go? No judgement.", "intent.title": "Morning intention",
+      "intent.s0": "Not this time, and that’s okay", "intent.s1": "Barely", "intent.s2": "Partly", "intent.s3": "Mostly", "intent.s4": "Completely",
+      "intent.unrated": "Move the slider if you like.", "intent.notePh": "Anything you’d like to add? (optional)", "intent.result": "How it went",
+      "intent.reset": "Clear",
       "memory.year": "One year ago today", "memory.month": "One month ago today",
       "sum.title": "Your {month}", "sum.few": "Once you have 3 evenings this month, a little summary appears here.",
       "sum.count": "You captured {count}.", "sum.mood": "Most of your days felt {mood}.",
@@ -1154,6 +1184,9 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       "q.o": "« ", "q.c": " »",
       "intent.label": "Aujourd’hui, j’aimerais …", "intent.ph": "p. ex. prendre le temps d’une promenade", "intent.saved": "Enregistré",
       "intent.remind": `Ce matin, tu voulais${NB}:`, "intent.how": `Comment ça s’est passé${NB}? Sans jugement.`, "intent.title": "Intention du matin",
+      "intent.s0": "Pas cette fois, et c’est ok", "intent.s1": "À peine", "intent.s2": "En partie", "intent.s3": "En grande partie", "intent.s4": "Complètement",
+      "intent.unrated": "Déplace le curseur si tu veux.", "intent.notePh": `Tu veux ajouter quelque chose${NB}? (facultatif)`, "intent.result": "Comment ça s’est passé",
+      "intent.reset": "Effacer",
       "memory.year": "Il y a un an aujourd’hui", "memory.month": "Il y a un mois aujourd’hui",
       "sum.title": "Ton mois · {month}", "sum.few": "Dès 3 soirées ce mois-ci, un petit résumé apparaîtra ici.",
       "sum.count": "Tu as noté {count}.", "sum.mood": "La plupart de tes journées étaient {mood}.",
@@ -1442,7 +1475,23 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       water: e ? (e.water || 0) : 0,
       photos: (e && Array.isArray(e.photos) ? e.photos : []).map(id => ({ id })),
       removed: [],
+      ir: e && irValid(e.ir) ? e.ir : null,
     };
+    const rg = $("#" + prefix + "-ir");
+    if (rg) {
+      const out = $("#" + prefix + "-ir-out"), rs = $("#" + prefix + "-ir-reset");
+      const paintIr = () => {
+        const v = f.ir;
+        rg.classList.toggle("unrated", v === null); out.classList.toggle("unrated", v === null);
+        out.textContent = v === null ? t("intent.unrated") : t("intent.s" + v);
+        rg.setAttribute("aria-valuetext", out.textContent);
+        rs.hidden = v === null;
+      };
+      rg.addEventListener("input", () => { f.ir = Number(rg.value); paintIr(); });
+      rg.addEventListener("change", () => sound("soft"));
+      rs.addEventListener("click", () => { f.ir = null; rg.value = 2; paintIr(); rg.focus(); });
+      paintIr();
+    }
     const gl = $("#" + prefix + "-water");
     const paintWater = () => { gl.innerHTML = glassesHTML(f.water); $("#" + prefix + "-water-out").textContent = waterText(f.water); };
     paintWater();
@@ -1709,7 +1758,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       doc.text(ml, M + IND, y + 10); y += 10 + ml.length * 4.4 + 2;
       const qa = QUESTIONS.map(k => [t("q." + k), e[k]]);
       if (e.dqa) qa.push([t("dq." + e.dq), e.dqa]);
-      if (intentFor(e.date)) qa.unshift([t("intent.title"), intentFor(e.date)]);
+      if (intentFor(e.date)) qa.unshift([t("intent.title"), quote(intentFor(e.date)) + (irValid(e.ir) ? "  ·  " + t("intent.result") + ": " + t("intent.s" + e.ir) : "") + (e.irNote ? "\n" + e.irNote : "")]);
       for (const [q, a] of qa) {
         if (!a) continue;
         ensure(12);
@@ -1777,7 +1826,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
     const box = $("#intentNote");
     const h = new Date().getHours();
     const txt = intentFor(logicalToday());
-    box.hidden = !(txt && (h >= 14 || h < 4));
+    box.hidden = true;  // seit Version 9 direkt im Check-in
     if (box.hidden) return;
     box.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
       <p><span class="hint" style="display:block">${esc(t("intent.remind"))}</span><strong>${esc(quote(txt))}</strong><span class="hint" style="display:block">${esc(t("intent.how"))}</span></p>`;
@@ -2092,6 +2141,26 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
   document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab)));
 
   // ---------- Check-in ----------
+  const irValid = v => Number.isInteger(v) && v >= 0 && v <= 4;
+  function intentBlock(prefix, e) {
+    const d = e && e.date ? e.date : todayIso();
+    const txt = intentFor(d);
+    if (!txt) return "";
+    const ir = e && irValid(e.ir) ? e.ir : null;
+    return `
+      <div class="intent-block" id="${prefix}-intent">
+        <p class="hint" style="margin:0">${esc(t("intent.remind"))}</p>
+        <p class="intent-quote">${esc(quote(txt))}</p>
+        <label class="intent-how" for="${prefix}-ir">${esc(t("intent.how"))}</label>
+        <output class="intent-val${ir === null ? " unrated" : ""}" id="${prefix}-ir-out" for="${prefix}-ir">${esc(ir === null ? t("intent.unrated") : t("intent.s" + ir))}</output>
+        <input type="range" class="intent-range${ir === null ? " unrated" : ""}" id="${prefix}-ir" min="0" max="4" step="1" value="${ir === null ? 2 : ir}"
+          aria-valuetext="${esc(ir === null ? t("intent.unrated") : t("intent.s" + ir))}">
+        <div class="intent-ends" aria-hidden="true"><span>${esc(t("intent.s0"))}</span><span>${esc(t("intent.s4"))}</span></div>
+        <button type="button" class="link-btn intent-reset" id="${prefix}-ir-reset" ${ir === null ? "hidden" : ""}>${esc(t("intent.reset"))}</button>
+        <label class="sr-only" for="${prefix}-irnote">${esc(t("intent.notePh"))}</label>
+        <textarea id="${prefix}-irnote" rows="2" placeholder="${esc(t("intent.notePh"))}">${esc(e && e.irNote ? e.irNote : "")}</textarea>
+      </div>`;
+  }
   function formHTML(prefix, e, withDate) {
     const mood = e ? e.mood : 0;
     const moods = [1, 2, 3, 4, 5].map(m => `
@@ -2138,6 +2207,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       </details>` : `<div class="q"><label for="${prefix}-date">${esc(t("form.date"))}</label><input type="date" id="${prefix}-date" value="${date}" max="${todayIso()}"></div>`;
     return `
       <fieldset><legend>${esc(t("mood.legend"))}</legend><div class="moods">${moods}</div></fieldset>
+      ${intentBlock(prefix, e)}
       ${extras}
       ${qs}
       ${dqBlock}
@@ -2152,6 +2222,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
     QUESTIONS.forEach(k => { out[k] = $("#" + prefix + "-" + k).value.trim(); });
     const dqa = $("#" + prefix + "-dqa");
     if (dqa) { out.dq = Number(dqa.dataset.dq); out.dqa = dqa.value.trim(); }
+    if ($("#" + prefix + "-ir")) { out.ir = f.ir; out.irNote = $("#" + prefix + "-irnote").value.trim(); }
     return out;
   }
 
@@ -2621,7 +2692,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
       </div>
       ${e.sample ? `<div class="note"><p>${esc(t("dlg.sampleNote"))}</p></div>` : ""}
       ${meta.length ? `<div class="meta-row">${meta.join("")}</div>` : ""}
-      ${intentFor(e.date) ? `<div class="answer"><h4>${esc(t("intent.title"))}</h4><p>${esc(quote(intentFor(e.date)))}</p></div>` : ""}
+      ${intentFor(e.date) ? `<div class="answer"><h4>${esc(t("intent.title"))}</h4><p>${esc(quote(intentFor(e.date)))}</p>${irValid(e.ir) ? `<div class="ir-show"><span class="ir-bar"><i style="width:${e.ir / 4 * 100}%"></i></span><span>${esc(t("intent.s" + e.ir))}</span></div>` : ""}${e.irNote ? `<p class="ir-note">${esc(e.irNote)}</p>` : ""}</div>` : ""}
       ${answers}
       ${dqHtml}
       ${gallery}
@@ -3010,6 +3081,7 @@ input[type="time"] { border-radius: var(--r-sm); border: 1.5px solid var(--line)
           photos: Array.isArray(e.photos) ? e.photos.filter(p => typeof p === "string" && /^p[a-z0-9]+$/i.test(p)).slice(0, MAX_PHOTOS) : [],
           now: String(e.now || ""), mind: String(e.mind || ""), nice: String(e.nice || ""),
           dq: Number.isInteger(e.dq) && e.dq >= 0 && e.dq < DQ_COUNT ? e.dq : dqIndex(e.date), dqa: String(e.dqa || ""),
+          ir: irValid(e.ir) ? e.ir : null, irNote: String(e.irNote || "").slice(0, 1000),
           createdAt: e.createdAt || new Date().toISOString(), updatedAt: e.updatedAt || e.createdAt || new Date().toISOString(),
         }));
         if (parsed && parsed.schlaf && typeof parsed.schlaf === "object") {
